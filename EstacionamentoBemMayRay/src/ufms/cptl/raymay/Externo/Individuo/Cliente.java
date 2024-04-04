@@ -32,6 +32,10 @@ public class Cliente {
     {
         this.veiculos.add(new Veiculo(placa, model, color));
     }
+
+    public List<Veiculo> getVeiculos() {
+        return veiculos;
+    }
     
     public String getNome() {
         return nome;
@@ -56,7 +60,11 @@ public class Cliente {
     public void setTelefone(String telefone) {
         this.telefone = telefone;
     }
-     
+
+    @Override /*Java faz isso de precaucao?*/
+    public String toString() {
+        return "Cliente{" + "nome=" + nome + ", cpf=" + cpf + ", telefone=" + telefone + ", veiculos=" + veiculos + '}';
+    } 
     
     
 }

@@ -7,7 +7,8 @@ import ufms.cptl.raymay.Externo.Individuo.Cliente;
 import ufms.cptl.raymay.Interno.Tarifa;
 import ufms.cptl.raymay.Interno.Ticket;
 import ufms.cptl.raymay.Interno.Vaga;
-
+import java.util.Scanner;
+import java.util.Collections;
 
 /**
  *
@@ -15,7 +16,7 @@ import ufms.cptl.raymay.Interno.Vaga;
  */
 public class Estacionamento {
     public static void main(String[] args){
-         
+        
         
    }
 }
