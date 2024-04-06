@@ -28,7 +28,7 @@ public class Cliente {
     }
     
     /*ADICIONAR UM NOVO VEICULO NA LISTA DE VEICULOS DO CLIENTE*/
-    public void setVeiculonaLista(String placa, Modelo model, Cor color)
+    public void setVeiculoNaLista(String placa, Modelo model, Cor color)
     {
         this.veiculos.add(new Veiculo(placa, model, color));
     }

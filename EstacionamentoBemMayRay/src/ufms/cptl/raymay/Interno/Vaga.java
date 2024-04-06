@@ -9,7 +9,7 @@ package ufms.cptl.raymay.Interno;
  * @author ra
  */
 public class Vaga {
-    enum VagaStatus {
+    public enum VagaStatus {
         DISPONIVEL, OCUPADA, INDISPONIVEL
     }
     

@@ -1,3 +1,5 @@
+package ufms.cptl.raymay.Operacoes;
+
 /*
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
@@ -6,21 +8,19 @@ import java.util.List;
 import ufms.cptl.raymay.Externo.Automovel.Modelo;
 import ufms.cptl.raymay.Externo.Automovel.Veiculo;
 import ufms.cptl.raymay.Externo.Individuo.Cliente;
-import ufms.cptl.raymay.Interno.Tarifa;
-import ufms.cptl.raymay.Interno.Ticket;
-import ufms.cptl.raymay.Interno.Vaga;
 import java.util.Scanner;
-import java.util.Collections;
+import ufms.cptl.raymay.Externo.Automovel.Cor;
 
 /**
  *
  * @author ra
  */
-public class Operacoes { /*Criamos essa classe para deixa o código do estacionamento mais limpo*/
+
+public class OperacoesCliente { /*Criamos essa classe para deixa o código do estacionamento mais limpo*/
     
     /*Scanner para pegar itens */
     Scanner scannner = new Scanner(System.in);
-    
+       
     /*Método para cadastrar um cliente na lista de cliente do Estacionamento Bem*/
     /*retorna verdadeiro se conseguir cadastrar e falso se ele achar um cpf ja cadastrado*/
     public boolean cadastrarCliente(List<Cliente> clientes, Cliente novo)
@@ -103,33 +103,62 @@ public class Operacoes { /*Criamos essa classe para deixa o código do estaciona
     }
     
     /*Gerenciar veiculos do cliente a partir do documento*/
-    /*Retornar verdadeiro e falso*/
-    
+    /*Operacao de gerenciar os veiculos do Cliente, nele voce pode adicionar ou excluir veiculo*/
+    /*Ajuda*/
     public boolean gerenciarVeiculo(List<Cliente> clientes, String documento){
         boolean pertence = consultarCliente(clientes, documento);
 
-            if(pertence == true){
-                /*mensagem de interface para digitar a placa do carro a ser modificado*/
+            if(pertence == true){ 
+               /*se mudarmos a interface vai ter que mudar isso*/
+                int operacaoVeiculo = scannner.nextInt();
+                    
+                scannner.nextLine(); /*Para evitar problema de puxar o inteiro na proxima 
+                leitura*/
                 
                 for(Cliente i : clientes) {
-                     if (i.getCpf().equals(documento)) {  
-                         
-                         String placaVeiculo = scannner.nextLine();
-                        
-                         for(Veiculo j :  i.getVeiculos()) {
-                              if(j.getPlaca().equals(placaVeiculo)) {                                
-                                 /*Criar uma função para gerenciar veiculos*/ 
-                              }
-                         break;
-                        }
+                     if (i.getCpf().equals(documento)) {
+                    
+                        switch(operacaoVeiculo){
+                            case 1: /*para adicionar um veiculo*/
+                                /*mensagem de interface para digitar um novo veiculo*/
+                               
+                                String cor = scannner.nextLine();
+                                String descricao = scannner.nextLine();
+                                Cor color = new Cor(cor, descricao);
+
+                                String marca = scannner.nextLine();
+                                String modelo = scannner.nextLine();
+                                String tipoV = scannner.nextLine();
+                                Modelo.Tipo type = Modelo.Tipo.valueOf(tipoV.toUpperCase());
+                                Modelo model = new Modelo(marca, modelo, type);
+
+                                String placa = scannner.nextLine();    
+                                
+                                i.setVeiculoNaLista(placa, model, color);
+                            break;
+                            case 2: /*para excluir um veiculo*/
+                                /*mensagem de interface para excluir um veiculo*/
+                                
+                                 String placaExcluir = scannner.nextLine(); 
+                                 
+                                for(Veiculo item : i.getVeiculos())
+                                {
+                                    if(item.getPlaca().equals(placaExcluir)){
+                                        i.getVeiculos().remove(item);                                       
+                                        break;
+                                    }
+                                }     
+                            break;
+                            default: /*qualquer digito para voltar*/
+                            break;  
+                            }
                      }
-                    break;
                 }
-                return true;
-            } else {
-                return false;
-            }       
-    } 
+                    return true;
+                }else{
+                     return false;   
+                }
+    }           
     
     public void relatorioCliente(List<Cliente> clientes) {
         for (int i = 0; i < clientes.size(); i++) {
