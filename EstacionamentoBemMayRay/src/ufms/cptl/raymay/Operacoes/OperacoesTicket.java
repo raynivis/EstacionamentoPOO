@@ -17,8 +17,6 @@ import ufms.cptl.raymay.Interno.Vaga;
  */
 public class OperacoesTicket {
     
-    Scanner scanner = new Scanner(System.in);
-    
     /*metodo para estacionar o veiculo, consequentenmente criar um ticket, eh necessario ver se a vaga
     ja esta ocupada*/
     /*retorna verdade caso conseguir iniciar o ticket e falso se não conseguir pela vaga estar preenchida*/

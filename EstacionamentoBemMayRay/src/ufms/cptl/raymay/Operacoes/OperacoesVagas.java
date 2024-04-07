@@ -19,7 +19,7 @@ public class OperacoesVagas {
             }
         }
         vagas.add(novaVaga);
-        return true;
+       return true;
     }
 
     /*Retorna a vaga*/
@@ -74,6 +74,5 @@ public class OperacoesVagas {
                 System.out.println(v.toString());
             }
         }
-    }
-    
+    } 
 }

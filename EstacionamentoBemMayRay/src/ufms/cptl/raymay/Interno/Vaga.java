@@ -20,6 +20,17 @@ public class Vaga {
     private VagaStatus status;
     private Modelo.Tipo tipo;
 
+    public Vaga(int numero, String rua, VagaStatus status, Modelo.Tipo tipo) {
+        this.numero = numero;
+        this.rua = rua;
+        this.status = status;
+        this.tipo = tipo;
+    }
+
+    @Override
+    public String toString() {
+        return "Vaga{" + "numero=" + numero + ", rua=" + rua + ", status=" + status + ", tipo=" + tipo + '}';
+    }  
     
     public int getNumero() {
         return numero;
