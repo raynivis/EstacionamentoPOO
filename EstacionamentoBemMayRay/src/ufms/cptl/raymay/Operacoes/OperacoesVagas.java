@@ -37,7 +37,7 @@ public class OperacoesVagas {
         for(Vaga v : vagas) {
             if(v.getRua().equals(rua) && v.getNumero() == numero) {
                 vagas.remove(v);
-                /*interface para mostra que foi removido*/
+                /*interface para mostrar que foi removido*/
                 return true;
             }
         }
@@ -54,7 +54,7 @@ public class OperacoesVagas {
         return false;
     }
     /* se o ticket referente a vaga não tiver voltado ao sistema, para ser descartado, 
-    não há possibilidade de alterar a disponibilidade da vaga*/ /*precisa terminar*/
+    não há possibilidade de alterar a disponibilidade da vaga*/
     public boolean alterarDispinibilidade(List<Vaga> vagas, String rua, int numero, Vaga.VagaStatus novoStatus) {
             for(Vaga v : vagas){               
                 if(v.getRua().equals(rua) && v.getNumero() == numero) {
