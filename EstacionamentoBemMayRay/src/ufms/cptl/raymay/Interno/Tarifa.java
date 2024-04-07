@@ -17,15 +17,14 @@ public class Tarifa {
     private Date inicio;
     private double valorPrimeira;
     private double valorHoraSeguinte;
-    private DiaSemana diasemanas[];
-    /*Adicionar outro enum para preços do tipo de veiculo*/
-    
+    private DiaSemana diaSemanas[];
+    private double precoVeiculo[];
 
     public Tarifa(Date inicio, double valorPrimeira, double valorHoraSeguinte, DiaSemana[] diasemanas) {
         this.inicio = inicio;
         this.valorPrimeira = valorPrimeira;
         this.valorHoraSeguinte = valorHoraSeguinte;
-        this.diasemanas = diasemanas;
+        this.diaSemanas = diasemanas;
     }
 
     public Date getInicio() {
@@ -51,7 +50,14 @@ public class Tarifa {
     public void setValorHoraSeguinte(double valorHoraSeguinte) {
         this.valorHoraSeguinte = valorHoraSeguinte;
     }
-    
-    
-    
+
+    public double[] getPrecoVeiculo() {
+        return precoVeiculo;
+    }
+
+    public void setPrecoVeiculo(double[] precoVeiculo) {
+        this.precoVeiculo = precoVeiculo;
+    }
+   
+     
 }

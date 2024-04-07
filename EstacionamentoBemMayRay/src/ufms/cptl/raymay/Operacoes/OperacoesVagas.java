@@ -44,17 +44,18 @@ public class OperacoesVagas {
         /*interface para mostra que não foi encontrado a vaga*/
         return false;
     }
-    public boolean editarVaga(List<Vaga> vagas, String rua, int numero) {
+    public boolean editarVaga(List<Vaga> vagas, String rua, int numero, String novaRua, int novoNumero) {
         for(Vaga v : vagas) {
             if(v.getRua().equals(rua) && v.getNumero() == numero) {
-                /*tem que terminar*/
+                v.setRua(novaRua);
+                v.setNumero(novoNumero);
                 return true;
             }
         }
         return false;
     }
     /* se o ticket referente a vaga não tiver voltado ao sistema, para ser descartado, 
-    não há possibilidade de alterar a disponibilidade da vaga*/
+    não há possibilidade de alterar a disponibilidade da vaga*/ 
     public boolean alterarDispinibilidade(List<Vaga> vagas, String rua, int numero, Vaga.VagaStatus novoStatus) {
             for(Vaga v : vagas){               
                 if(v.getRua().equals(rua) && v.getNumero() == numero) {

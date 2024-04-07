@@ -11,16 +11,42 @@ import java.util.Date;
  * @author ra
  */
 public class Ticket {
+ 
     private int codigo;
     private String status;
     private Date inicio;
     private Date fim;
-    private int codigoVaga;
+    private int numeroVaga;
+    private String ruaVaga;
     private String placaVeiOcupado;
-    private Tarifa tarifaAtual;
-
+    private Tarifa tarifaAtual;    
+    
+    public Ticket(int codigo, int numeroVaga, String ruaVaga, String placaVeiOcupado, Tarifa tarifaAtual) {
+        this.codigo = codigo;
+        this.numeroVaga = numeroVaga;
+        this.ruaVaga = ruaVaga;
+        this.placaVeiOcupado = placaVeiOcupado;
+        this.tarifaAtual = tarifaAtual;
+    }
+    
     public int getCodigo() {
         return codigo;
+    }
+
+    public int getNumeroVaga() {
+        return numeroVaga;
+    }
+
+    public void setNumeroVaga(int numeroVaga) {
+        this.numeroVaga = numeroVaga;
+    }
+
+    public String getRuaVaga() {
+        return ruaVaga;
+    }
+
+    public void setRuaVaga(String ruaVaga) {
+        this.ruaVaga = ruaVaga;
     }
 
     public void setCodigo(int codigo) {
@@ -51,14 +77,6 @@ public class Ticket {
         this.fim = fim;
     }
 
-    public int getCodigoVaga() {
-        return codigoVaga;
-    }
-
-    public void setCodigoVaga(int codigoVaga) {
-        this.codigoVaga = codigoVaga;
-    }
-
     public String getPlacaVeiOcupado() {
         return placaVeiOcupado;
     }
@@ -74,5 +92,6 @@ public class Ticket {
     public void setTarifaAtual(Tarifa tarifaAtual) {
         this.tarifaAtual = tarifaAtual;
     }
+
     
 }

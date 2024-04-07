@@ -19,7 +19,7 @@ import ufms.cptl.raymay.Externo.Automovel.Cor;
 public class OperacoesCliente { /*Criamos essa classe para deixa o código do estacionamento mais limpo*/
     
     /*Scanner para pegar itens */
-    Scanner scannner = new Scanner(System.in);
+    Scanner scanner = new Scanner(System.in);
        
     /*Método para cadastrar um cliente na lista de cliente do Estacionamento Bem*/
     /*retorna verdadeiro se conseguir cadastrar e falso se ele achar um cpf ja cadastrado*/
@@ -72,34 +72,20 @@ public class OperacoesCliente { /*Criamos essa classe para deixa o código do es
         if(pertence == true){
              for(Cliente i : clientes) {
                 if (i.getCpf().equals(documento)) {                   
-                    /*mensagem de interface para seleciona uma opcao para mudar de 1 a 2
-                    Escrever que para editar veiculos precisa ir na opcao de gerenciar veiculo*/
-                    int operacaoEditar = scannner.nextInt();
-                    
-                    scannner.nextLine(); /*Para evitar problema de puxar o inteiro na proxima 
-                    leitura*/
-                    
-                    switch(operacaoEditar){
-                        case 1: /*para mudar o nome*/
-                            /*mensagem de interface para digitar o novo nome*/
-                            String nomeNovo = scannner.nextLine();
-                            i.setNome(nomeNovo);
-                         break;
-                        case 2: /*para mudar o telefone*/
-                            /*mensagem de interface para digitar o novo telefone*/
-                            String telefoneNovo = scannner.nextLine();
-                            i.setTelefone(telefoneNovo);
-                         break;
-                        default: /*qualquer digito para voltar*/
-                        break;                                               
+                    /*Escrever que para editar veiculos precisa ir na opcao de gerenciar veiculo*/                                      
+                    String nomeNovo = scanner.nextLine();
+                    i.setNome(nomeNovo);
+                       
+                    /*mensagem de interface para digitar o novo telefone*/
+                    String telefoneNovo = scanner.nextLine();
+                    i.setTelefone(telefoneNovo);                                                                 
                     }
                     break;    
                 }
-            }
-            return true;
-        } else {
+             return true;
+            } else {
             return false;
-        }  
+            }
     }
     
     /*Gerenciar veiculos do cliente a partir do documento*/
@@ -110,36 +96,38 @@ public class OperacoesCliente { /*Criamos essa classe para deixa o código do es
 
             if(pertence == true){ 
                /*se mudarmos a interface vai ter que mudar isso*/
-                int operacaoVeiculo = scannner.nextInt();
+                int operacaoVeiculo = scanner.nextInt();
                     
-                scannner.nextLine(); /*Para evitar problema de puxar o inteiro na proxima 
+                scanner.nextLine(); /*Para evitar problema de puxar o inteiro na proxima 
                 leitura*/
                 
                 for(Cliente i : clientes) {
                      if (i.getCpf().equals(documento)) {
-                    
+                         System.out.println("1 - Adicionar Veiculo");
+                         System.out.println("2 - Excluir Veiculo");                         
                         switch(operacaoVeiculo){
                             case 1: /*para adicionar um veiculo*/
                                 /*mensagem de interface para digitar um novo veiculo*/
-                               
-                                String cor = scannner.nextLine();
-                                String descricao = scannner.nextLine();
+                                System.out.println("Digite a Cor, Descricao, Marca, Modelo, ");
+                                System.out.println("Tipo do Veiculo(MOTOCICLETA, MEDIOPORTE, GRANDEPORTE) e a Placa");
+                                String cor = scanner.nextLine();
+                                String descricao = scanner.nextLine();
                                 Cor color = new Cor(cor, descricao);
 
-                                String marca = scannner.nextLine();
-                                String modelo = scannner.nextLine();
-                                String tipoV = scannner.nextLine();
+                                String marca = scanner.nextLine();
+                                String modelo = scanner.nextLine();
+                                String tipoV = scanner.nextLine();
                                 Modelo.Tipo type = Modelo.Tipo.valueOf(tipoV.toUpperCase());
                                 Modelo model = new Modelo(marca, modelo, type);
 
-                                String placa = scannner.nextLine();    
+                                String placa = scanner.nextLine();    
                                 
                                 i.setVeiculoNaLista(placa, model, color);
                             break;
                             case 2: /*para excluir um veiculo*/
                                 /*mensagem de interface para excluir um veiculo*/
-                                
-                                 String placaExcluir = scannner.nextLine(); 
+                                System.out.println("Digite a placa para excluir:");
+                                 String placaExcluir = scanner.nextLine(); 
                                  
                                 for(Veiculo item : i.getVeiculos())
                                 {
@@ -161,9 +149,6 @@ public class OperacoesCliente { /*Criamos essa classe para deixa o código do es
     }           
     
     public void relatorioCliente(List<Cliente> clientes) {
-        for (int i = 0; i < clientes.size(); i++) {
+        for (int i = 0; i <= clientes.size(); i++) {
             System.out.println(clientes.get(i).toString()); 
-         }      
-    }   
-            
-}
+         

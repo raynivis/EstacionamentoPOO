@@ -4,6 +4,8 @@
  */
 package ufms.cptl.raymay.Interno;
 
+import ufms.cptl.raymay.Externo.Automovel.Modelo;
+
 /**
  *
  * @author ra
@@ -16,8 +18,9 @@ public class Vaga {
     private int numero;
     private String rua;
     private VagaStatus status;
-    /*Adicionar o tipo de veiculo na vaga*/
+    private Modelo.Tipo tipo;
 
+    
     public int getNumero() {
         return numero;
     }
@@ -41,6 +44,13 @@ public class Vaga {
     public void setStatus(VagaStatus status) {
         this.status = status;
     }
-    
+
+    public Modelo.Tipo getTipo() {
+        return tipo;
+    }
+
+    public void setTipo(Modelo.Tipo tipo) {
+        this.tipo = tipo;
+    }
 
 }
