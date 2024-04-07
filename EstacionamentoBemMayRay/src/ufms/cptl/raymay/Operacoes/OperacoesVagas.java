@@ -37,7 +37,7 @@ public class OperacoesVagas {
         for(Vaga v : vagas) {
             if(v.getRua().equals(rua) && v.getNumero() == numero) {
                 vagas.remove(v);
-                /*interface para mostra que foi removido*/
+                /*interface para mostrar que foi removido*/
                 return true;
             }
         }
