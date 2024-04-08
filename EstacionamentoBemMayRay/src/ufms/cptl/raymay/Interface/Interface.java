@@ -11,6 +11,7 @@ import ufms.cptl.raymay.Externo.Individuo.Cliente;
 import ufms.cptl.raymay.Interno.Tarifa;
 import ufms.cptl.raymay.Interno.Ticket;
 import ufms.cptl.raymay.Interno.Vaga;
+import ufms.cptl.raymay.Interno.Vaga.VagaStatus;
 import ufms.cptl.raymay.Operacoes.OperacoesVagas;
 
 /**
@@ -31,7 +32,7 @@ public class Interface {
             System.out.println("3 - Gerenciar estacionamento");
             System.out.println("4 - Cadastros gerais");
             System.out.println("5 - Consultar total faturado em um periodo");
-            System.out.println("6 - sair do programa");
+            System.out.println("6 - Sair do programa");
             opcao = op.nextInt();
             op.nextLine();
             
@@ -104,7 +105,7 @@ public class Interface {
             switch (opcao2) {
                 case 1:
                     /*cadastrar vaga*/
-                    System.out.println("Digite a Rua, Numero e Tipo de Vaga(MOTOCICLETA, MEDIOPORTE, GRANDEPORTE ): ");
+                    System.out.println("Digite a Rua, Numero e Tipo de Vaga(MOTOCICLETA, MEDIOPORTE, GRANDEPORTE):");
                     String rua = op.nextLine();                   
                     
                     int numero = op.nextInt();
@@ -119,23 +120,69 @@ public class Interface {
                     Vaga novaVaga = new Vaga(numero, rua, vagastatus, tipoV);
                     
                     if (vag.cadastrarVaga(vagas, novaVaga, rua, numero) == true){
-                        System.out.println("Vaga cadastrada com Sucesso!!");
+                        System.out.println("Vaga cadastrada com Sucesso!");
                     }
                     else{
                         System.out.println("Vaga ja existente!");
                     }   
-                break;    
+                break;  
+                
                 case 2:
                     /*consultar vaga por numero*/
+                    System.out.println("Insira o numero da vaga a ser consultada:");
+                    numero = op.nextInt();
+                    op.nextLine();
+                    if(vag.consultarVaga(vagas, numero) == null){
+                        System.out.println("Vaga nao existente!");
+                    }
                 break;    
+    
                 case 3:
                     /*excluir vaga*/
-                break;    
+                    System.out.println("Insira a rua e o numero da vaga a ser excluida:");
+                    rua = op.nextLine();
+                    numero = op.nextInt();
+                    op.nextLine();
+                    if(vag.excluirVaga(vagas, rua, numero) == true) {
+                        System.out.println("Vaga rua:" + rua + " numero:" + numero + " excluida com sucesso!");
+                    }
+                break;  
+                
                 case 4:
                     /*editar vaga*/
-                break;    
+                    System.out.println("Insira a rua e o numero da vaga a ser editada:");
+                    rua = op.nextLine();
+                    numero = op.nextInt();
+                    op.nextLine();
+                    
+                    System.out.println("Agora insira a nova rua, o novo numero e o novo tipo da vaga (MOTOCICLETA, MEDIOPORTE, GRANDEPORTE): ");
+                    String ruaNova = op.nextLine();
+                    int numeroNovo = op.nextInt();
+                    op.nextLine();
+                    
+                    tipo = op.nextLine();
+                    Modelo.Tipo tipoN = Modelo.Tipo.valueOf(tipo.toUpperCase());
+                    if(vag.editarVaga(vagas, rua, numero, ruaNova, numeroNovo, tipoN) == true) {
+                        System.out.println("Vaga editada com sucesso!");
+                    }
+                    else {
+                        System.out.println("Vaga nao existente!");
+                    }
+                break;  
+                
                 case 5:
-                    /*alterar disp da vaga*/
+                    /*alterar disponibilidade da vaga*/
+                    System.out.println("Insira a rua, numero e o novo status da vaga (DISPONIVEL, OCUPADA ou INDISPONIVEL)");
+                    rua = op.nextLine();
+                    numero = op.nextInt();
+                    op.nextLine();
+                    
+                    String status = op.nextLine();
+                    Vaga.VagaStatus statusV = Vaga.VagaStatus.valueOf(status.toUpperCase());
+                    
+                    if(vag.alterarDispinibilidade(vagas, rua, numero, statusV) == true){
+                        System.out.println("Disponibilidade da vaga alterada com sucesso!");
+                    }
                 break;    
             }    
         }while(opcao2 != 6);
