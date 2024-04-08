@@ -85,7 +85,7 @@ exemplo, usar uma interface gráfica, as classes de negócio não precisam ser a
 irá atuar como uma classe gerente, fazendo a interligação das classes de negócio com a classe de interface. Em um
 projeto mais profissional, provavelmente existiriam várias interfaces e classes gerente.
 
-# Requisitos
+Requisitos
 
 - Deve-se priorizar a declaração de todos os atributos com acesso privativo. Atributos que forem declarados
     com outros modificadores de acesso deverão ter breves comentários justificando a escolha.
@@ -109,8 +109,8 @@ projeto mais profissional, provavelmente existiriam várias interfaces e classes
 
 //Este método calcula a média
 public double calculaMedia()
-```
-```
+
+
 Considere descrever de forma mais específica:
 ```
 ```
