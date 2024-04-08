@@ -106,7 +106,7 @@ projeto mais profissional, provavelmente existiriam várias interfaces e classes
     estar presentes no código-fonte.
 - Não serão contabilizados na nota comentários óbvios como:
 
-```
+
 //Este método calcula a média
 public double calculaMedia()
 ```
