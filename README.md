@@ -7,12 +7,12 @@ Professor(a): Humberto Lidio Antonelli
 
 # Descrição geral
 
-```
+
 Bruno e seu pai compraram um terreno e irão inaugurar um estacionamento. O estacionamento “Estaciona Bem”
 necessita de um sistema para manter e gerenciar informações sobre as vagas disponíveis/ocupadas, bem como de
 seus clientes e veículos. Para isso, a irmã de Bruno elaborou o seguinte projeto (Diagrama de Classes) básico:
-```
-```
+
+
 No “Estaciona Bem”, há diversos tipos de vagas, as quais podem ser utilizadas por determinado tipo de veículo,
 desde que estejam disponíveis no momento que o cliente chegar parar estacionar. Portanto, o ticket a ser gerado
 deve conter os dados de quando o veículo entrar no estacionamento com a hora de entrada gerada automaticamente,
@@ -28,15 +28,16 @@ A classe “Estacionamento” deverá conter os atributos para armazenamento das
 serão utilizados dentro do sistema. Recomenda-se que as funcionalidades estejam relacionadas a classes específicas
 de acordo com o contexto de cada classe. Além disso, o diagrama inicial deve ser complementado com os atributos
 e métodos utilizados. Outras classes podem ser incluídas, mas a estrutura inicial deve ser mantida.
-```
+
+
 # Interface de interação do sistema
 
-```
+
 Criar uma classe específica que contenha métodos para geração dos menus, bem como gerenciar a forma de entrada
 de dados no sistema pelo usuário. O gerenciamento da interface pode ser feito em mais de uma classe, caso seja
 necessário.
 O acesso às funcionalidades do sistema se dará pelo menu principal:
-```
+
 ```
 1 - Gerenciar clientes
 2 - Gerenciar vagas
