@@ -11,6 +11,7 @@ import ufms.cptl.raymay.Externo.Automovel.Modelo;
  * @author ra
  */
 public class Vaga {
+
     public enum VagaStatus {
         DISPONIVEL, OCUPADA, INDISPONIVEL
     }
@@ -18,7 +19,7 @@ public class Vaga {
     private int numero;
     private String rua;
     private VagaStatus status;
-    private Modelo.Tipo tipo;
+    public Modelo.Tipo tipo;
 
     public Vaga(int numero, String rua, VagaStatus status, Modelo.Tipo tipo) {
         this.numero = numero;
@@ -29,7 +30,7 @@ public class Vaga {
 
     @Override
     public String toString() {
-        return "Vaga{" + "numero=" + numero + ", rua=" + rua + ", status=" + status + ", tipo=" + tipo + '}';
+        return ("Vaga:\n rua: " + rua + "\n numero: " + numero + "\n status: " + status + "\n tipo: " + tipo);
     }  
     
     public int getNumero() {

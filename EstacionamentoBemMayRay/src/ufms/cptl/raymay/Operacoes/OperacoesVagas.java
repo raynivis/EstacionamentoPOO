@@ -4,6 +4,7 @@
  */
 package ufms.cptl.raymay.Operacoes;
 import java.util.List;
+import ufms.cptl.raymay.Externo.Automovel.Modelo;
 import ufms.cptl.raymay.Interno.Vaga;
 /**
  *
@@ -23,9 +24,9 @@ public class OperacoesVagas {
     }
 
     /*Retorna a vaga*/
-    public Vaga consultarVaga(List<Vaga> vagas, String rua, int numero) {
+    public Vaga consultarVaga(List<Vaga> vagas, int numero) {
         for(Vaga v : vagas) {
-            if(v.getRua().equals(rua) && v.getNumero() == numero) {
+            if(v.getNumero() == numero) {
                 System.out.println(v.toString());
                 return v;
             }
@@ -36,19 +37,25 @@ public class OperacoesVagas {
     public boolean excluirVaga(List<Vaga> vagas, String rua, int numero) {
         for(Vaga v : vagas) {
             if(v.getRua().equals(rua) && v.getNumero() == numero) {
-                vagas.remove(v);
-                /*interface para mostrar que foi removido*/
-                return true;
-            }
+                if(v.getStatus() != Vaga.VagaStatus.OCUPADA) {
+                    vagas.remove(v);
+                    /*interface para mostrar que foi removido*/
+                    return true;
+                }
+                System.out.println("A vaga nao pode ser excluida pois esta sendo usada (OCUPADA)!");
+                return false;
+            }  
         }
         /*interface para mostra que não foi encontrado a vaga*/
+        System.out.println("Vaga nao existente!");
         return false;
     }
-    public boolean editarVaga(List<Vaga> vagas, String rua, int numero, String novaRua, int novoNumero) {
+    public boolean editarVaga(List<Vaga> vagas, String rua, int numero, String novaRua, int novoNumero, Modelo.Tipo novoTipo) {
         for(Vaga v : vagas) {
             if(v.getRua().equals(rua) && v.getNumero() == numero) {
                 v.setRua(novaRua);
                 v.setNumero(novoNumero);
+                v.setTipo(novoTipo);
                 return true;
             }
         }
@@ -57,16 +64,18 @@ public class OperacoesVagas {
     /* se o ticket referente a vaga não tiver voltado ao sistema, para ser descartado, 
     não há possibilidade de alterar a disponibilidade da vaga*/ 
     public boolean alterarDispinibilidade(List<Vaga> vagas, String rua, int numero, Vaga.VagaStatus novoStatus) {
-            for(Vaga v : vagas){               
-                if(v.getRua().equals(rua) && v.getNumero() == numero) {
-                    if(v.getStatus() != Vaga.VagaStatus.OCUPADA ){                   
-                        v.setStatus(novoStatus);
-                        return true;
-                    }
-                    return false;
+        for(Vaga v : vagas){
+            if(v.getRua().equals(rua) && v.getNumero() == numero) {
+                if(v.getStatus() != Vaga.VagaStatus.OCUPADA){                   
+                    v.setStatus(novoStatus);
+                    return true;
                 }
-            }
-            return false;
+                System.out.println("A disponibilidade da vaga nao pode ser alterada pois o Ticket nao foi devolvido (OCUPADA)");
+                return false;
+            }          
+        }
+        System.out.println("Vaga nao existente!");
+        return false;
     }
     public void listarVagasDisponiveis(List<Vaga> vagas) {
         for(Vaga v : vagas) {
