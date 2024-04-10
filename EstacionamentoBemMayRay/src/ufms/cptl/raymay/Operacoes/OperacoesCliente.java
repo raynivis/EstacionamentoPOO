@@ -20,33 +20,17 @@ public class OperacoesCliente { /*Criamos essa classe para deixa o código do es
     
     /*Scanner para pegar itens */
     Scanner scanner = new Scanner(System.in);
-       
-    /*Método para cadastrar um cliente na lista de cliente do Estacionamento Bem*/
-    /*retorna verdadeiro se conseguir cadastrar e falso se ele achar um cpf ja cadastrado*/
-    public boolean cadastrarCliente(List<Cliente> clientes, Cliente novo)
-    {
-        String cpfnovo = novo.getCpf();
-        
-        for(Cliente i : clientes) {
-            if (i.getCpf().equals(cpfnovo)) {
-                return false;
-            }
-        }
-        clientes.add(novo);
-        return true;
-    }
     
     /*Procura um Cliente na lista de Clientes e mostra na tela a suas informaçoes */
     /*retorna verdadeiro se conseguir encontrar o cliente e falso se o cpf do cliente não 
     estar cadastrado*/
-    public boolean consultarCliente(List<Cliente> clientes, String documento){
+    public Cliente verificarCliente(List<Cliente> clientes, String documento){
         for(Cliente i : clientes) {
             if (i.getCpf().equals(documento)) {
-                System.out.println(i.toString());
-                return true;
+                return i;
             }
         }
-        return false;
+        return null;
     }
     
     /*Excluir o Cliente da lista de Clientes pelo CPF // talvez fazer de outras formas
@@ -65,95 +49,62 @@ public class OperacoesCliente { /*Criamos essa classe para deixa o código do es
     
     /*Editar dados dos clientes (não é recomendavel mudar o cpf, pelo menos em alguns sistemas) e 
     não devemos gerenciar os veiculos do cliente, pois tem outro metodo para isso*/
-    /*retorna verdadeira se achar o cliente e retorna falso se não achar o cliente*/
-    public boolean editarCliente(List<Cliente> clientes, String documento) {
-        boolean pertence = consultarCliente(clientes, documento);
-        
-        if(pertence == true){
-             for(Cliente i : clientes) {
-                if (i.getCpf().equals(documento)) {                   
-                    /*Escrever que para editar veiculos precisa ir na opcao de gerenciar veiculo*/                                      
-                    String nomeNovo = scanner.nextLine();
-                    i.setNome(nomeNovo);
-                       
-                    /*mensagem de interface para digitar o novo telefone*/
-                    String telefoneNovo = scanner.nextLine();
-                    i.setTelefone(telefoneNovo);                                                                 
-                    }
-                    scanner.close();
-                    break;    
-                }
-             return true;
-            } else {
-            return false;
-            }
+    /*retorna vazio pois nao eh necessario nenhuma verificacao*/
+    public void editarCliente(Cliente editarC, String nomeNovo, String telefoneNovo) {                                                        
+        editarC.setNome(nomeNovo);                                                         
+        editarC.setTelefone(telefoneNovo);                                                                                           
     }
     
     /*Gerenciar veiculos do cliente a partir do documento*/
     /*Operacao de gerenciar os veiculos do Cliente, nele voce pode adicionar ou excluir veiculo*/
-    /*Ajuda*/
-    public boolean gerenciarVeiculo(List<Cliente> clientes, String documento){
-        boolean pertence = consultarCliente(clientes, documento);
-
-            if(pertence == true){ 
-               /*se mudarmos a interface vai ter que mudar isso*/
-                int operacaoVeiculo = scanner.nextInt();
-                    
-                scanner.nextLine(); /*Para evitar problema de puxar o inteiro na proxima 
-                leitura*/
-                
-                for(Cliente i : clientes) {
-                     if (i.getCpf().equals(documento)) {
-                         System.out.println("1 - Adicionar Veiculo");
-                         System.out.println("2 - Excluir Veiculo");                         
-                        switch(operacaoVeiculo){
-                            case 1: /*para adicionar um veiculo*/
-                                /*mensagem de interface para digitar um novo veiculo*/
-                                System.out.println("Digite a Cor, Descricao, Marca, Modelo, ");
-                                System.out.println("Tipo do Veiculo(MOTOCICLETA, MEDIOPORTE, GRANDEPORTE) e a Placa");
-                                String cor = scanner.nextLine();
-                                String descricao = scanner.nextLine();
-                                Cor color = new Cor(cor, descricao);
-
-                                String marca = scanner.nextLine();
-                                String modelo = scanner.nextLine();
-                                String tipoV = scanner.nextLine();
-                                Modelo.Tipo type = Modelo.Tipo.valueOf(tipoV.toUpperCase());
-                                Modelo model = new Modelo(marca, modelo, type);
-
-                                String placa = scanner.nextLine();    
-                                
-                                i.setVeiculoNaLista(placa, model, color);
-                            break;
-                            case 2: /*para excluir um veiculo*/
-                                /*mensagem de interface para excluir um veiculo*/
-                                System.out.println("Digite a placa para excluir:");
-                                 String placaExcluir = scanner.nextLine(); 
-                                 
-                                for(Veiculo item : i.getVeiculos())
-                                {
-                                    if(item.getPlaca().equals(placaExcluir)){
-                                        i.getVeiculos().remove(item);                                       
-                                        break;
-                                    }
-                                }     
-                            break;
-                            default: /*qualquer digito para voltar*/
-                            break;  
-                            }
-                        scanner.close();
-                     }
-                }
-                    return true;
-                }else{
-                     return false;   
-                }
-    }           
+    public Veiculo verificarVeiculo(List<Cliente> clientes, String placa){
+        for(Cliente c : clientes) {
+            for(Veiculo v : c.getVeiculos() ) {
+                    if(v.getPlaca().equals(placa)) {                                               
+                            return v;
+                    }
+            }
+        }
+        return null;
+    }
+    
+    public boolean apagaVeiculo(List<Cliente> clientes, String placa){
+        for(Cliente c : clientes) {
+            for(Veiculo v : c.getVeiculos() ) {
+                    if(v.getPlaca().equals(placa)) {                                               
+                            c.getVeiculos().remove(v);
+                            return true;
+                    }
+            }
+        }
+        return false;
+    }
+    
     
     public void relatorioCliente(List<Cliente> clientes) {
-        for (int i = 0; i <= clientes.size(); i++) {
-            System.out.println(clientes.get(i).toString()); 
+        for(Cliente c : clientes) {
+            System.out.println(c.toString());
+            System.out.println("Veiculos:");
+            for(Veiculo v : c.getVeiculos()){
+                System.out.println("        Placa: " + v.getPlaca());
+            }
+            System.out.println("///////////////////////////////////////////////////");
         }
+    }
+    public Cliente relatorioCliente(List<Cliente> clientes, String documento) {
+        for(Cliente c : clientes) {
+            if(c.getCpf().equals(documento)) {
+                System.out.println("///////////////////////////////////////////////////");
+                System.out.println(c.toString());
+                System.out.println("Veiculos:");
+                for(Veiculo v : c.getVeiculos()){
+                    System.out.println("        Placa: " + v.getPlaca());
+                }
+                System.out.println("///////////////////////////////////////////////////");
+                return c;
+            }
+        }
+        return null;
     }
 }    
          

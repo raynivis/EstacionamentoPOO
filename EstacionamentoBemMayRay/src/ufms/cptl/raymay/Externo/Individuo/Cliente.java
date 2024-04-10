@@ -20,19 +20,24 @@ public class Cliente {
 
     /*PARA CADASTRAR O CLIENTE É NECESSARIO CADASTRAR PELO MENOS UM VEICULO NA LISTA DE CARROS
     ESTES CONSTRUTOR É INSTACIADO NO CADASTRO DE QUALQUER CLIENTE*/
-    public Cliente(String nome, String cpf, String telefone, String placa, Modelo model, Cor color) {
+    public Cliente(String nome, String cpf, String telefone, List<Veiculo> veiculos) {
         this.nome = nome;
         this.cpf = cpf;
         this.telefone = telefone;
-        this.veiculos.add(new Veiculo(placa, model, color));
+        this.veiculos = veiculos;
+        
     }
     
     /*ADICIONAR UM NOVO VEICULO NA LISTA DE VEICULOS DO CLIENTE*/
-    public void setVeiculoNaLista(String placa, Modelo model, Cor color)
+    public void setVeiculoNaLista(Veiculo novoVeiculo)
     {
-        this.veiculos.add(new Veiculo(placa, model, color));
+        this.veiculos.add(novoVeiculo);
     }
 
+    public void setVeiculos(List<Veiculo> veiculos) {
+        this.veiculos = veiculos;
+    }
+    
     public List<Veiculo> getVeiculos() {
         return veiculos;
     }
@@ -63,7 +68,7 @@ public class Cliente {
 
     @Override /*Java faz isso de precaucao?*/
     public String toString() {
-        return "Cliente{" + "nome=" + nome + ", cpf=" + cpf + ", telefone=" + telefone + ", veiculos=" + veiculos + '}';
+        return "Cliente: " + nome + "\nCPF: " + cpf + ",\nTelefone: " + telefone;
     } 
     
     
