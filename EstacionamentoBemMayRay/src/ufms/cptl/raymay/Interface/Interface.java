@@ -102,21 +102,10 @@ public class Interface {
                     for(Ticket t : tickets) {
                         if(t.getCodigo() == codigo) 
                             t.setFim(dateTime);
-                    }
-                    System.out.println("Digite a data de inicio tarifa 2:");
-                    Tarifa taris = tarifas.get(1);
-                    data = op.nextLine();
-                    dateTime = LocalDateTime.parse(data, dataBonitinha);
-                    taris.setInicio(dateTime);
-                    
-                    System.out.println("Digite a data de inicio tarifa 3:");
-                    taris = tarifas.get(2);
-                    data = op.nextLine();
-                    dateTime = LocalDateTime.parse(data, dataBonitinha);
-                    taris.setInicio(dateTime);
-                    
+                    }                                      
                     for(Ticket t : tickets) {
                         if(t.getCodigo() == codigo) {
+                            System.out.println("Data inicial: " +t.getInicio());
                             double lucro = tic.totalFaturadoTicket(t, vagas, tarifas);
                             System.out.println(lucro);
                         }                           

@@ -99,24 +99,11 @@ public class OperacoesTicket {
         
         Tarifa tarifa  = ticket.getTarifaAtual();
         
-        total = tarifa.getValorPrimeira(ticketV, semanaToEnum(diaS));
-        
-        for(Tarifa t : tarifas) {
-            if(t.getInicio().isAfter(diaS) && t.getInicio().isBefore(diaS.plusHours(1))) {
-                /*se foi iniciada entre diaS e diaS + 1*/
-                tarifa = t;
-            }
-        }
+        total = tarifa.getValorPrimeira(ticketV, semanaToEnum(diaS));      
         
         diaS = diaS.plusHours(1);
         
         while(diaS.isEqual(ticket.getFim()) != true && diaS.isAfter(ticket.getFim()) != true){
-            for(Tarifa t : tarifas) {
-                if(t.getInicio().isAfter(diaS) && t.getInicio().isBefore(diaS.plusHours(1))) {
-                    /*se foi iniciada entre diaS e diaS + 1*/
-                    tarifa = t;
-                }
-            }
             total = total + tarifa.getValorHoraSeguinte(ticketV, semanaToEnum(diaS));
             diaS = diaS.plusHours(1);
         }
