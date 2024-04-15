@@ -23,10 +23,10 @@ public class Estacionamento {
         List<Cliente> clientes = new ArrayList<>();
         List<Vaga> vagas = new ArrayList<>();
         List<Ticket> tickets = new ArrayList<>();
-        Tarifa tarifaAtual;
-        tarifaAtual = null; 
+        List<Tarifa> tarifas = new  ArrayList<>();
         
-        inter.primeirasOpcoes(clientes, vagas, tickets, tarifaAtual);   
+        
+        inter.primeirasOpcoes(clientes, vagas, tickets, tarifas);   
         
    }
 }

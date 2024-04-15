@@ -24,10 +24,9 @@ public class OperacoesVagas {
     }
 
     /*Retorna a vaga*/
-    public Vaga consultarVaga(List<Vaga> vagas, int numero) {
+    public Vaga consultarVaga(List<Vaga> vagas, int numero, String rua) {
         for(Vaga v : vagas) {
-            if(v.getNumero() == numero) {
-                System.out.println(v.toString());
+            if(v.getNumero() == numero && v.getRua().equals(rua)) {              
                 return v;
             }
         }

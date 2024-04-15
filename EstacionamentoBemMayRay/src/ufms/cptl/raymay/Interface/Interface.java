@@ -4,6 +4,8 @@
  */
 package ufms.cptl.raymay.Interface;
 
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
@@ -17,6 +19,7 @@ import ufms.cptl.raymay.Interno.Vaga.VagaStatus;
 import ufms.cptl.raymay.Operacoes.OperacoesCliente;
 import ufms.cptl.raymay.Operacoes.OperacoesVagas;
 import ufms.cptl.raymay.Externo.Automovel.Veiculo;
+import ufms.cptl.raymay.Operacoes.OperacoesTicket;
 
 /**
  *
@@ -26,8 +29,10 @@ public class Interface {
     
     OperacoesVagas vag = new OperacoesVagas(); 
     OperacoesCliente clie = new OperacoesCliente();
+    OperacoesTicket tic = new OperacoesTicket();
     byte opcao;
     byte opcao2;
+    byte opcao3;
     Scanner op = new Scanner(System.in);
     
     public Veiculo receberVeiculo(List<Cliente> clientes, Cliente cliente) {
@@ -65,7 +70,7 @@ public class Interface {
         return novoV;
     }
 
-    public void primeirasOpcoes(List<Cliente> clientes, List<Vaga> vagas, List<Ticket> tickets, Tarifa tarifa) {  
+    public void primeirasOpcoes(List<Cliente> clientes, List<Vaga> vagas, List<Ticket> tickets, List<Tarifa> tarifas) {  
         do {
             System.out.println("1 - Gerenciar cliente");
             System.out.println("2 - Gerenciar vagas");
@@ -78,13 +83,13 @@ public class Interface {
             
             switch (opcao) {
                 case 1:
-                    opcoesCliente(clientes, vagas, tickets, tarifa);
+                    opcoesCliente(clientes, vagas, tickets, tarifas);
                 break;    
                 case 2:
-                    opcoesVaga(clientes, vagas, tickets, tarifa);
+                    opcoesVaga(clientes, vagas, tickets, tarifas);
                 break;
                 case 3:
-                    opcoesEstacionamento(clientes, vagas, tickets, tarifa);
+                    opcoesEstacionamento(clientes, vagas, tickets, tarifas);
                 break;
                 case 4:  
                 break;    
@@ -97,7 +102,7 @@ public class Interface {
         op.close();
     }
     
-    public void opcoesCliente(List<Cliente> clientes, List<Vaga> vagas, List<Ticket> tickets, Tarifa tarifa) {       
+    public void opcoesCliente(List<Cliente> clientes, List<Vaga> vagas, List<Ticket> tickets, List<Tarifa> tarifas) {       
         do{
             System.out.println("1 - Cadastrar");
             System.out.println("2 - Consultar por documento");
@@ -173,58 +178,58 @@ public class Interface {
                         /*gerenciar veiculos do cliente*/
                         System.out.println("Digite o CPF do Cliente que deseja gerenciar os veiculos:");
                         cpf = op.nextLine();
-                        if(clie.relatorioCliente(clientes, cpf) == null) {
+                        Cliente operador = clie.verificarCliente(clientes, cpf);
+                        if(operador == null) {
                            System.out.println("\nErro: Cliente nao econtrado!!\n");
                             break; 
                         } 
-                        Cliente operador = clie.verificarCliente(clientes, cpf);
-                        System.out.println("1 - Cadastrar novo veiculo");
-                        System.out.println("2 - Excluir Veiculo");
-                        System.out.println("3 - Editar Veiculo");
-                        System.out.println("4 - Voltar");
-                        byte opcao3 = op.nextByte();
-                        op.nextLine();
-                        switch(opcao3){
-                            case 1: /*Adicionar um veiculo*/
-                                Veiculo veiculoAdicional = receberVeiculo(clientes, operador); 
-                                if(veiculoAdicional != null) {
-                                    operador.setVeiculoNaLista(veiculoAdicional);
-                                    System.out.println("\nVeiculo Cadastrado com sucesso!!\n");
-                                }
-                                else {
-                                    System.out.println("\nErro: Placa ja registrada no sistema!\n");
-                                }
-                            break;
-                            case 2: /*Remover um veiculo*/
-                                System.out.println("Digite a Placa:");
-                                String placa = op.nextLine();
-                                if(clie.apagaVeiculo(clientes, placa) == true) {
-                                    System.out.println("\nVeiculo excluido!!\n");
-                                } else {
-                                    System.out.println("\nVeiculo nao encontrado!\n");
-                                }
-                            break;
-                            case 3: /*Editar um veiculo*/
-                                System.out.println("Digite a Placa:");
-                                placa = op.nextLine();
-                                if(clie.verificarVeiculo(clientes, placa) != null) {                                   
-                                    Veiculo auxVeiculo = clie.verificarVeiculo(clientes, placa);
-                                    
-                                    System.out.println("Digita a nova Cor e Descricao:");
-                                    String cor = op.nextLine();
-                                    String descricao = op.nextLine();
-                                    Cor ediColor = new Cor(cor, descricao);
-                                    
-                                    auxVeiculo.setColor(ediColor);
-                                    
-                                    System.out.println("\nVeiculo editado com sucesso!!\n");
-                                } else {
-                                    System.out.println("\nVeiculo nao encontrado\n");
-                                }
-                            break;
-                            case 4: /*Voltar*/                           
-                            break;
-                        }                       
+                        do{
+                            System.out.println("1 - Cadastrar novo veiculo");
+                            System.out.println("2 - Excluir Veiculo");
+                            System.out.println("3 - Editar Veiculo");
+                            System.out.println("4 - Voltar");
+                            opcao3 = op.nextByte();
+                            op.nextLine();
+                            switch(opcao3){
+                                case 1: /*Adicionar um veiculo*/
+                                    Veiculo veiculoAdicional = receberVeiculo(clientes, operador); 
+                                    if(veiculoAdicional != null) {
+                                        operador.setVeiculoNaLista(veiculoAdicional);
+                                        System.out.println("\nVeiculo Cadastrado com sucesso!!\n");
+                                    }
+                                    else {
+                                        System.out.println("\nErro: Placa ja registrada no sistema!\n");
+                                    }
+                                break;
+                                case 2: /*Remover um veiculo*/
+                                    System.out.println("Digite a Placa:");
+                                    String placa = op.nextLine();
+                                    if(clie.apagaVeiculo(clientes, placa) == true) {
+                                        System.out.println("\nVeiculo excluido!!\n");
+                                    } else {
+                                        System.out.println("\nVeiculo nao encontrado!\n");
+                                    }
+                                break;
+                                case 3: /*Editar um veiculo*/
+                                    System.out.println("Digite a Placa:");
+                                    placa = op.nextLine();
+                                    if(clie.verificarVeiculo(clientes, placa) != null) {                                   
+                                        Veiculo auxVeiculo = clie.verificarVeiculo(clientes, placa);
+
+                                        System.out.println("Digita a nova Cor e Descricao:");
+                                        String cor = op.nextLine();
+                                        String descricao = op.nextLine();
+                                        Cor ediColor = new Cor(cor, descricao);
+
+                                        auxVeiculo.setColor(ediColor);
+
+                                        System.out.println("\nVeiculo editado com sucesso!!\n");
+                                    } else {
+                                        System.out.println("\nVeiculo nao encontrado\n");
+                                    }
+                                break;
+                            }
+                        }while(opcao3 != 4);
                     break;    
                     case 6: 
                         /*listar todos os cadastros do(s)? cliente*/
@@ -235,7 +240,7 @@ public class Interface {
         
     }
     
-    public  void opcoesVaga(List<Cliente> clientes, List<Vaga> vagas, List<Ticket> tickets, Tarifa tarifa) {      
+    public  void opcoesVaga(List<Cliente> clientes, List<Vaga> vagas, List<Ticket> tickets, List<Tarifa> tarifas) {      
         do{
             System.out.println("1 - Cadastrar");
             System.out.println("2 - Consultar por numero");
@@ -263,22 +268,26 @@ public class Interface {
                     Vaga novaVaga = new Vaga(numero, rua, vagastatus, tipoV);
                     
                     if (vag.cadastrarVaga(vagas, novaVaga, rua, numero) == true){
-                        System.out.println("Vaga cadastrada com Sucesso!");
+                        System.out.println("\nVaga cadastrada com Sucesso!\n");
                     }
                     else{
-                        System.out.println("Vaga ja existente!");
+                        System.out.println("\nVaga ja existente!\n");
                     }   
                 break;  
                 
                 case 2:
                     /*consultar vaga por numero*/
-                    System.out.println("Insira o numero da vaga a ser consultada:");
+                    System.out.println("Insira o numero da vaga e rua a ser consultada:");
                     numero = op.nextInt();
                     op.nextLine();
-                    if(vag.consultarVaga(vagas, numero) == null){
-                        System.out.println("Vaga nao existente!");
+                    rua = op.nextLine();
+                    Vaga vaga = vag.consultarVaga(vagas, numero, rua); 
+                    if(vaga == null){
+                        System.out.println("\nVaga nao existente!\n");
+                        break;
                     }
-                break;    
+                    System.out.println(vaga.toString()); 
+               break;    
     
                 case 3:
                     /*excluir vaga*/
@@ -306,10 +315,10 @@ public class Interface {
                     tipo = op.nextLine();
                     Modelo.Tipo tipoN = Modelo.Tipo.valueOf(tipo.toUpperCase());
                     if(vag.editarVaga(vagas, rua, numero, ruaNova, numeroNovo, tipoN) == true) {
-                        System.out.println("Vaga editada com sucesso!");
+                        System.out.println("\nVaga editada com sucesso!\n");
                     }
                     else {
-                        System.out.println("Vaga nao existente!");
+                        System.out.println("\nVaga nao existente!\n");
                     }
                 break;  
                 
@@ -324,7 +333,7 @@ public class Interface {
                     Vaga.VagaStatus statusV = Vaga.VagaStatus.valueOf(status.toUpperCase());
                     
                     if(vag.alterarDispinibilidade(vagas, rua, numero, statusV) == true){
-                        System.out.println("Disponibilidade da vaga alterada com sucesso!");
+                        System.out.println("\nDisponibilidade da vaga alterada com sucesso!\n");
                     }
                 break;    
             }    
@@ -332,7 +341,7 @@ public class Interface {
                
     }
     
-    public void opcoesEstacionamento(List<Cliente> clientes, List<Vaga> vagas, List<Ticket> tickets, Tarifa tarifa) {
+    public void opcoesEstacionamento(List<Cliente> clientes, List<Vaga> vagas, List<Ticket> tickets, List<Tarifa> tarifas) {
         do{
             System.out.println("1 - Estacionar");
             System.out.println("2 - Retirar");
@@ -343,10 +352,58 @@ public class Interface {
             op.nextLine();  
             switch (opcao2) {
                 case 1:
-                    /*estacionar*/
+                    /*estacionar*/                    
+                    if(tarifas.isEmpty() == true) {
+                        System.out.println("\nCadastre uma tarifa primeiro!!\n");
+                        break;
+                    }
+                    
+                    System.out.println("Digite o numero e a rua da vaga que pretende ser estacionada:");
+                    int numeroRua = op.nextInt();
+                    op.nextLine(); 
+                    String ruaVaga = op.nextLine();
+                    
+                    Vaga vaga = vag.consultarVaga(vagas, numeroRua, ruaVaga);
+                    if(vaga == null || vaga.getStatus() != Vaga.VagaStatus.DISPONIVEL) {
+                        System.out.println("\nErro: Vaga nao econtrada ou indisponivel!!\n");
+                        break;
+                    }
+                    vaga.setStatus(VagaStatus.OCUPADA);
+                    
+                    System.out.println("Digite a placa do veiculo:");
+                    String placa = op.nextLine();
+                    Veiculo veiculo = clie.verificarVeiculo(clientes, placa);
+                    if(veiculo == null || 
+                    veiculo.getModel().getTipoVeiculo() != vaga.getTipo()) {
+                        /*Ja comentando que bagunça eh essa ai em cima no if, eh literalmente vendo se o veiculo
+                        e vaga sao do mesmo tipo para poder estacionar*/
+                        System.out.println("\nErro: Veiculo nao econtrado ou o tipo de Veiculo nao eh Compativel a o tipo de Vaga!!\n");
+                        break;
+                    }
+                    /*Ultima tarifa cadastrada*/
+                    Tarifa atual = tarifas.get(tarifas.size()-1);
+                    
+                    Ticket novoTicket = new Ticket(numeroRua, ruaVaga, placa, atual);
+                    
+                    novoTicket.setStatus(Ticket.Operando.ATIVO);
+                    novoTicket.setInicio(LocalDateTime.now());
+                    
+                    tickets.add(novoTicket);
+                    
+                    System.out.println("\nTicket criado com sucesso!!\n");                   
                 break;    
                 case 2:
                     /*retirar*/
+                    System.out.println("Digite o numero e a rua que deseja retirar o veiculo:");
+                    int numero = op.nextInt();
+                    op.nextLine();
+                    String rua = op.nextLine();
+                     
+                    if(tic.retirar(tickets, vagas, numero, rua) == false) {
+                        System.out.println("\nVaga nao encontrada!!\n");
+                    } else {
+                        System.out.println("\nTicket liberado e Vaga Liberada!!\n");
+                    }
                 break;    
                 case 3:
                     /*Listar todas as vagas disponíveis do estacionamento*/
@@ -354,6 +411,116 @@ public class Interface {
                 break;    
                 case 4:
                     /*Gerenciar tarifas*/
+                    do{ 
+                        System.out.println("1 - Cadastrar Tarifa");
+                        System.out.println("2 - Excluir Tarifa");
+                        System.out.println("3 - Editar tarifa");
+                        System.out.println("4 - Voltar");
+                        opcao3 = op.nextByte();
+                        op.nextLine();
+                        switch(opcao3){
+                            case 1: /*adicionar tarifa*/
+                                LocalDateTime agora = LocalDateTime.now();
+
+                                List<Double> precosV = new ArrayList<>();
+                                System.out.println("Digite o juros de Tipo de Veiculo");
+                                System.out.println("MOTOCICLETA:");
+                                double preco = op.nextDouble();
+                                op.nextLine();
+                                precosV.add(preco);
+                                System.out.println("MEDIOPORTE:");
+                                preco = op.nextDouble();
+                                op.nextLine();
+                                precosV.add(preco);
+                                System.out.println("GRANDEPORTE:");
+                                preco = op.nextDouble();
+                                op.nextLine();
+                                precosV.add(preco);
+                                List<Double> precosPD = new ArrayList<>();
+                                List<Double> precosD = new ArrayList<>();
+                                System.out.println("Digite o preco de primeira hora, e logo em "
+                                + "seguida das horas subsquentes:");
+
+                                System.out.println("Domingo: ");
+                                preco = op.nextDouble();
+                                op.nextLine();
+                                precosPD.add(preco);
+
+                                preco = op.nextDouble();
+                                op.nextLine();
+                                precosD.add(preco);
+
+                                System.out.println("Segunda-Feira: ");
+                                preco = op.nextDouble();
+                                op.nextLine();
+                                precosPD.add(preco);
+
+                                preco = op.nextDouble();
+                                op.nextLine();
+                                precosD.add(preco);
+
+                                 System.out.println("Terca-Feira: ");
+                                preco = op.nextDouble();
+                                op.nextLine();
+                                precosPD.add(preco);
+
+                                preco = op.nextDouble();
+                                op.nextLine();
+                                precosD.add(preco);
+
+                                 System.out.println("Quarta-Feira: ");
+                                preco = op.nextDouble();
+                                op.nextLine();
+                                precosPD.add(preco);
+
+                                preco = op.nextDouble();
+                                op.nextLine();
+                                precosD.add(preco);
+
+                                 System.out.println("Quinta-Feira: ");
+                                preco = op.nextDouble();
+                                op.nextLine();
+                                precosPD.add(preco);
+
+                                preco = op.nextDouble();
+                                op.nextLine();
+                                precosD.add(preco);
+
+                                System.out.println("Sexta-Feira: ");
+                                preco = op.nextDouble();
+                                op.nextLine();
+                                precosPD.add(preco);
+
+                                preco = op.nextDouble();
+                                op.nextLine();
+                                precosD.add(preco);
+
+                                System.out.println("Sabado: ");
+                                preco = op.nextDouble();
+                                op.nextLine();
+                                precosPD.add(preco);
+
+                                preco = op.nextDouble();
+                                op.nextLine();
+                                precosD.add(preco);
+
+                                Tarifa novaTarifa = new Tarifa(agora, precosV, precosPD, precosD);
+
+                                tarifas.add(novaTarifa);
+
+                                DateTimeFormatter dataBonitinha = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm:ss");
+                                String dataFormatada = agora.format(dataBonitinha);
+
+                                System.out.println("\nTarifa de "+ dataFormatada + " cadastrada com sucesso!!\n");                                                     
+                            break; 
+                            case 2: /*excluir tarifa*/
+
+                            break;
+                            case 3: /*editar tarifa*/
+
+                            break;
+                        }
+                    }while(opcao3 != 4);
                 break;    
             }    
         }while(opcao2 != 5);

@@ -4,25 +4,30 @@
  */
 package ufms.cptl.raymay.Interno;
 
-import java.util.Date;
+import java.time.LocalDateTime;
+
 
 /**
  *
  * @author ra
  */
 public class Ticket {
+    
+    public enum Operando{
+        ATIVO, DESATIVO     
+    }
  
-    private int codigo;
-    private String status;
-    private Date inicio;
-    private Date fim;
+    private static int codigo = 100;
+    private Operando status;
+    private LocalDateTime inicio;
+    private LocalDateTime fim;
     private int numeroVaga;
     private String ruaVaga;
     private String placaVeiOcupado;
     private Tarifa tarifaAtual;    
     
-    public Ticket(int codigo, int numeroVaga, String ruaVaga, String placaVeiOcupado, Tarifa tarifaAtual) {
-        this.codigo = codigo;
+    public Ticket(int numeroVaga, String ruaVaga, String placaVeiOcupado, Tarifa tarifaAtual) {
+        codigo++;
         this.numeroVaga = numeroVaga;
         this.ruaVaga = ruaVaga;
         this.placaVeiOcupado = placaVeiOcupado;
@@ -49,31 +54,28 @@ public class Ticket {
         this.ruaVaga = ruaVaga;
     }
 
-    public void setCodigo(int codigo) {
-        this.codigo = codigo;
-    }
-
-    public String getStatus() {
+    public Operando getStatus() {
         return status;
     }
 
-    public void setStatus(String status) {
+    public void setStatus(Operando status) {
         this.status = status;
     }
 
-    public Date getInicio() {
+
+    public LocalDateTime getInicio() {
         return inicio;
     }
 
-    public void setInicio(Date inicio) {
+    public void setInicio(LocalDateTime inicio) {
         this.inicio = inicio;
     }
 
-    public Date getFim() {
+    public LocalDateTime getFim() {
         return fim;
     }
 
-    public void setFim(Date fim) {
+    public void setFim(LocalDateTime fim) {
         this.fim = fim;
     }
 

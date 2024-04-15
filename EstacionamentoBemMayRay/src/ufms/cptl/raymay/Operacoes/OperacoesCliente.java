@@ -18,8 +18,6 @@ import ufms.cptl.raymay.Externo.Automovel.Cor;
 
 public class OperacoesCliente { /*Criamos essa classe para deixa o código do estacionamento mais limpo*/
     
-    /*Scanner para pegar itens */
-    Scanner scanner = new Scanner(System.in);
     
     /*Procura um Cliente na lista de Clientes e mostra na tela a suas informaçoes */
     /*retorna verdadeiro se conseguir encontrar o cliente e falso se o cpf do cliente não 
