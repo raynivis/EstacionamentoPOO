@@ -84,7 +84,7 @@ public class OperacoesTicket {
     
     
     
-    public void totalFaturadoTicket(Ticket ticket, List<Vaga> vagas, List<Tarifa> tarifas){
+    public double totalFaturadoTicket(Ticket ticket, List<Vaga> vagas, List<Tarifa> tarifas){
         double total;
         Modelo.Tipo ticketV = null; 
         LocalDateTime diaS; 
@@ -101,11 +101,18 @@ public class OperacoesTicket {
         
         total = tarifa.getValorPrimeira(ticketV, semanaToEnum(diaS));
         
+        for(Tarifa t : tarifas) {
+            if(t.getInicio().isAfter(diaS) && t.getInicio().isBefore(diaS.plusHours(1))) {
+                /*se foi iniciada entre diaS e diaS + 1*/
+                tarifa = t;
+            }
+        }
+        
         diaS = diaS.plusHours(1);
         
         while(diaS.isEqual(ticket.getFim()) != true && diaS.isAfter(ticket.getFim()) != true){
             for(Tarifa t : tarifas) {
-                if( t.getInicio().isAfter(diaS) && t.getInicio().isBefore(diaS.plusHours(1))) {
+                if(t.getInicio().isAfter(diaS) && t.getInicio().isBefore(diaS.plusHours(1))) {
                     /*se foi iniciada entre diaS e diaS + 1*/
                     tarifa = t;
                 }
@@ -113,7 +120,7 @@ public class OperacoesTicket {
             total = total + tarifa.getValorHoraSeguinte(ticketV, semanaToEnum(diaS));
             diaS = diaS.plusHours(1);
         }
-        
+        return total;
     }
     
 }

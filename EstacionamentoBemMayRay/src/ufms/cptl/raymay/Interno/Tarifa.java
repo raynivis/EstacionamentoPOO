@@ -19,7 +19,6 @@ public class Tarifa {
     
     }
     private LocalDateTime inicio;
-    private DiaSemana diaSemanas;
     
     
     private List<Double> precoVeiculo;
@@ -201,15 +200,6 @@ public class Tarifa {
            }         
         }  
       return precoHoras + precoTipoVeiculo;
-    }
-
-
-    public DiaSemana getDiaSemanas() {
-        return diaSemanas;
-    }
-
-    public void setDiaSemanas(DiaSemana diaSemanas) {
-        this.diaSemanas = diaSemanas;
     }
 
     public List<Double> getPrecoVeiculo() {

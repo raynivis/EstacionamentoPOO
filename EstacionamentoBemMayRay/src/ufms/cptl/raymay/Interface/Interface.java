@@ -34,6 +34,7 @@ public class Interface {
     byte opcao2;
     byte opcao3;
     Scanner op = new Scanner(System.in);
+    DateTimeFormatter dataBonitinha = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm:ss");
     
     public Veiculo receberVeiculo(List<Cliente> clientes, Cliente cliente) {
         /*mensagem de interface para digitar um novo veiculo*/
@@ -75,7 +76,7 @@ public class Interface {
             System.out.println("1 - Gerenciar cliente");
             System.out.println("2 - Gerenciar vagas");
             System.out.println("3 - Gerenciar estacionamento");
-            System.out.println("4 - Cadastros gerais");
+            System.out.println("4 - Cadastros gerais / Teste de ticket: ");
             System.out.println("5 - Consultar total faturado em um periodo");
             System.out.println("6 - Sair do programa");
             opcao = op.nextByte();
@@ -91,7 +92,35 @@ public class Interface {
                 case 3:
                     opcoesEstacionamento(clientes, vagas, tickets, tarifas);
                 break;
-                case 4:  
+                case 4:
+                    System.out.println("Digite o codigo do ticket:");
+                    int codigo = op.nextInt();
+                    op.nextLine();
+                    System.out.println("Digite a data de finalizacao do ticket:");
+                    String data = op.nextLine();
+                    LocalDateTime dateTime = LocalDateTime.parse(data, dataBonitinha);
+                    for(Ticket t : tickets) {
+                        if(t.getCodigo() == codigo) 
+                            t.setFim(dateTime);
+                    }
+                    System.out.println("Digite a data de inicio tarifa 2:");
+                    Tarifa taris = tarifas.get(1);
+                    data = op.nextLine();
+                    dateTime = LocalDateTime.parse(data, dataBonitinha);
+                    taris.setInicio(dateTime);
+                    
+                    System.out.println("Digite a data de inicio tarifa 3:");
+                    taris = tarifas.get(2);
+                    data = op.nextLine();
+                    dateTime = LocalDateTime.parse(data, dataBonitinha);
+                    taris.setInicio(dateTime);
+                    
+                    for(Ticket t : tickets) {
+                        if(t.getCodigo() == codigo) {
+                            double lucro = tic.totalFaturadoTicket(t, vagas, tarifas);
+                            System.out.println(lucro);
+                        }                           
+                    }                                                        
                 break;    
       
                 case 5:
@@ -508,7 +537,7 @@ public class Interface {
 
                                 tarifas.add(novaTarifa);
 
-                                DateTimeFormatter dataBonitinha = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm:ss");
+                                
                                 String dataFormatada = agora.format(dataBonitinha);
 
                                 System.out.println("\nTarifa de "+ dataFormatada + " cadastrada com sucesso!!\n");                                                     
