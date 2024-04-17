@@ -5,9 +5,13 @@
 package ufms.cptl.raymay.Operacoes;
 
 import java.time.DayOfWeek;
+import java.time.Duration;
 import java.time.LocalDateTime;
 import java.util.List;
-import ufms.cptl.raymay.Externo.Automovel.Modelo;
+import ufms.cptl.raymay.Enum.DiaSemana;
+import ufms.cptl.raymay.Enum.Operando;
+import ufms.cptl.raymay.Enum.VagaStatus;
+import ufms.cptl.raymay.Externo.Automovel.Veiculo;
 import ufms.cptl.raymay.Externo.Individuo.Cliente;
 import ufms.cptl.raymay.Interno.Tarifa;
 import ufms.cptl.raymay.Interno.Ticket;
@@ -27,11 +31,11 @@ public class OperacoesTicket {
     public boolean retirar(List<Ticket> tickets, List<Vaga> vagas, int numero, String rua){
         for(Ticket t : tickets) {
             if(t.getNumeroVaga() == numero && t.getRuaVaga().equals(rua)) {
-                t.setStatus(Ticket.Operando.DESATIVO);
+                t.setStatus(Operando.DESATIVO);
                 t.setFim(LocalDateTime.now());
                 for(Vaga v : vagas) {
                     if(v.getNumero() == (t.getNumeroVaga()) && v.getRua().equals(t.getRuaVaga())){
-                        v.setStatus(Vaga.VagaStatus.DISPONIVEL);
+                        v.setStatus(VagaStatus.DISPONIVEL);
                         return true;
                     }
                 }
@@ -40,8 +44,7 @@ public class OperacoesTicket {
         return false;    
     }
     
-    
-    
+       
     public void cadastrosGerais(List<Cliente> clientes, List<Vaga> vagas){
         for(Cliente c : clientes){           
             System.out.println(c.toString());    
@@ -51,60 +54,63 @@ public class OperacoesTicket {
         }
     }
     
-    
-    public Tarifa.DiaSemana semanaToEnum(LocalDateTime data){
+      
+    public DiaSemana semanaToEnum(LocalDateTime data){
         DayOfWeek diaS = data.getDayOfWeek();
-        Tarifa.DiaSemana tipo = null;
+        DiaSemana tipo = null;
         
         switch(diaS){
             case SUNDAY:
-                tipo = Tarifa.DiaSemana.DOMINGO;
+                tipo = DiaSemana.DOMINGO;
             break; 
             case MONDAY:
-                tipo = Tarifa.DiaSemana.SEGUNDA;
+                tipo = DiaSemana.SEGUNDA;
             break;
             case TUESDAY:
-                tipo = Tarifa.DiaSemana.TERCA;
+                tipo = DiaSemana.TERCA;
             break;
             case WEDNESDAY:
-                tipo = Tarifa.DiaSemana.QUARTA;
+                tipo = DiaSemana.QUARTA;
             break;
             case THURSDAY:
-                tipo = Tarifa.DiaSemana.QUINTA;
+                tipo = DiaSemana.QUINTA;
             break;
             case FRIDAY:
-                tipo = Tarifa.DiaSemana.SEXTA;
+                tipo = DiaSemana.SEXTA;
             break;
             case SATURDAY:
-                tipo = Tarifa.DiaSemana.SABADO;
+                tipo = DiaSemana.SABADO;
             break;           
         }  
         return tipo;
     }
     
+    public Tarifa tarifaProxima(List<Tarifa> tarifas, LocalDateTime inicio, Veiculo veiculo) {
+        Tarifa tarifaPerto = null;
+        for(Tarifa t : tarifas) {
+            if(t.getInicio().isBefore(inicio) && t.getDiasSemana().contains(semanaToEnum(LocalDateTime.now())) )
+                if(t.getTarifaVeiculos().contains(veiculo.getModel().getTipoVeiculo())) {               	
+                    if(tarifaPerto == null || Duration.between(t.getInicio(), inicio).getSeconds() <= Duration.between(tarifaPerto.getInicio(), inicio).getSeconds() )
+                        tarifaPerto = t;               
+                }
+	}
+        return tarifaPerto;
+    }
     
     
     public double totalFaturadoTicket(Ticket ticket, List<Vaga> vagas, List<Tarifa> tarifas){
         double total;
-        Modelo.Tipo ticketV = null; 
-        LocalDateTime diaS; 
         
-        for(Vaga v : vagas){
-            if(ticket.getRuaVaga().equals(v.getRua()) && ticket.getNumeroVaga() == v.getNumero()){
-                ticketV = v.getTipo();
-            }
-        }
-        
-        diaS = ticket.getInicio();
+        LocalDateTime diaS = ticket.getInicio();
         
         Tarifa tarifa  = ticket.getTarifaAtual();
         
-        total = tarifa.getValorPrimeira(ticketV, semanaToEnum(diaS));      
+        total = tarifa.getValorPrimeiraHora();
         
         diaS = diaS.plusHours(1);
         
         while(diaS.isEqual(ticket.getFim()) != true && diaS.isAfter(ticket.getFim()) != true){
-            total = total + tarifa.getValorHoraSeguinte(ticketV, semanaToEnum(diaS));
+            total = total + tarifa.getValorHoraSubsequente();
             diaS = diaS.plusHours(1);
         }
         return total;

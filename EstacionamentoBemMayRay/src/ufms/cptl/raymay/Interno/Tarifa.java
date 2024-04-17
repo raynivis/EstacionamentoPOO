@@ -4,9 +4,9 @@
  */
 package ufms.cptl.raymay.Interno;
 import java.time.LocalDateTime;
-import java.util.Date;
 import java.util.List;
-import ufms.cptl.raymay.Externo.Automovel.Modelo;
+import ufms.cptl.raymay.Enum.DiaSemana;
+import ufms.cptl.raymay.Enum.TipoVeiculo;
 
 /**
  *
@@ -14,24 +14,20 @@ import ufms.cptl.raymay.Externo.Automovel.Modelo;
  */
 public class Tarifa {
     
-    public enum DiaSemana {
-        SEGUNDA, TERCA, QUARTA, QUINTA, SEXTA, SABADO, DOMINGO
-    
-    }
-    private LocalDateTime inicio;
-    
-    
-    private List<Double> precoVeiculo;
-    private List<Double> precoPrimeiraHora;
-    private List<Double> precoDias;
+   private LocalDateTime inicio;
+   private double valorPrimeiraHora;
+   private double valorHoraSubsequente;
+   private List<DiaSemana> diasSemana;
+   private List<TipoVeiculo> tarifaVeiculos;
 
-    public Tarifa(LocalDateTime inicio, List<Double> precoVeiculo, List<Double> precoPrimeiraHora, List<Double> precoDias) {
+    public Tarifa(LocalDateTime inicio, double valorPrimeiraHora, double valorHoraSubsequente, List<DiaSemana> diasSemana, List<TipoVeiculo> tarifaVeiculos) {
         this.inicio = inicio;
-        this.precoVeiculo = precoVeiculo;
-        this.precoPrimeiraHora = precoPrimeiraHora;
-        this.precoDias = precoDias;
+        this.valorPrimeiraHora = valorPrimeiraHora;
+        this.valorHoraSubsequente = valorHoraSubsequente;
+        this.diasSemana = diasSemana;
+        this.tarifaVeiculos = tarifaVeiculos;
     }
-    
+
     public LocalDateTime getInicio() {
         return inicio;
     }
@@ -40,194 +36,46 @@ public class Tarifa {
         this.inicio = inicio;
     }
 
-    /*A partir desse metodo ele retorna o valor necessario para o calculo da primeira hora do veiculo
-    baseado no seu tipo e no dia da semana da tarifa*/
-    public double getValorPrimeira(Modelo.Tipo tipoV, DiaSemana dia) {
-        double precoPrimeiraHora = 0;
-        double precoTipoVeiculo = 0;
-        
-        if(tipoV == Modelo.Tipo.MOTOCICLETA) {
-           precoTipoVeiculo = this.precoVeiculo.get(0);  
-           if(dia == DiaSemana.DOMINGO) {
-               precoPrimeiraHora = this.precoPrimeiraHora.get(0);
-           }
-           if(dia == DiaSemana.SEGUNDA) {
-               precoPrimeiraHora = this.precoPrimeiraHora.get(1);
-           }
-           if(dia == DiaSemana.TERCA) {
-               precoPrimeiraHora = this.precoPrimeiraHora.get(2);
-           }
-           if(dia == DiaSemana.QUARTA) {
-               precoPrimeiraHora = this.precoPrimeiraHora.get(3);
-           }
-           if(dia == DiaSemana.QUINTA) {
-               precoPrimeiraHora = this.precoPrimeiraHora.get(4);
-           }
-           if(dia == DiaSemana.SEXTA) {
-               precoPrimeiraHora = this.precoPrimeiraHora.get(5);
-           }
-          if(dia == DiaSemana.SABADO) {
-               precoPrimeiraHora = this.precoPrimeiraHora.get(6);
-           }         
-        }
-        if(tipoV == Modelo.Tipo.MEDIOPORTE) {
-           precoTipoVeiculo = this.precoVeiculo.get(1);  
-           if(dia == DiaSemana.DOMINGO) {
-               precoPrimeiraHora = this.precoPrimeiraHora.get(0);
-           }
-           if(dia == DiaSemana.SEGUNDA) {
-               precoPrimeiraHora = this.precoPrimeiraHora.get(1);
-           }
-           if(dia == DiaSemana.TERCA) {
-               precoPrimeiraHora = this.precoPrimeiraHora.get(2);
-           }
-           if(dia == DiaSemana.QUARTA) {
-               precoPrimeiraHora = this.precoPrimeiraHora.get(3);
-           }
-           if(dia == DiaSemana.QUINTA) {
-               precoPrimeiraHora = this.precoPrimeiraHora.get(4);
-           }
-           if(dia == DiaSemana.SEXTA) {
-               precoPrimeiraHora = this.precoPrimeiraHora.get(5);
-           }
-          if(dia == DiaSemana.SABADO) {
-               precoPrimeiraHora = this.precoPrimeiraHora.get(6);
-           }         
-        }
-        
-        if(tipoV == Modelo.Tipo.GRANDEPORTE) {
-           precoTipoVeiculo = this.precoVeiculo.get(2);  
-           if(dia == DiaSemana.DOMINGO) {
-               precoPrimeiraHora = this.precoPrimeiraHora.get(0);
-           }
-           if(dia == DiaSemana.SEGUNDA) {
-               precoPrimeiraHora = this.precoPrimeiraHora.get(1);
-           }
-           if(dia == DiaSemana.TERCA) {
-               precoPrimeiraHora = this.precoPrimeiraHora.get(2);
-           }
-           if(dia == DiaSemana.QUARTA) {
-               precoPrimeiraHora = this.precoPrimeiraHora.get(3);
-           }
-           if(dia == DiaSemana.QUINTA) {
-               precoPrimeiraHora = this.precoPrimeiraHora.get(4);
-           }
-           if(dia == DiaSemana.SEXTA) {
-               precoPrimeiraHora = this.precoPrimeiraHora.get(5);
-           }
-          if(dia == DiaSemana.SABADO) {
-               precoPrimeiraHora = this.precoPrimeiraHora.get(6);
-           }         
-        }  
-      return precoPrimeiraHora + precoTipoVeiculo;
+    public double getValorPrimeiraHora() {
+        return valorPrimeiraHora;
     }
 
-    public double getValorHoraSeguinte(Modelo.Tipo tipoV, DiaSemana dia) {
-        double precoHoras = 0;
-        double precoTipoVeiculo = 0;
-        
-        if(tipoV == Modelo.Tipo.MOTOCICLETA) {
-           precoTipoVeiculo = this.precoVeiculo.get(0);  
-           if(dia == DiaSemana.DOMINGO) {
-               precoHoras = this.precoDias.get(0);
-           }
-           if(dia == DiaSemana.SEGUNDA) {
-               precoHoras = this.precoDias.get(1);
-           }
-           if(dia == DiaSemana.TERCA) {
-               precoHoras = this.precoDias.get(2);
-           }
-           if(dia == DiaSemana.QUARTA) {
-               precoHoras = this.precoDias.get(3);
-           }
-           if(dia == DiaSemana.QUINTA) {
-               precoHoras = this.precoDias.get(4);
-           }
-           if(dia == DiaSemana.SEXTA) {
-               precoHoras = this.precoDias.get(5);
-           }
-          if(dia == DiaSemana.SABADO) {
-               precoHoras = this.precoDias.get(6);
-           }         
-        }
-        if(tipoV == Modelo.Tipo.MEDIOPORTE) {
-           precoTipoVeiculo = this.precoVeiculo.get(1);  
-           if(dia == DiaSemana.DOMINGO) {
-               precoHoras = this.precoDias.get(0);
-           }
-           if(dia == DiaSemana.SEGUNDA) {
-               precoHoras = this.precoDias.get(1);
-           }
-           if(dia == DiaSemana.TERCA) {
-               precoHoras = this.precoDias.get(2);
-           }
-           if(dia == DiaSemana.QUARTA) {
-               precoHoras = this.precoDias.get(3);
-           }
-           if(dia == DiaSemana.QUINTA) {
-               precoHoras = this.precoDias.get(4);
-           }
-           if(dia == DiaSemana.SEXTA) {
-               precoHoras = this.precoDias.get(5);
-           }
-          if(dia == DiaSemana.SABADO) {
-               precoHoras = this.precoDias.get(6);
-           }         
-        }
-        
-        if(tipoV == Modelo.Tipo.GRANDEPORTE) {
-           precoTipoVeiculo = this.precoVeiculo.get(2);  
-           if(dia == DiaSemana.DOMINGO) {
-               precoHoras = this.precoDias.get(0);
-           }
-           if(dia == DiaSemana.SEGUNDA) {
-               precoHoras = this.precoDias.get(1);
-           }
-           if(dia == DiaSemana.TERCA) {
-               precoHoras = this.precoDias.get(2);
-           }
-           if(dia == DiaSemana.QUARTA) {
-               precoHoras = this.precoDias.get(3);
-           }
-           if(dia == DiaSemana.QUINTA) {
-               precoHoras = this.precoDias.get(4);
-           }
-           if(dia == DiaSemana.SEXTA) {
-               precoHoras = this.precoDias.get(5);
-           }
-          if(dia == DiaSemana.SABADO) {
-               precoHoras = this.precoDias.get(6);
-           }         
-        }  
-      return precoHoras + precoTipoVeiculo;
+    public void setValorPrimeiraHora(double valorPrimeiraHora) {
+        this.valorPrimeiraHora = valorPrimeiraHora;
     }
 
-    public List<Double> getPrecoVeiculo() {
-        return precoVeiculo;
+    public double getValorHoraSubsequente() {
+        return valorHoraSubsequente;
     }
 
-    public void setPrecoVeiculo(List<Double> precoVeiculo) {
-        this.precoVeiculo = precoVeiculo;
+    public void setValorHoraSubsequente(double valorHoraSubsequente) {
+        this.valorHoraSubsequente = valorHoraSubsequente;
     }
 
-    public List<Double> precoPrimeiraHora() {
-        return precoPrimeiraHora;
+    public List<DiaSemana> getDiasSemana() {
+        return diasSemana;
     }
 
-    public void setprecoPrimeiraHora(List<Double> precoPrimeiraHora) {
-        this.precoPrimeiraHora = precoPrimeiraHora;
+    public void setDiasSemana(List<DiaSemana> diasSemana) {
+        this.diasSemana = diasSemana;
     }
-
-    public List<Double> getPrecoDias() {
-        return precoDias;
-    }
-
-    public void setPrecoDias(List<Double> precoDias) {
-        this.precoDias = precoDias;
-    }
-
     
+    public void setDiaSemanaNaLista(DiaSemana dia) {
+        this.diasSemana.add(dia);
+    }
+
+    public List<TipoVeiculo> getTarifaVeiculos() {
+        return tarifaVeiculos;
+    }
+
+    public void setTarifaVeiculos(List<TipoVeiculo> tarifaVeiculos) {
+        this.tarifaVeiculos = tarifaVeiculos;
+    }
     
+   public void setTipoVeiculoNaLista(TipoVeiculo tVeiculo) {
+        this.tarifaVeiculos.add(tVeiculo);
+    }
    
-     
+   
+      
 }

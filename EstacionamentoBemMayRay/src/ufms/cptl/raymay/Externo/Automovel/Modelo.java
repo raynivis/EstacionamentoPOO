@@ -4,6 +4,8 @@
  */
 package ufms.cptl.raymay.Externo.Automovel;
 
+import ufms.cptl.raymay.Enum.TipoVeiculo;
+
 /**
  *
  * @author ra
@@ -11,29 +13,27 @@ package ufms.cptl.raymay.Externo.Automovel;
 public class Modelo {
     /*Enumeração do tipo de veiculo, consideramos a melhor opção pra identificar
     do veículo*/
-    public enum Tipo {
-        MOTOCICLETA, MEDIOPORTE, GRANDEPORTE    
-    }
+   
     
     /*Marca do veículo a considerar pelo veículo*/
     private String marca;
     /*especificação do modelo do carro*/
     private String modelo;
     /*especificação do tipo de automovel pelo porte de enum*/
-    private Tipo tipoVeiculo;
+    private TipoVeiculo tipoVeiculo;
     
 
-    public Modelo(String marca, String modelo, Tipo tipoVeiculo) {
+    public Modelo(String marca, String modelo, TipoVeiculo tipoVeiculo) {
         this.marca = marca;
         this.modelo = modelo;
         this.tipoVeiculo = tipoVeiculo;
     }
 
-    public Tipo getTipoVeiculo() {
+    public TipoVeiculo getTipoVeiculo() {
         return tipoVeiculo;
     }
 
-    public void setTipoVeiculo(Tipo tipoVeiculo) {
+    public void setTipoVeiculo(TipoVeiculo tipoVeiculo) {
         this.tipoVeiculo = tipoVeiculo;
     }
     

@@ -5,6 +5,7 @@
 package ufms.cptl.raymay.Interno;
 
 import java.time.LocalDateTime;
+import ufms.cptl.raymay.Enum.Operando;
 
 
 /**
@@ -12,12 +13,9 @@ import java.time.LocalDateTime;
  * @author ra
  */
 public class Ticket {
-    
-    public enum Operando{
-        ATIVO, DESATIVO     
-    }
- 
-    private static int codigo = 100;
+
+    private static int proxCodigo = 1;
+    private final int codigo;
     private Operando status;
     private LocalDateTime inicio;
     private LocalDateTime fim;
@@ -26,12 +24,13 @@ public class Ticket {
     private String placaVeiOcupado;
     private Tarifa tarifaAtual;    
     
-    public Ticket(int numeroVaga, String ruaVaga, String placaVeiOcupado, Tarifa tarifaAtual) {
-        codigo++;
+    public Ticket(int numeroVaga, String ruaVaga, String placaVeiOcupado, Tarifa tarifaAtual) {   
         this.numeroVaga = numeroVaga;
         this.ruaVaga = ruaVaga;
         this.placaVeiOcupado = placaVeiOcupado;
         this.tarifaAtual = tarifaAtual;
+        this.codigo = proxCodigo;
+        proxCodigo++;
     }
     
     public int getCodigo() {

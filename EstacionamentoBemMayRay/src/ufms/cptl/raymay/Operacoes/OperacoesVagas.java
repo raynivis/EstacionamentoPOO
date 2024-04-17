@@ -4,7 +4,8 @@
  */
 package ufms.cptl.raymay.Operacoes;
 import java.util.List;
-import ufms.cptl.raymay.Externo.Automovel.Modelo;
+import ufms.cptl.raymay.Enum.TipoVeiculo;
+import ufms.cptl.raymay.Enum.VagaStatus;
 import ufms.cptl.raymay.Interno.Vaga;
 /**
  *
@@ -36,7 +37,7 @@ public class OperacoesVagas {
     public boolean excluirVaga(List<Vaga> vagas, String rua, int numero) {
         for(Vaga v : vagas) {
             if(v.getRua().equals(rua) && v.getNumero() == numero) {
-                if(v.getStatus() != Vaga.VagaStatus.OCUPADA) {
+                if(v.getStatus() != VagaStatus.OCUPADA) {
                     vagas.remove(v);
                     /*interface para mostrar que foi removido*/
                     return true;
@@ -49,7 +50,7 @@ public class OperacoesVagas {
         System.out.println("Vaga nao existente!");
         return false;
     }
-    public boolean editarVaga(List<Vaga> vagas, String rua, int numero, String novaRua, int novoNumero, Modelo.Tipo novoTipo) {
+    public boolean editarVaga(List<Vaga> vagas, String rua, int numero, String novaRua, int novoNumero, TipoVeiculo novoTipo) {
         for(Vaga v : vagas) {
             if(v.getRua().equals(rua) && v.getNumero() == numero) {
                 v.setRua(novaRua);
@@ -62,10 +63,10 @@ public class OperacoesVagas {
     }
     /* se o ticket referente a vaga não tiver voltado ao sistema, para ser descartado, 
     não há possibilidade de alterar a disponibilidade da vaga*/ 
-    public boolean alterarDispinibilidade(List<Vaga> vagas, String rua, int numero, Vaga.VagaStatus novoStatus) {
+    public boolean alterarDispinibilidade(List<Vaga> vagas, String rua, int numero, VagaStatus novoStatus) {
         for(Vaga v : vagas){
             if(v.getRua().equals(rua) && v.getNumero() == numero) {
-                if(v.getStatus() != Vaga.VagaStatus.OCUPADA){                   
+                if(v.getStatus() != VagaStatus.OCUPADA){                   
                     v.setStatus(novoStatus);
                     return true;
                 }
@@ -78,7 +79,7 @@ public class OperacoesVagas {
     }
     public void listarVagasDisponiveis(List<Vaga> vagas) {
         for(Vaga v : vagas) {
-            if(v.getStatus() == Vaga.VagaStatus.DISPONIVEL) {
+            if(v.getStatus() == VagaStatus.DISPONIVEL) {
                 System.out.println(v.toString());
             }
         }

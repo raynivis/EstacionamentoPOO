@@ -4,6 +4,8 @@
  */
 package ufms.cptl.raymay.Interno;
 
+import ufms.cptl.raymay.Enum.TipoVeiculo;
+import ufms.cptl.raymay.Enum.VagaStatus;
 import ufms.cptl.raymay.Externo.Automovel.Modelo;
 
 /**
@@ -12,16 +14,13 @@ import ufms.cptl.raymay.Externo.Automovel.Modelo;
  */
 public class Vaga {
 
-    public enum VagaStatus {
-        DISPONIVEL, OCUPADA, INDISPONIVEL
-    }
     
     private int numero;
     private String rua;
     private VagaStatus status;
-    public Modelo.Tipo tipo;
+    public TipoVeiculo tipo;
 
-    public Vaga(int numero, String rua, VagaStatus status, Modelo.Tipo tipo) {
+    public Vaga(int numero, String rua, VagaStatus status, TipoVeiculo tipo) {
         this.numero = numero;
         this.rua = rua;
         this.status = status;
@@ -57,11 +56,11 @@ public class Vaga {
         this.status = status;
     }
 
-    public Modelo.Tipo getTipo() {
+    public TipoVeiculo getTipo() {
         return tipo;
     }
 
-    public void setTipo(Modelo.Tipo tipo) {
+    public void setTipo(TipoVeiculo tipo) {
         this.tipo = tipo;
     }
 
