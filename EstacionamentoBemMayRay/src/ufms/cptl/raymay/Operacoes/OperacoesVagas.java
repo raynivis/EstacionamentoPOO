@@ -6,6 +6,7 @@ package ufms.cptl.raymay.Operacoes;
 import java.util.List;
 import ufms.cptl.raymay.Enum.TipoVeiculo;
 import ufms.cptl.raymay.Enum.VagaStatus;
+import static ufms.cptl.raymay.Interface.OperacaoMostraMensagem.operacaoMensagem;
 import ufms.cptl.raymay.Interno.Vaga;
 /**
  *
@@ -33,21 +34,22 @@ public class OperacoesVagas {
         }
         return null;
     }
-     /* retorna true se foi excluida e false se nao foi ou nao existe */
+     /* Retorna true se foi excluída e false se não foi ou não existe */
     public boolean excluirVaga(List<Vaga> vagas, String rua, int numero) {
         for(Vaga v : vagas) {
             if(v.getRua().equals(rua) && v.getNumero() == numero) {
                 if(v.getStatus() != VagaStatus.OCUPADA) {
                     vagas.remove(v);
-                    /*interface para mostrar que foi removido*/
+                    /*interface para mostrar que foi removida*/
                     return true;
                 }
-                System.out.println("A vaga nao pode ser excluida pois esta sendo usada (OCUPADA)!");
+                /* 1 condição que justifica não ser possível a exclusão da vaga -> Estar sendo utilizada */
+                operacaoMensagem("A vaga não pode ser excluída pois está sendo usada (OCUPADA)!");
                 return false;
             }  
         }
-        /*interface para mostra que não foi encontrado a vaga*/
-        System.out.println("Vaga nao existente!");
+        /* 2 condição que justifica não ser possível a exclusão da vaga -> Vaga inexistente */
+        operacaoMensagem("Vaga não existente!");
         return false;
     }
     public boolean editarVaga(List<Vaga> vagas, String rua, int numero, String novaRua, int novoNumero, TipoVeiculo novoTipo) {
@@ -70,11 +72,11 @@ public class OperacoesVagas {
                     v.setStatus(novoStatus);
                     return true;
                 }
-                System.out.println("A disponibilidade da vaga nao pode ser alterada pois o Ticket nao foi devolvido (OCUPADA)");
+                operacaoMensagem("A disponibilidade da vaga não pode ser alterada pois o Ticket não foi devolvido (OCUPADA)!");
                 return false;
             }          
         }
-        System.out.println("Vaga nao existente!");
+        operacaoMensagem("Vaga não existente!");
         return false;
     }
     public void listarVagasDisponiveis(List<Vaga> vagas) {

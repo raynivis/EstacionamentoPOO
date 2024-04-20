@@ -7,7 +7,7 @@ import ufms.cptl.raymay.Externo.Individuo.Cliente;
 import ufms.cptl.raymay.Interno.Tarifa;
 import ufms.cptl.raymay.Interno.Ticket;
 import ufms.cptl.raymay.Interno.Vaga;
-import ufms.cptl.raymay.Interface.Interface;
+import ufms.cptl.raymay.Interface.InterfaceInicial;
 import java.util.Scanner;
 import java.util.Collections;
 import java.util.ArrayList;
@@ -19,7 +19,7 @@ import java.util.List;
  */
 public class Estacionamento {
     public static void main(String[] args){
-        Interface inter = new Interface();
+        InterfaceInicial inter = new InterfaceInicial();
         List<Cliente> clientes = new ArrayList<>();
         List<Vaga> vagas = new ArrayList<>();
         List<Ticket> tickets = new ArrayList<>();
