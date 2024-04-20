@@ -10,6 +10,7 @@ import ufms.cptl.raymay.Externo.Automovel.Veiculo;
 import ufms.cptl.raymay.Externo.Individuo.Cliente;
 import java.util.Scanner;
 import ufms.cptl.raymay.Externo.Automovel.Cor;
+import static ufms.cptl.raymay.Interface.OperacaoMostraMensagem.operacaoMensagem;
 
 /**
  *
@@ -78,27 +79,26 @@ public class OperacoesCliente { /*Criamos essa classe para deixa o código do es
         return false;
     }
     
-    
     public void relatorioCliente(List<Cliente> clientes) {
         for(Cliente c : clientes) {
             System.out.println(c.toString());
-            System.out.println("Veiculos:");
+            operacaoMensagem("Veículos:");
             for(Veiculo v : c.getVeiculos()){
-                System.out.println("        Placa: " + v.getPlaca());
+                operacaoMensagem("        Placa: " + v.getPlaca());
             }
-            System.out.println("///////////////////////////////////////////////////");
+            operacaoMensagem("///////////////////////////////////////////////////");
         }
     }
     public Cliente relatorioCliente(List<Cliente> clientes, String documento) {
         for(Cliente c : clientes) {
             if(c.getCpf().equals(documento)) {
-                System.out.println("///////////////////////////////////////////////////");
-                System.out.println(c.toString());
-                System.out.println("Veiculos:");
+                operacaoMensagem("///////////////////////////////////////////////////");
+                operacaoMensagem(c.toString());
+                operacaoMensagem("Veículos:");
                 for(Veiculo v : c.getVeiculos()){
-                    System.out.println("        Placa: " + v.getPlaca());
+                    operacaoMensagem("        Placa: " + v.getPlaca());
                 }
-                System.out.println("///////////////////////////////////////////////////");
+                operacaoMensagem("///////////////////////////////////////////////////");
                 return c;
             }
         }
