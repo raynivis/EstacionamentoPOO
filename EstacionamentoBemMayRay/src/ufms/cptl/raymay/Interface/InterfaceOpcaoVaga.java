@@ -35,15 +35,15 @@ public class InterfaceOpcaoVaga {
             switch (opcao2) {
                 case 1:
                     /*cadastrar vaga*/
-                    interMensagem("Digite a rua, número e tipo de vaga(MOTOCICLETA, MEDIOPORTE, GRANDEPORTE):");
-                    String rua = scanner.nextLine();                   
-                    
+                    interMensagem("Digite a número da Vaga:");
                     int numero = scanner.nextInt();
                     scanner.nextLine();
-                    
-                    
+                    interMensagem("Digite o nome da Rua:");
+                    String rua = scanner.nextLine();                                      
+                                                    
                     VagaStatus vagastatus = VagaStatus.DISPONIVEL;
                     
+                    interMensagem("Digite o tipo de vaga(MOTOCICLETA, MEDIOPORTE, GRANDEPORTE):");
                     String tipo = scanner.nextLine();
                     TipoVeiculo tipoV = TipoVeiculo.valueOf(tipo.toUpperCase());
                                         
@@ -59,9 +59,10 @@ public class InterfaceOpcaoVaga {
                 
                 case 2:
                     /*consultar vaga por numero*/
-                    interMensagem("Insira o número da vaga e rua a ser consultada:");
+                    interMensagem("Digite a número da Vaga:");
                     numero = scanner.nextInt();
                     scanner.nextLine();
+                    interMensagem("Digite o nome da Rua:");
                     rua = scanner.nextLine();
                     Vaga vaga = vag.consultarVaga(vagas, numero, rua); 
                     if(vaga == null){
@@ -73,10 +74,12 @@ public class InterfaceOpcaoVaga {
     
                 case 3:
                     /*excluir vaga*/
-                    interMensagem("Insira a rua e o número da vaga a ser excluída:");
-                    rua = scanner.nextLine();
+                    interMensagem("Digite a número da Vaga:");
                     numero = scanner.nextInt();
                     scanner.nextLine();
+                    interMensagem("Digite a rua para a Vaga ser excluída:");
+                    rua = scanner.nextLine();
+                                       
                     if(vag.excluirVaga(vagas, rua, numero) == true) {
                         interMensagem("Vaga rua:" + rua + " número:" + numero + " excluída com sucesso!");
                     }
@@ -84,10 +87,12 @@ public class InterfaceOpcaoVaga {
                 
                 case 4:
                     /*editar vaga*/
-                    interMensagem("Insira a rua e o número da vaga a ser editada:");
-                    rua = scanner.nextLine();
+                    interMensagem("Digite a número da Vaga:");
                     numero = scanner.nextInt();
                     scanner.nextLine();
+                    
+                    interMensagem("Digite a rua para a Vaga ser editada:");
+                    rua = scanner.nextLine();                 
                     
                     interMensagem("Agora insira a nova rua, o novo número e o novo tipo da vaga (MOTOCICLETA, MEDIOPORTE, GRANDEPORTE): ");
                     String ruaNova = scanner.nextLine();
@@ -106,11 +111,14 @@ public class InterfaceOpcaoVaga {
                 
                 case 5:
                     /*alterar disponibilidade da vaga*/
-                    interMensagem("Insira a rua, número e o novo status da vaga (DISPONIVEL, OCUPADA ou INDISPONIVEL)");
-                    rua = scanner.nextLine();
+                    interMensagem("Digite a número da Vaga:");
                     numero = scanner.nextInt();
                     scanner.nextLine();
                     
+                    interMensagem("Digite a rua para a Vaga ser editada:");
+                    rua = scanner.nextLine();   
+                    interMensagem("Digite o novo status da vaga (DISPONIVEL, OCUPADA ou INDISPONIVEL)");
+                            
                     String status = scanner.nextLine();
                     VagaStatus statusV = VagaStatus.valueOf(status.toUpperCase());
                     

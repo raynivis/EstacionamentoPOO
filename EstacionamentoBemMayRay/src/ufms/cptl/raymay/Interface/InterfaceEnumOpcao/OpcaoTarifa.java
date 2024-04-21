@@ -21,7 +21,8 @@ public class OpcaoTarifa {
         CADASTRAR (1, "Cadastrar tarifa"),
         EXCLUIR (2, "Excluir tarifa"),
         EDITAR(3, "Editar tarifa"),
-        SAIR(4, "Voltar");
+        CONSULTAR(4, "Imprimir as Tarifas cadastradas"),
+        SAIR(5, "Voltar");
         
         public int valorOpcao;
         public String desc;

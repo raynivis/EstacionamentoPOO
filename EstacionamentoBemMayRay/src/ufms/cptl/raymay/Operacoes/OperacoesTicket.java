@@ -10,9 +10,11 @@ import java.time.LocalDateTime;
 import java.util.List;
 import ufms.cptl.raymay.Enum.DiaSemana;
 import ufms.cptl.raymay.Enum.Operando;
+import ufms.cptl.raymay.Enum.TipoVeiculo;
 import ufms.cptl.raymay.Enum.VagaStatus;
 import ufms.cptl.raymay.Externo.Automovel.Veiculo;
 import ufms.cptl.raymay.Externo.Individuo.Cliente;
+import static ufms.cptl.raymay.Interface.OperacaoMostraMensagem.operacaoMensagem;
 import ufms.cptl.raymay.Interno.Tarifa;
 import ufms.cptl.raymay.Interno.Ticket;
 import ufms.cptl.raymay.Interno.Vaga;
@@ -23,14 +25,9 @@ import ufms.cptl.raymay.Interno.Vaga;
  */
 public class OperacoesTicket {
     
-    /*metodo para estacionar o veiculo, consequentenmente criar um ticket, eh necessario ver se a vaga
-    ja esta ocupada*/
-    /*retorna verdade caso conseguir iniciar o ticket e falso se não conseguir pela vaga estar preenchida*/
-    
-    
     public boolean retirar(List<Ticket> tickets, List<Vaga> vagas, int numero, String rua){
         for(Ticket t : tickets) {
-            if(t.getNumeroVaga() == numero && t.getRuaVaga().equals(rua)) {
+            if(t.getNumeroVaga() == numero && t.getRuaVaga().equals(rua) && t.getStatus() == Operando.ATIVO) {
                 t.setStatus(Operando.DESATIVO);
                 t.setFim(LocalDateTime.now());
                 for(Vaga v : vagas) {
@@ -85,6 +82,25 @@ public class OperacoesTicket {
         return tipo;
     }
     
+    public Tarifa buscarTarifa(List<Tarifa> tarifas, String inicio, List<DiaSemana> dias, List<TipoVeiculo> veiculos) {
+        for(Tarifa t : tarifas) {
+            if(t.getInicio().format(t.getDataBonitinha()).equals(inicio) 
+            && t.getDiasSemana().equals(dias) && t.getTarifaVeiculos().equals(veiculos)) {
+                return t;
+            }            
+        }
+        return null;
+    }
+    
+    public Ticket buscarTicket(List<Ticket> tickets, int codigo) {
+        for(Ticket t : tickets) {
+            if(t.getCodigo() == codigo) {
+                return t;
+            }
+        }
+        return null;
+    }
+      
     public Tarifa tarifaProxima(List<Tarifa> tarifas, LocalDateTime inicio, Veiculo veiculo) {
         Tarifa tarifaPerto = null;
         for(Tarifa t : tarifas) {
@@ -98,7 +114,7 @@ public class OperacoesTicket {
     }
     
     
-    public double totalFaturadoTicket(Ticket ticket, List<Vaga> vagas, List<Tarifa> tarifas){
+    public double totalFaturadoTicket(Ticket ticket){
         double total;
         
         LocalDateTime diaS = ticket.getInicio();
@@ -114,6 +130,40 @@ public class OperacoesTicket {
             diaS = diaS.plusHours(1);
         }
         return total;
+    }
+    
+    public void relatorioTarifa(List<Tarifa> tarifas) {
+        for(Tarifa t : tarifas) {
+            System.out.println(t.toString());
+            operacaoMensagem("Dia/s da Semana:");
+            for(DiaSemana ds : t.getDiasSemana()){
+                System.out.print(ds.toString() + " ");
+            }
+            operacaoMensagem("\nTipo/s de Veiculo:");
+            for(TipoVeiculo tv : t.getTarifaVeiculos()){
+                System.out.print(tv.toString() + " ");
+            }
+            operacaoMensagem("\n///////////////////////////////////////////////////");
+        }
+    }
+    
+    public void ListarTicketAtivo(List<Ticket> tickets) {
+        for(Ticket t : tickets) {
+            if(t.getStatus() == Operando.ATIVO){
+                operacaoMensagem(t.toString());
+                operacaoMensagem("///////////////////////////////////////////////////");
+            }               
+        }
+    }
+      
+    public double FaturadoPeriodo(List<Ticket> tickets, LocalDateTime inicio, LocalDateTime fim){
+        double soma = 0;
+        for(Ticket t : tickets) {
+            if(t.getFim().isAfter(inicio) && t.getFim().isBefore(fim)) {
+                soma = soma + totalFaturadoTicket(t);
+            }
+        }
+        return soma;
     }
     
 }

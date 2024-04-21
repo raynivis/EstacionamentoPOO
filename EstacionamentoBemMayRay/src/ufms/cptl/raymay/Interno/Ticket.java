@@ -94,5 +94,13 @@ public class Ticket {
         this.tarifaAtual = tarifaAtual;
     }
 
+    @Override
+    public String toString() {
+        return "Codigo: " + codigo + "\nInicio do Ticket: " + inicio.format(tarifaAtual.getDataBonitinha()) + 
+        "\nNumero da Vaga: " + numeroVaga + "\nRua da Vaga: " + ruaVaga + "\nPlaca do Veículo Ocupado: " + placaVeiOcupado + 
+        "\nData da Tarifa do Ticket: " + tarifaAtual.getInicio().format(tarifaAtual.getDataBonitinha());
+    }
+
+    
     
 }

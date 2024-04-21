@@ -42,5 +42,12 @@ public class Veiculo {
     public void setColor(Cor color) {
         this.color = color;
     }
+
+    @Override
+    public String toString() {
+        return "Placa: " + placa + "\nMarca: " + model.getMarca() +  "\nModelo: "+ model.getModelo() +
+        "\nTipo de Veiculo: " + model.getTipoVeiculo() +"\nCor: " +color.getCor()+ "\nDescrição: " + color.getDescricao();
+    }
+    
         
 }

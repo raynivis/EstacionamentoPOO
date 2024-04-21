@@ -33,10 +33,11 @@ public class InterfaceOpcaoEstacionamento {
     OperacoesVagas vag = new OperacoesVagas(); 
     OperacoesCliente clie = new OperacoesCliente();
     OperacoesTicket tic = new OperacoesTicket();
+    InterfarceListaTipoSemanas listasVS = new InterfarceListaTipoSemanas();
     byte opcao2;
     byte opcao3;
     Scanner scanner = new Scanner(System.in);
-    DateTimeFormatter dataBonitinha = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm:ss");
+    DateTimeFormatter dataFormata = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm");
     
     public void opcoesEstacionamento(List<Cliente> clientes, List<Vaga> vagas, List<Ticket> tickets, List<Tarifa> tarifas) {
         do{
@@ -59,28 +60,36 @@ public class InterfaceOpcaoEstacionamento {
                     String ruaVaga = scanner.nextLine();
                     
                     Vaga vaga = vag.consultarVaga(vagas, numeroRua, ruaVaga);
-                    if(vaga == null || vaga.getStatus() != VagaStatus.DISPONIVEL) {
-                        /* talvez seria bom colocar essa especificacao nas oprecaoes? */
-                        interMensagem("\nErro: Vaga não econtrada ou indisponível!\n");
+                    if(vaga == null) {                       
+                        interMensagem("\nErro: Vaga não econtrada!\n");
                         break;
                     }
+                    if(vaga.getStatus() != VagaStatus.DISPONIVEL) {
+                        
+                        interMensagem("\nErro: Vaga indisponível!\n");
+                        break;
+                    }
+                    
                     vaga.setStatus(VagaStatus.OCUPADA);
                     
                     interMensagem("Digite a placa do veículo:");
                     String placa = scanner.nextLine();
                     Veiculo veiculo = clie.verificarVeiculo(clientes, placa);
                     
-                    if(veiculo == null || 
-                    veiculo.getModel().getTipoVeiculo() != vaga.getTipo()) {
-                        /*Ja comentando que bagunça eh essa ai em cima no if, eh literalmente vendo se o veiculo
-                        e vaga sao do mesmo tipo para poder estacionar*/
-                        interMensagem("\nErro: Veículo não econtrado ou o tipo de veículo não é compatível a o tipo de vaga!\n");
+                    if(veiculo == null) {
+                       interMensagem("\nErro: Veículo não econtrado!\n"); 
+                       break;
+                    }
+                        
+                    if( veiculo.getModel().getTipoVeiculo() != vaga.getTipo()) {                       
+                        interMensagem("\nErro: O tipo de veículo não é compatível a o tipo de vaga!\n");
                         break;
                     }
+                   
                     /*Achar a tarifa que pertence ao ticket*/
                     Tarifa atual = tic.tarifaProxima(tarifas, LocalDateTime.now(), veiculo);
                     if(atual == null){
-                        interMensagem("Erro: Não existe uma tarifa para esse tipo de vaga nesse período!");
+                        interMensagem("\nErro: Não existe uma tarifa para esse tipo de vaga nesse período!\n");
                         break;
                     }
                     
@@ -92,7 +101,7 @@ public class InterfaceOpcaoEstacionamento {
                     
                     tickets.add(novoTicket);
                     
-                    interMensagem("\nTicket criado com sucesso!\n");                   
+                    interMensagem("\nTicket de código " + novoTicket.getCodigo() + " criado com sucesso!\n");                   
                 break;    
                 case 2:
                     /*retirar*/
@@ -121,7 +130,7 @@ public class InterfaceOpcaoEstacionamento {
                         scanner.nextLine();
                         switch(opcao3){
                             case 1: /*adicionar tarifa*/
-                                interMensagem("Digite a data que deseja iniciar tarifa:");
+                                interMensagem("Digite a data que deseja iniciar tarifa (em dia/mês/ano horas:minutos) :");
                                 interMensagem("Se deseja cadastrar uma tarifa instantânea, digite: Agora");
                                 String data = scanner.nextLine();
                                 LocalDateTime inicio;
@@ -129,68 +138,73 @@ public class InterfaceOpcaoEstacionamento {
                                 if(data.toUpperCase().equals("AGORA")) {
                                     inicio = LocalDateTime.now();
                                 } else {
-                                    inicio = LocalDateTime.parse(data, dataBonitinha);
+                                    inicio = LocalDateTime.parse(data, dataFormata);
                                     if(inicio.isBefore(LocalDateTime.now())) {
-                                        interMensagem("Erro: Nao é possível cadastrar uma tarifa no passado!");
+                                        interMensagem("\nErro: Nao é possível cadastrar uma tarifa no passado!\n");
                                         break;
                                     }
                                 }                                                              
                                                                             
-                                interMensagem("Digite o valor da primeira hora:");
+                                interMensagem("Digite o valor da Primeira Hora:");
                                 double precoPrimeira = scanner.nextDouble();
                                 scanner.nextLine();
                                 
-                                interMensagem("Digite o valor das horas subsequentes:");
+                                interMensagem("Digite o valor das Horas Subsequentes:");
                                 double precoHora = scanner.nextDouble();
                                 scanner.nextLine();
                                 
-                                interMensagem("Digite o/s dia/s da semana dessa tarifa (Domingo, Segunda, Terça, Quarta, Quinta, Sexta, Sábado)");
-                                interMensagem("Caso queira para todos os dias da Semana, digite: Todos");
-                                List<DiaSemana> diaSmns = new  ArrayList<>();
-                                String dias = scanner.nextLine();
-                                dias = dias.toUpperCase();
-                    
-                                if(dias.contains("DOMINGO") || dias.contains("TODOS")) 
-                                   diaSmns.add(DiaSemana.DOMINGO);
-                                if(dias.contains("SEGUNDA") || dias.contains("TODOS"))
-                                   diaSmns.add(DiaSemana.SEGUNDA); 
-                                if(dias.contains("TERCA") || dias.contains("TODOS"))
-                                   diaSmns.add(DiaSemana.TERCA); 
-                                if(dias.contains("QUARTA") || dias.contains("TODOS"))
-                                   diaSmns.add(DiaSemana.QUARTA); 
-                                if(dias.contains("QUINTA") || dias.contains("TODOS"))
-                                   diaSmns.add(DiaSemana.QUINTA); 
-                                if(dias.contains("SEXTA") || dias.contains("TODOS"))
-                                   diaSmns.add(DiaSemana.SEXTA); 
-                                if(dias.contains("SABADO") || dias.contains("TODOS"))
-                                   diaSmns.add(DiaSemana.SABADO); 
-                                
-                                interMensagem("Digite o/s veículo/s dessa tarifa (MOTOCICLETA, MEDIOPORTE, GRANDEPORTE):");
-                                interMensagem("Caso queira para todos os tipos de veículo, digite: Todos");
+                             
+                                List<DiaSemana> diaSmns = new  ArrayList<>();                        
                                 List<TipoVeiculo> listaTps = new  ArrayList<>();
-                                String tipos = scanner.nextLine();
-                                tipos = tipos.toUpperCase();
-                    
-                                if(tipos.contains("MOTOCICLETA") || tipos.contains("TODOS"))
-                                   listaTps.add(TipoVeiculo.MOTOCICLETA);
-                                if(tipos.contains("MEDIOPORTE") || tipos.contains("TODOS"))
-                                   listaTps.add(TipoVeiculo.MEDIOPORTE); 
-                                if(tipos.contains("GRANDEPORTE") || tipos.contains("TODOS"))
-                                   listaTps.add(TipoVeiculo.GRANDEPORTE); 
+                                listasVS.OperacaoListaTVDS(diaSmns, listaTps);
                                                                               
                                 Tarifa novaTarifa = new Tarifa(inicio, precoPrimeira, precoHora, diaSmns, listaTps);
                                 tarifas.add(novaTarifa);
 
-                                interMensagem("\nTarifa de " + data + " cadastrada com sucesso!\n");                                                     
+                                interMensagem("\nTarifa de " + inicio.format(dataFormata) + " cadastrada com sucesso!\n");                                                     
                             break; 
                             case 2: /*excluir tarifa*/
-
+                                interMensagem("Digite a data da tarifa que deseja excluir iniciar tarifa (em dia/mês/ano horas:minutos) :");
+                                data = scanner.nextLine();                              
+                                List<DiaSemana> dias = new ArrayList<>();                        
+                                List<TipoVeiculo> tps = new ArrayList<>();
+                                listasVS.OperacaoListaTVDS(dias, tps);
+                                Tarifa tarifaEx = tic.buscarTarifa(tarifas, data, dias, tps);
+                                if(tarifaEx == null){
+                                    interMensagem("\nErro: Tarifa não encontrada!\n");
+                                    break;
+                                }
+                                tarifas.remove(tarifaEx);  
+                                interMensagem("\nTarifa Removida com sucesso!\n");
                             break;
                             case 3: /*editar tarifa*/
-
+                                interMensagem("Digite a data da tarifa que deseja excluir iniciar tarifa (em dia/mês/ano horas:minutos) :");
+                                data = scanner.nextLine();
+                                
+                                dias = new ArrayList<>();                        
+                                tps = new ArrayList<>();
+                                listasVS.OperacaoListaTVDS(dias, tps);
+                                tarifaEx = tic.buscarTarifa(tarifas, data, dias, tps);
+                                if(tarifaEx == null){
+                                    interMensagem("\nErro: Tarifa não encontrada!\n");
+                                    break;
+                                }
+                                interMensagem("Digite a nova data (em dia/mês/ano horas:minutos):");
+                                String novaData = scanner.nextLine();
+                                tarifaEx.setInicio(LocalDateTime.parse(novaData, dataFormata));
+                                interMensagem("Digite o novo valor da Primeira Hora:");
+                                double novaPH = scanner.nextDouble();
+                                tarifaEx.setValorPrimeiraHora(novaPH);
+                                interMensagem("Digite o novo valor da Horas Subsequentes");
+                                double novaHS = scanner.nextDouble();
+                                tarifaEx.setValorHoraSubsequente(novaHS);               
+                                interMensagem("\nTarifa Editada com sucesso!\n");
+                            break;
+                            case 4: /*imprimir tarifas*/
+                                tic.relatorioTarifa(tarifas);
                             break;
                         }
-                    }while(opcao3 != 4);
+                    }while(opcao3 != 5);
                 break;    
             }    
         }while(opcao2 != 5);

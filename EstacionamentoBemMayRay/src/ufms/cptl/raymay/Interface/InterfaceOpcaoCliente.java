@@ -4,9 +4,7 @@
  */
 package ufms.cptl.raymay.Interface;
 
-import java.io.PrintStream;
-import java.io.UnsupportedEncodingException;
-import java.nio.charset.StandardCharsets;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
@@ -14,7 +12,6 @@ import ufms.cptl.raymay.Externo.Automovel.Cor;
 import ufms.cptl.raymay.Externo.Automovel.Veiculo;
 import ufms.cptl.raymay.Externo.Individuo.Cliente;
 import static ufms.cptl.raymay.Interface.InterfaceEnumOpcao.OpcaoCliente.imprimeCliente;
-import ufms.cptl.raymay.Interface.InterfaceEnumOpcao.OpcaoVeiculo;
 import static ufms.cptl.raymay.Interface.InterfaceEnumOpcao.OpcaoVeiculo.imprimeVeiculo;
 import static ufms.cptl.raymay.Interface.MostraMensagem.interMensagem;
 import ufms.cptl.raymay.Interno.Tarifa;
@@ -160,7 +157,7 @@ public class InterfaceOpcaoCliente {
                         }while(opcao3 != 4);
                     break;    
                     case 6: 
-                        /*listar todos os cadastros do(s)? cliente*/
+                        /*listar todos os cadastros de cliente*/
                         clie.relatorioCliente(clientes);
                     break;    
                 }

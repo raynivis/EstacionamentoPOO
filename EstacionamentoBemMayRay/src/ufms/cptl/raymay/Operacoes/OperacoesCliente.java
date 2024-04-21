@@ -5,11 +5,8 @@ package ufms.cptl.raymay.Operacoes;
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
 import java.util.List;
-import ufms.cptl.raymay.Externo.Automovel.Modelo;
 import ufms.cptl.raymay.Externo.Automovel.Veiculo;
 import ufms.cptl.raymay.Externo.Individuo.Cliente;
-import java.util.Scanner;
-import ufms.cptl.raymay.Externo.Automovel.Cor;
 import static ufms.cptl.raymay.Interface.OperacaoMostraMensagem.operacaoMensagem;
 
 /**
@@ -84,7 +81,7 @@ public class OperacoesCliente { /*Criamos essa classe para deixa o código do es
             System.out.println(c.toString());
             operacaoMensagem("Veículos:");
             for(Veiculo v : c.getVeiculos()){
-                operacaoMensagem("        Placa: " + v.getPlaca());
+                operacaoMensagem("        Placa: " + v.getPlaca() + "       Tipo: " + v.getModel().getTipoVeiculo());
             }
             operacaoMensagem("///////////////////////////////////////////////////");
         }
@@ -96,7 +93,7 @@ public class OperacoesCliente { /*Criamos essa classe para deixa o código do es
                 operacaoMensagem(c.toString());
                 operacaoMensagem("Veículos:");
                 for(Veiculo v : c.getVeiculos()){
-                    operacaoMensagem("        Placa: " + v.getPlaca());
+                    operacaoMensagem("        Placa: " + v.getPlaca() + "       Tipo:" + v.getModel().getTipoVeiculo() );
                 }
                 operacaoMensagem("///////////////////////////////////////////////////");
                 return c;

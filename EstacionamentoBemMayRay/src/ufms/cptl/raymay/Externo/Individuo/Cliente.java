@@ -3,11 +3,8 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
 package ufms.cptl.raymay.Externo.Individuo;
-import ufms.cptl.raymay.Externo.Automovel.Cor;
-import ufms.cptl.raymay.Externo.Automovel.Modelo;
 import ufms.cptl.raymay.Externo.Automovel.Veiculo;
 import java.util.List;
-import java.util.ArrayList;
 /**
  *
  * @author ra
@@ -68,7 +65,7 @@ public class Cliente {
 
     @Override /*Java faz isso de precaucao?*/
     public String toString() {
-        return "Cliente: " + nome + "\nCPF: " + cpf + ",\nTelefone: " + telefone;
+        return "Cliente: " + nome + "\nCPF: " + cpf + "\nTelefone: " + telefone;
     } 
     
     

@@ -4,6 +4,7 @@
  */
 package ufms.cptl.raymay.Interno;
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 import ufms.cptl.raymay.Enum.DiaSemana;
 import ufms.cptl.raymay.Enum.TipoVeiculo;
@@ -14,6 +15,7 @@ import ufms.cptl.raymay.Enum.TipoVeiculo;
  */
 public class Tarifa {
     
+   private static DateTimeFormatter dataBonitinha = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm"); 
    private LocalDateTime inicio;
    private double valorPrimeiraHora;
    private double valorHoraSubsequente;
@@ -27,6 +29,10 @@ public class Tarifa {
         this.diasSemana = diasSemana;
         this.tarifaVeiculos = tarifaVeiculos;
     }
+
+    public static DateTimeFormatter getDataBonitinha() {
+        return dataBonitinha;
+    }   
 
     public LocalDateTime getInicio() {
         return inicio;
@@ -74,6 +80,11 @@ public class Tarifa {
     
    public void setTipoVeiculoNaLista(TipoVeiculo tVeiculo) {
         this.tarifaVeiculos.add(tVeiculo);
+    }
+
+    @Override
+    public String toString() {
+        return  "inicio: " + inicio.format(dataBonitinha) + "\nvalorPrimeiraHora: " + valorPrimeiraHora + "\nvalorHoraSubsequente: " + valorHoraSubsequente;
     }
    
    
