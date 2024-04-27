@@ -5,21 +5,23 @@ package ufms.cptl.raymay.Operacoes;
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
 import java.util.List;
+import ufms.cptl.raymay.Enum.Operando;
 import ufms.cptl.raymay.Externo.Automovel.Veiculo;
 import ufms.cptl.raymay.Externo.Individuo.Cliente;
-import static ufms.cptl.raymay.Interface.OperacaoMostraMensagem.operacaoMensagem;
-
+import ufms.cptl.raymay.Interno.Ticket;
+import static ufms.cptl.raymay.Operacoes.OperacaoMostraMensagem.operacaoMensagem;
 /**
  *
  * @author ra
  */
 
-public class OperacoesCliente { /*Criamos essa classe para deixa o código do estacionamento mais limpo*/
+public class OperacoesCliente {
+/* Essa Classe possui métodos que serão realizados com o cliente, de acordo com a opção escolhida no Menu */
+    OperacoesTicket opTic = new OperacoesTicket();
     
-    
-    /*Procura um Cliente na lista de Clientes e mostra na tela a suas informaçoes */
-    /*retorna verdadeiro se conseguir encontrar o cliente e falso se o cpf do cliente não 
-    estar cadastrado*/
+    /* O método procura um Cliente na lista de Clientes e mostra na tela a suas informaçoes */
+    /* Retorna o Cliente se conseguir encontrar o cliente e NULO se o CPF do cliente não 
+    estiver cadastrado */
     public Cliente verificarCliente(List<Cliente> clientes, String documento){
         for(Cliente i : clientes) {
             if (i.getCpf().equals(documento)) {
@@ -29,17 +31,22 @@ public class OperacoesCliente { /*Criamos essa classe para deixa o código do es
         return null;
     }
     
-    /*Excluir o Cliente da lista de Clientes pelo CPF // talvez fazer de outras formas
-    vai depender do professor*/
-    /* retorna verdadeiro se o cliente for excluido e falso se o cliente não estiver com cpf
-    cadastrado*/
-    public boolean excluirCliente(List<Cliente> clientes, String documento){
+    /* O método exclui o Cliente da lista de Clientes pelo CPF e retorna verdadeiro se o cliente for
+    excluido e falso se o cliente não estiver com CPF cadastrado ou se possuir algum ticket de estacionamento
+    ATIVO ou DESATIVO relacionado a esse cliente */
+    public boolean excluirCliente(List<Cliente> clientes, String documento, List<Ticket> tickets){
         for(Cliente i : clientes) {
             if (i.getCpf().equals(documento)) {
-                clientes.remove(i);
+                for(Veiculo v : i.getVeiculos()) {
+                    if(opTic.verificaTicketVeiculo(clientes, v.getPlaca(), tickets) == null) {
+                        operacaoMensagem("\nO cliente não pode ser excluído pois ele já cadastrou um ticket de estacionamento!\n");
+                        return false;
+                    }    
+                }
                 return true;
             }
-        }
+        }                           
+        operacaoMensagem("\nO cliente não pode ser excluído pois seu CPF não está cadastrado (inexistente)!\n");
         return false;
     }
     
@@ -56,9 +63,9 @@ public class OperacoesCliente { /*Criamos essa classe para deixa o código do es
     public Veiculo verificarVeiculo(List<Cliente> clientes, String placa){
         for(Cliente c : clientes) {
             for(Veiculo v : c.getVeiculos() ) {
-                    if(v.getPlaca().equals(placa)) {                                               
-                            return v;
-                    }
+                if(v.getPlaca().equals(placa)) {                                               
+                    return v;
+                }
             }
         }
         return null;
@@ -67,10 +74,10 @@ public class OperacoesCliente { /*Criamos essa classe para deixa o código do es
     public boolean apagaVeiculo(List<Cliente> clientes, String placa){
         for(Cliente c : clientes) {
             for(Veiculo v : c.getVeiculos() ) {
-                    if(v.getPlaca().equals(placa)) {                                               
-                            c.getVeiculos().remove(v);
-                            return true;
-                    }
+                if(v.getPlaca().equals(placa)) {                                               
+                    c.getVeiculos().remove(v);
+                    return true;
+                }
             }
         }
         return false;

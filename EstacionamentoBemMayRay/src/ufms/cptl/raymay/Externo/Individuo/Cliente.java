@@ -14,6 +14,7 @@ public class Cliente {
     private String cpf;
     private String telefone;
     private List<Veiculo> veiculos;
+    
 
     /*PARA CADASTRAR O CLIENTE É NECESSARIO CADASTRAR PELO MENOS UM VEICULO NA LISTA DE CARROS
     ESTES CONSTRUTOR É INSTACIADO NO CADASTRO DE QUALQUER CLIENTE*/

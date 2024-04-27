@@ -11,20 +11,20 @@ import java.util.Scanner;
 import ufms.cptl.raymay.Externo.Automovel.Cor;
 import ufms.cptl.raymay.Externo.Automovel.Veiculo;
 import ufms.cptl.raymay.Externo.Individuo.Cliente;
-import static ufms.cptl.raymay.Interface.InterfaceEnumOpcao.OpcaoCliente.imprimeCliente;
-import static ufms.cptl.raymay.Interface.InterfaceEnumOpcao.OpcaoVeiculo.imprimeVeiculo;
 import static ufms.cptl.raymay.Interface.MostraMensagem.interMensagem;
 import ufms.cptl.raymay.Interno.Tarifa;
 import ufms.cptl.raymay.Interno.Ticket;
 import ufms.cptl.raymay.Interno.Vaga;
 import ufms.cptl.raymay.Operacoes.OperacoesCliente;
-
 /**
  *
  * @author maymi
  */
 public class InterfaceOpcaoCliente {
     OperacoesCliente clie = new OperacoesCliente();
+    List<Veiculo> veiculos = new ArrayList<>();
+    ItensMenu menuc = new ItensMenu(); /* menuc = Menu de gerencia de Clientes */
+    ItensMenu menuve = new ItensMenu(); /*menuve = Menu de gerencia de Veículos */
     
     InterfaceCadastraVeiculo InVeiculo = new InterfaceCadastraVeiculo();
     
@@ -34,9 +34,9 @@ public class InterfaceOpcaoCliente {
     
     public void opcoesCliente(List<Cliente> clientes, List<Vaga> vagas, List<Ticket> tickets, List<Tarifa> tarifas) {       
         do{
-            /* Utiliza o método criado em OpcaoCliente no package InterfaceEnumOpcao, reduzindo o tamanho
-            de linhas das classes da interface */
-            imprimeCliente();
+            /* Utiliza o método criado em ItensMenu, reduzindo o tamanho
+            de linhas das Classes da interface */
+            menuc.imprimeCliente();
             opcao2 = scanner.nextByte();
             scanner.nextLine();  
                 switch (opcao2) {
@@ -53,7 +53,6 @@ public class InterfaceOpcaoCliente {
                         }
                         interMensagem("Digite o telefone:");
                         String telefone = scanner.nextLine();
-                        List<Veiculo> veiculos = new ArrayList<>();
                         Cliente novoCliente = new Cliente(nome, cpf, telefone, veiculos);
                          
                         Veiculo Novoveiculo = InVeiculo.receberVeiculo(clientes, novoCliente);                      
@@ -80,10 +79,8 @@ public class InterfaceOpcaoCliente {
                         /*excluir cliente*/
                         interMensagem("Digite o CPF:");
                         cpf = scanner.nextLine();
-                        if(clie.excluirCliente(clientes, cpf) == true) {
+                        if(clie.excluirCliente(clientes, cpf, tickets) == true) {
                             interMensagem("\nCliente excluído com sucesso!\n");
-                        } else {
-                            interMensagem("\nCliente não encotrado!\n");
                         }
                     break;    
                     case 4:
@@ -110,13 +107,13 @@ public class InterfaceOpcaoCliente {
                             break; 
                         } 
                         do{
-                            /* Utiliza o método criado em OpcaoVeiculo no package InterfaceEnumOpcao, reduzindo o tamanho
-                            de linhas das classes da interface */
-                            imprimeVeiculo();
+                            /* Utiliza o método criado em ItensMenu, reduzindo o tamanho
+                            de linhas das Classes da interface */
+                            menuve.imprimeVeiculo();
                             opcao3 = scanner.nextByte();
                             scanner.nextLine();
                             switch(opcao3){
-                                case 1: /*Adicionar um veiculo*/
+                                case 1: /*Adicionar um veículo*/
                                     Veiculo veiculoAdicional = InVeiculo.receberVeiculo(clientes, operador); 
                                     if(veiculoAdicional != null) {
                                         operador.setVeiculoNaLista(veiculoAdicional);

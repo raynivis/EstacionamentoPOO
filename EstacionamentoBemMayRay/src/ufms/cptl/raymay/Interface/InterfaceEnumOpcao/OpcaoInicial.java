@@ -3,21 +3,12 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
 package ufms.cptl.raymay.Interface.InterfaceEnumOpcao;
-
-import java.io.PrintStream;
-import java.io.UnsupportedEncodingException;
-import java.nio.charset.StandardCharsets;
-
 /**
  *
  * @author maymi
  */
 public class OpcaoInicial {
-    
-    /**
-    * @charset UTF-8 -> comando para imprimir simbolos especiais no terminal
-    */
-    @SuppressWarnings("CharsetObjectCanBeUsed")
+
     public enum InterInicial{
         GERENCIAR_CLIENTES(1, "Gerenciar clientes"),
         GERENCIAR_VAGAS(2, "Gerenciar vagas"),
@@ -26,6 +17,9 @@ public class OpcaoInicial {
         TOTAL_FATURADO(5, "Consultar total faturado em um período"),
         SAIR(6, "Sair do programa");
         
+        /* Como esse enum trabalha com a impressão de menus, os atributos são private -> final <-  pois
+        não serão alterados, caso fossem isso traria confusão ao usuário e perderia a característica
+        imutável dos enums */
         public int valorOpcao;
         public String desc;
 
@@ -33,31 +27,14 @@ public class OpcaoInicial {
             this.valorOpcao = valorOpcao;
             this.desc = desc;
         }
-        
+        /* Como se trata de um enum e menu, não será necessário métodos setters na Classe, pois os atributos
+        não serão alterados ou definidos posteriormente e já foram inicializados no construtor */
         public int getValorOpcao() {
             return valorOpcao;
         }
 
-        public void setValorOpcao(int valorOpcao) {
-            this.valorOpcao = valorOpcao;
-        }
-
         public String getDesc() {
             return desc;
-        }
-
-        public void setDesc(String desc) {
-            this.desc = desc;
         }  
     } 
-    
-    public static void imprimeInicio(){
-        try {
-            PrintStream out = new PrintStream(System.out, true, StandardCharsets.UTF_8.toString());
-            for (OpcaoInicial.InterInicial op : OpcaoInicial.InterInicial.values()) {
-                out.println(op.getValorOpcao() + " - " + op.getDesc());
-            }
-        } catch (UnsupportedEncodingException e) {
-        }
-    }  
 }
