@@ -7,7 +7,7 @@ import java.util.List;
 import ufms.cptl.raymay.Enum.TipoVeiculo;
 import ufms.cptl.raymay.Enum.VagaStatus;
 import static ufms.cptl.raymay.Operacoes.OperacaoMostraMensagem.operacaoMensagem;
-import ufms.cptl.raymay.Interno.Vaga;
+import ufms.cptl.raymay.Classes.Interno.Vaga;
 /**
  *
  * @author maymi
@@ -21,7 +21,7 @@ public class OperacoesVagas {
                 return false;
             }
         }
-        vagas.add(novaVaga);
+       vagas.add(novaVaga);
        return true;
     }
 
@@ -94,6 +94,7 @@ public class OperacoesVagas {
             if(v.getStatus() == VagaStatus.DISPONIVEL) {
                 System.out.println(v.toString());
             }
+            operacaoMensagem("///////////////////////////////////////////////////");
         }
     } 
 }

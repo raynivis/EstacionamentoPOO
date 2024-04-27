@@ -14,7 +14,7 @@ import static ufms.cptl.raymay.Interface.MostraMensagem.interMensagem;
  *
  * @author ra
  */
-public class InterfarceListaTipoSemanas {
+public class AuxiliarInterfarceListaTipoSemanas {
     Scanner scanner = new Scanner(System.in);
     
     public void OperacaoListaTVDS(List<DiaSemana> diaSmns, List<TipoVeiculo> listaTps){

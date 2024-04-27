@@ -8,25 +8,24 @@ package ufms.cptl.raymay.Interface;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
-import ufms.cptl.raymay.Externo.Automovel.Cor;
-import ufms.cptl.raymay.Externo.Automovel.Veiculo;
-import ufms.cptl.raymay.Externo.Individuo.Cliente;
+import ufms.cptl.raymay.Classes.Externo.Automovel.Cor;
+import ufms.cptl.raymay.Classes.Externo.Automovel.Veiculo;
+import ufms.cptl.raymay.Classes.Externo.Individuo.Cliente;
 import static ufms.cptl.raymay.Interface.MostraMensagem.interMensagem;
-import ufms.cptl.raymay.Interno.Tarifa;
-import ufms.cptl.raymay.Interno.Ticket;
-import ufms.cptl.raymay.Interno.Vaga;
+import ufms.cptl.raymay.Classes.Interno.Tarifa;
+import ufms.cptl.raymay.Classes.Interno.Ticket;
+import ufms.cptl.raymay.Classes.Interno.Vaga;
 import ufms.cptl.raymay.Operacoes.OperacoesCliente;
 /**
  *
  * @author maymi
  */
 public class InterfaceOpcaoCliente {
-    OperacoesCliente clie = new OperacoesCliente();
-    List<Veiculo> veiculos = new ArrayList<>();
+    OperacoesCliente opCliente = new OperacoesCliente();
     ItensMenu menuc = new ItensMenu(); /* menuc = Menu de gerencia de Clientes */
     ItensMenu menuve = new ItensMenu(); /*menuve = Menu de gerencia de Veículos */
     
-    InterfaceCadastraVeiculo InVeiculo = new InterfaceCadastraVeiculo();
+    AuxiliarInterfaceCadastraVeiculo InVeiculo = new AuxiliarInterfaceCadastraVeiculo();
     
     byte opcao2;
     byte opcao3;
@@ -47,12 +46,13 @@ public class InterfaceOpcaoCliente {
                         interMensagem("Digite o CPF:");
                         String cpf = scanner.nextLine();
                         
-                        if(clie.verificarCliente(clientes, cpf) != null) {
+                        if(opCliente.verificarCliente(clientes, cpf) != null) {
                             interMensagem("\nErro ao cadastrar: CPF já existente no sistema.\n");
                             break;
                         }
                         interMensagem("Digite o telefone:");
                         String telefone = scanner.nextLine();
+                        List<Veiculo> veiculos = new ArrayList<>();
                         Cliente novoCliente = new Cliente(nome, cpf, telefone, veiculos);
                          
                         Veiculo Novoveiculo = InVeiculo.receberVeiculo(clientes, novoCliente);                      
@@ -71,7 +71,7 @@ public class InterfaceOpcaoCliente {
                         /*consultar cliente por documento*/
                         interMensagem("Digite o CPF:");
                         cpf = scanner.nextLine();
-                        if(clie.relatorioCliente(clientes, cpf) == null){
+                        if(opCliente.relatorioCliente(clientes, cpf) == null){
                             interMensagem("\nCliente não encontrado!\n");
                         }                        
                     break;   
@@ -79,15 +79,23 @@ public class InterfaceOpcaoCliente {
                         /*excluir cliente*/
                         interMensagem("Digite o CPF:");
                         cpf = scanner.nextLine();
-                        if(clie.excluirCliente(clientes, cpf, tickets) == true) {
+                        Cliente clieteEx = opCliente.verificarCliente(clientes, cpf);
+                        if(clieteEx == null) {
+                            interMensagem("\nErro: Cliente nao encontrado!\n");
+                        }
+                        if(opCliente.excluirCliente(clientes, clieteEx, tickets) == true) {
+                            clieteEx = null;
                             interMensagem("\nCliente excluído com sucesso!\n");
+                        }
+                        else {
+                            interMensagem("\nErro: Não é possivel excluir o cliente, pois existe um Ticket em seu nome!\n");
                         }
                     break;    
                     case 4:
                         /*editar cliente*/
                         interMensagem("Digite o CPF:");
                         cpf = scanner.nextLine();
-                        if(clie.verificarCliente(clientes, cpf) == null) {
+                        if(opCliente.verificarCliente(clientes, cpf) == null) {
                            interMensagem("\nErro: cliente não econtrado!\n");
                             break; 
                         }                                                  
@@ -95,13 +103,13 @@ public class InterfaceOpcaoCliente {
                         String novoNome = scanner.nextLine();
                         interMensagem("Digite o novo telefone:");
                         String novoTelefone = scanner.nextLine();
-                        clie.editarCliente(clie.verificarCliente(clientes, cpf), novoNome, novoTelefone);
+                        opCliente.editarCliente(opCliente.verificarCliente(clientes, cpf), novoNome, novoTelefone);
                     break;    
                     case 5:
                         /*gerenciar veiculos do cliente*/
                         interMensagem("Digite o CPF do cliente que deseja gerenciar os veículos:");
                         cpf = scanner.nextLine();
-                        Cliente operador = clie.verificarCliente(clientes, cpf);
+                        Cliente operador = opCliente.verificarCliente(clientes, cpf);
                         if(operador == null) {
                            interMensagem("\nErro: Cliente não econtrado!\n");
                             break; 
@@ -126,7 +134,7 @@ public class InterfaceOpcaoCliente {
                                 case 2: /*Remover um veiculo*/
                                     interMensagem("Digite a placa:");
                                     String placa = scanner.nextLine();
-                                    if(clie.apagaVeiculo(clientes, placa) == true) {
+                                    if(opCliente.apagaVeiculo(clientes, placa) == true) {
                                         interMensagem("\nVeículo excluído com sucesso!\n");
                                     } else {
                                         interMensagem("\nVeículo não encontrado!\n");
@@ -135,8 +143,8 @@ public class InterfaceOpcaoCliente {
                                 case 3: /*Editar um veiculo*/
                                     interMensagem("Digite a placa:");
                                     placa = scanner.nextLine();
-                                    if(clie.verificarVeiculo(clientes, placa) != null) {                                   
-                                        Veiculo auxVeiculo = clie.verificarVeiculo(clientes, placa);
+                                    if(opCliente.verificarVeiculo(clientes, placa) != null) {                                   
+                                        Veiculo auxVeiculo = opCliente.verificarVeiculo(clientes, placa);
 
                                         interMensagem("Digite a nova cor e descrição:");
                                         String cor = scanner.nextLine();
@@ -150,13 +158,17 @@ public class InterfaceOpcaoCliente {
                                         interMensagem("\nVeículo não encontrado!\n");
                                     }
                                 break;
+                                default:
+                                break;
                             }
                         }while(opcao3 != 4);
                     break;    
                     case 6: 
                         /*listar todos os cadastros de cliente*/
-                        clie.relatorioCliente(clientes);
-                    break;    
+                        opCliente.relatorioCliente(clientes);
+                    break; 
+                    default:
+                    break;
                 }
         }while(opcao2 != 7);
         

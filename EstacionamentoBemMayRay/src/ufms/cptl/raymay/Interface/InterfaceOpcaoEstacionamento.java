@@ -13,12 +13,12 @@ import ufms.cptl.raymay.Enum.DiaSemana;
 import ufms.cptl.raymay.Enum.Operando;
 import ufms.cptl.raymay.Enum.TipoVeiculo;
 import ufms.cptl.raymay.Enum.VagaStatus;
-import ufms.cptl.raymay.Externo.Automovel.Veiculo;
-import ufms.cptl.raymay.Externo.Individuo.Cliente;
+import ufms.cptl.raymay.Classes.Externo.Automovel.Veiculo;
+import ufms.cptl.raymay.Classes.Externo.Individuo.Cliente;
 import static ufms.cptl.raymay.Interface.MostraMensagem.interMensagem;
-import ufms.cptl.raymay.Interno.Tarifa;
-import ufms.cptl.raymay.Interno.Ticket;
-import ufms.cptl.raymay.Interno.Vaga;
+import ufms.cptl.raymay.Classes.Interno.Tarifa;
+import ufms.cptl.raymay.Classes.Interno.Ticket;
+import ufms.cptl.raymay.Classes.Interno.Vaga;
 import ufms.cptl.raymay.Operacoes.OperacoesCliente;
 import ufms.cptl.raymay.Operacoes.OperacoesTicket;
 import ufms.cptl.raymay.Operacoes.OperacoesVagas;
@@ -28,10 +28,10 @@ import ufms.cptl.raymay.Operacoes.OperacoesVagas;
  * @author maymi
  */
 public class InterfaceOpcaoEstacionamento {
-    OperacoesVagas vag = new OperacoesVagas(); 
-    OperacoesCliente clie = new OperacoesCliente();
-    OperacoesTicket tic = new OperacoesTicket();
-    InterfarceListaTipoSemanas listasVS = new InterfarceListaTipoSemanas();
+    OperacoesVagas opVaga = new OperacoesVagas(); 
+    OperacoesCliente opCliente = new OperacoesCliente();
+    OperacoesTicket opTicket = new OperacoesTicket();
+    AuxiliarInterfarceListaTipoSemanas listasVS = new AuxiliarInterfarceListaTipoSemanas();
     ItensMenu menue = new ItensMenu(); /* menue = Menu de gerencia do Estacionamento */
     ItensMenu menut = new ItensMenu(); /*menut = Menu de gerencia das Tarifas */
     
@@ -55,13 +55,14 @@ public class InterfaceOpcaoEstacionamento {
                         break;
                     }
                     
-                    interMensagem("Digite o número e a rua da vaga que pretende ser estacionada:");
+                    interMensagem("Digite o número da vaga que pretende ser estacionada:");
                     int numeroRua = scanner.nextInt();
                     scanner.nextLine(); 
+                    interMensagem("Digite a rua da vaga que pretende ser estacionada:");
                     String ruaVaga = scanner.nextLine();
                     
                     
-                    Vaga vaga = vag.consultarVagaEstacionamento(vagas, numeroRua, ruaVaga);
+                    Vaga vaga = opVaga.consultarVagaEstacionamento(vagas, numeroRua, ruaVaga);
                     if(vaga == null) {                       
                         interMensagem("\nErro: Vaga não econtrada!\n");
                         break;
@@ -78,20 +79,17 @@ public class InterfaceOpcaoEstacionamento {
                     interMensagem("Vaga disponível!\nDigite a placa do veículo:");
                     String placa = scanner.nextLine();
                   
-                    Veiculo veiculo = clie.verificarVeiculo(clientes, placa);
+                    Veiculo veiculo = opCliente.verificarVeiculo(clientes, placa);
                     
                     if(veiculo == null) {
                        interMensagem("\nErro: Veículo não econtrado!\n"); 
                        break;
                     }
                     
-                    /* TEM QUE AJEITAR AQUI!!! */
-                    Ticket ticket = tic.verificaTicketVeiculo(clientes, placa, tickets);
-                    if(ticket != null){
-                        if(ticket.getStatus().equals(Operando.ATIVO)) {
-                            interMensagem("\nErro: O veículo já possui um ticket de estacionamento ATIVO (está estacionado)!\n");
-                            break;
-                        }
+                    Ticket veriTicket = opTicket.verificaTicketVeiculo(clientes, placa, tickets);
+                    if(veriTicket != null){                       
+                        interMensagem("\nErro: O veículo já possui um ticket de estacionamento ATIVO (está estacionado)!\n");
+                        break;
                     }
                         
                     if(veiculo.getModel().getTipoVeiculo() != vaga.getTipo()) {                       
@@ -100,13 +98,13 @@ public class InterfaceOpcaoEstacionamento {
                     }
                    
                     /*Achar a tarifa que pertence ao ticket*/
-                    Tarifa atual = tic.tarifaProxima(tarifas, LocalDateTime.now(), veiculo);
+                    Tarifa atual = opTicket.tarifaProxima(tarifas, LocalDateTime.now(), veiculo);
                     if(atual == null){
                         interMensagem("\nErro: Não existe uma tarifa para esse tipo de vaga nesse período!\n");
                         break;
                     }
                     
-                    Ticket novoTicket = new Ticket(tarifaTicket, veiculoTicket, vagaTicket);
+                    Ticket novoTicket = new Ticket(atual, veiculo, vaga);
                     vaga.setStatus(VagaStatus.OCUPADA);
                     
                     novoTicket.setStatus(Operando.ATIVO);
@@ -118,20 +116,23 @@ public class InterfaceOpcaoEstacionamento {
                 break;    
                 case 2:
                     /*retirar*/
-                    interMensagem("Digite o número e a rua que deseja retirar o veículo:");
-                    int numero = scanner.nextInt();
-                    scanner.nextLine();
-                    String rua = scanner.nextLine();
-                     
-                    if(tic.retirar(tickets, vagas, numero, rua) == false) {
-                        interMensagem("\nVaga não encontrada!\n");
+                    interMensagem("Digite a placa do veículo que deseja retirar:");
+                    placa = scanner.nextLine();
+                    
+                    Veiculo retirar = opCliente.verificarVeiculo(clientes, placa);
+                    if(retirar == null) {
+                        interMensagem("\nVeiculo não encontrado nos Clientes!\n");
+                    }
+                    
+                    if(opTicket.retirar(tickets, retirar) == false) {
+                        interMensagem("\nVeiculo não está estacionado!\n");
                     } else {
                         interMensagem("\nTicket liberado e vaga liberada!\n");
                     }
                 break;    
                 case 3:
                     /*Listar todas as vagas disponíveis do estacionamento*/
-                    vag.listarVagasDisponiveis(vagas);
+                    opVaga.listarVagasDisponiveis(vagas);
                 break;    
                 case 4:
                     /*Gerenciar tarifas*/
@@ -170,6 +171,11 @@ public class InterfaceOpcaoEstacionamento {
                                 List<DiaSemana> diaSmns = new  ArrayList<>();                        
                                 List<TipoVeiculo> listaTps = new  ArrayList<>();
                                 listasVS.OperacaoListaTVDS(diaSmns, listaTps);
+                                
+                                if(opTicket.buscarTarifa(tarifas, inicio.format(dataFormata), diaSmns, listaTps) != null){
+                                    interMensagem("Erro: Você ja cadastrou uma Tarifa desse tipo para essa data!");
+                                    break;
+                                }
                                                                               
                                 Tarifa novaTarifa = new Tarifa(inicio, precoPrimeira, precoHora, diaSmns, listaTps);
                                 tarifas.add(novaTarifa);
@@ -182,7 +188,7 @@ public class InterfaceOpcaoEstacionamento {
                                 List<DiaSemana> dias = new ArrayList<>();                        
                                 List<TipoVeiculo> tps = new ArrayList<>();
                                 listasVS.OperacaoListaTVDS(dias, tps);
-                                Tarifa tarifaEx = tic.buscarTarifa(tarifas, data, dias, tps);
+                                Tarifa tarifaEx = opTicket.buscarTarifa(tarifas, data, dias, tps);
                                 if(tarifaEx == null){
                                     interMensagem("\nErro: Tarifa não encontrada!\n");
                                     break;
@@ -197,7 +203,7 @@ public class InterfaceOpcaoEstacionamento {
                                 dias = new ArrayList<>();                        
                                 tps = new ArrayList<>();
                                 listasVS.OperacaoListaTVDS(dias, tps);
-                                tarifaEx = tic.buscarTarifa(tarifas, data, dias, tps);
+                                tarifaEx = opTicket.buscarTarifa(tarifas, data, dias, tps);
                                 if(tarifaEx == null){
                                     interMensagem("\nErro: Tarifa não encontrada!\n");
                                     break;
@@ -214,11 +220,15 @@ public class InterfaceOpcaoEstacionamento {
                                 interMensagem("\nTarifa editada com sucesso!\n");
                             break;
                             case 4: /*imprimir tarifas*/
-                                tic.relatorioTarifa(tarifas);
+                                opTicket.relatorioTarifa(tarifas);
+                            break;
+                            default:
                             break;
                         }
                     }while(opcao3 != 5);
-                break;    
+                break; 
+                default:
+                break;
             }    
         }while(opcao2 != 5);
        

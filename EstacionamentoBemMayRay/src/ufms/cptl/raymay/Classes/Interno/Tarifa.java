@@ -2,7 +2,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
-package ufms.cptl.raymay.Interno;
+package ufms.cptl.raymay.Classes.Interno;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
@@ -15,7 +15,7 @@ import ufms.cptl.raymay.Enum.TipoVeiculo;
  */
 public class Tarifa {
     
-   private static DateTimeFormatter dataBonitinha = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm"); 
+   private DateTimeFormatter dataBonitinha = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm"); 
    private LocalDateTime inicio;
    private double valorPrimeiraHora;
    private double valorHoraSubsequente;
@@ -29,10 +29,6 @@ public class Tarifa {
         this.diasSemana = diasSemana;
         this.tarifaVeiculos = tarifaVeiculos;
     }
-
-    public static DateTimeFormatter getDataBonitinha() {
-        return dataBonitinha;
-    }   
 
     public LocalDateTime getInicio() {
         return inicio;

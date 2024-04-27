@@ -7,17 +7,17 @@ package ufms.cptl.raymay.Interface;
 import java.util.List;
 import java.util.Scanner;
 import ufms.cptl.raymay.Enum.TipoVeiculo;
-import ufms.cptl.raymay.Externo.Automovel.Cor;
-import ufms.cptl.raymay.Externo.Automovel.Modelo;
-import ufms.cptl.raymay.Externo.Automovel.Veiculo;
-import ufms.cptl.raymay.Externo.Individuo.Cliente;
+import ufms.cptl.raymay.Classes.Externo.Automovel.Cor;
+import ufms.cptl.raymay.Classes.Externo.Automovel.Modelo;
+import ufms.cptl.raymay.Classes.Externo.Automovel.Veiculo;
+import ufms.cptl.raymay.Classes.Externo.Individuo.Cliente;
 import static ufms.cptl.raymay.Interface.MostraMensagem.interMensagem;
 
 /**
  *
  * @author maymi
  */
-public class InterfaceCadastraVeiculo {
+public class AuxiliarInterfaceCadastraVeiculo {
     Scanner scanner = new Scanner(System.in);
     
     public Veiculo receberVeiculo(List<Cliente> clientes, Cliente cliente) {

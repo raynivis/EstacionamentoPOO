@@ -2,8 +2,8 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
-package ufms.cptl.raymay.Externo.Individuo;
-import ufms.cptl.raymay.Externo.Automovel.Veiculo;
+package ufms.cptl.raymay.Classes.Externo.Individuo;
+import ufms.cptl.raymay.Classes.Externo.Automovel.Veiculo;
 import java.util.List;
 /**
  *

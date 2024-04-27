@@ -8,11 +8,11 @@ import java.util.List;
 import java.util.Scanner;
 import ufms.cptl.raymay.Enum.TipoVeiculo;
 import ufms.cptl.raymay.Enum.VagaStatus;
-import ufms.cptl.raymay.Externo.Individuo.Cliente;
+import ufms.cptl.raymay.Classes.Externo.Individuo.Cliente;
 import static ufms.cptl.raymay.Interface.MostraMensagem.interMensagem;
-import ufms.cptl.raymay.Interno.Tarifa;
-import ufms.cptl.raymay.Interno.Ticket;
-import ufms.cptl.raymay.Interno.Vaga;
+import ufms.cptl.raymay.Classes.Interno.Tarifa;
+import ufms.cptl.raymay.Classes.Interno.Ticket;
+import ufms.cptl.raymay.Classes.Interno.Vaga;
 import ufms.cptl.raymay.Operacoes.OperacoesVagas;
 
 /**
@@ -20,7 +20,7 @@ import ufms.cptl.raymay.Operacoes.OperacoesVagas;
  * @author maymi
  */
 public class InterfaceOpcaoVaga {
-    OperacoesVagas vag = new OperacoesVagas(); 
+    OperacoesVagas opVaga = new OperacoesVagas(); 
     ItensMenu menuva = new ItensMenu(); /*menuva = Menu de gerencia das Vagas*/
     byte opcao2;
     Scanner scanner = new Scanner(System.in);
@@ -49,7 +49,7 @@ public class InterfaceOpcaoVaga {
                                         
                     Vaga novaVaga = new Vaga(numero, rua, vagastatus, tipoV);
                     
-                    if (vag.cadastrarVaga(vagas, novaVaga, rua, numero) == true){
+                    if (opVaga.cadastrarVaga(vagas, novaVaga, rua, numero) == true){
                         interMensagem("\nVaga cadastrada com sucesso!\n");
                     }
                     else{
@@ -64,7 +64,7 @@ public class InterfaceOpcaoVaga {
                     scanner.nextLine();
                     interMensagem("Digite a rua da vaga que você deseja consultar:");
                     rua = scanner.nextLine();
-                    Vaga vaga = vag.consultarVaga(vagas, numero, rua); 
+                    Vaga vaga = opVaga.consultarVaga(vagas, numero, rua); 
                     if(vaga == null){
                         interMensagem("\nVaga inexistente!\n");
                         break;
@@ -80,7 +80,7 @@ public class InterfaceOpcaoVaga {
                     interMensagem("Digite a rua da vaga ser excluída:");
                     rua = scanner.nextLine();
                                        
-                    if(vag.excluirVaga(vagas, rua, numero) == true) {
+                    if(opVaga.excluirVaga(vagas, rua, numero) == true) {
                         interMensagem("Vaga rua:" + rua + " número:" + numero + " excluída com sucesso!");
                     }
                 break;  
@@ -101,7 +101,7 @@ public class InterfaceOpcaoVaga {
                     
                     tipo = scanner.nextLine();
                     TipoVeiculo tipoN = TipoVeiculo.valueOf(tipo.toUpperCase());
-                    if(vag.editarVaga(vagas, rua, numero, ruaNova, numeroNovo, tipoN) == true) {
+                    if(opVaga.editarVaga(vagas, rua, numero, ruaNova, numeroNovo, tipoN) == true) {
                         interMensagem("\nVaga editada com sucesso!\n");
                     }
                     else {
@@ -122,10 +122,12 @@ public class InterfaceOpcaoVaga {
                     String status = scanner.nextLine();
                     VagaStatus statusV = VagaStatus.valueOf(status.toUpperCase());
                     
-                    if(vag.alterarDispinibilidade(vagas, rua, numero, statusV) == true){
+                    if(opVaga.alterarDispinibilidade(vagas, rua, numero, statusV) == true){
                         interMensagem("\nDisponibilidade da vaga alterada com sucesso!\n");
                     }
-                break;    
+                break;
+                default:
+                break;
             }    
         }while(opcao2 != 6);
                

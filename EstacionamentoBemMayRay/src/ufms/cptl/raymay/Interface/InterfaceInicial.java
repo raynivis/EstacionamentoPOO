@@ -4,6 +4,7 @@
  */
 package ufms.cptl.raymay.Interface;
 
+import java.text.NumberFormat;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
@@ -11,12 +12,13 @@ import java.util.List;
 import java.util.Scanner;
 import ufms.cptl.raymay.Enum.DiaSemana;
 import ufms.cptl.raymay.Enum.TipoVeiculo;
-import ufms.cptl.raymay.Externo.Automovel.Veiculo;
-import ufms.cptl.raymay.Externo.Individuo.Cliente;
+import ufms.cptl.raymay.Classes.Externo.Automovel.Veiculo;
+import ufms.cptl.raymay.Classes.Externo.Individuo.Cliente;
 import static ufms.cptl.raymay.Interface.MostraMensagem.interMensagem;
-import ufms.cptl.raymay.Interno.Tarifa;
-import ufms.cptl.raymay.Interno.Ticket;
-import ufms.cptl.raymay.Interno.Vaga;
+import ufms.cptl.raymay.Classes.Interno.Tarifa;
+import ufms.cptl.raymay.Classes.Interno.Ticket;
+import ufms.cptl.raymay.Classes.Interno.Vaga;
+import ufms.cptl.raymay.Enum.Operando;
 import ufms.cptl.raymay.Operacoes.OperacoesCliente;
 import ufms.cptl.raymay.Operacoes.OperacoesTicket;
 
@@ -26,8 +28,7 @@ import ufms.cptl.raymay.Operacoes.OperacoesTicket;
  */
 public class InterfaceInicial {
     
-    OperacoesTicket tic = new OperacoesTicket();
-    
+    OperacoesTicket opTicket = new OperacoesTicket();
     InterfaceOpcaoCliente opCliente = new InterfaceOpcaoCliente();
     InterfaceOpcaoVaga opVaga = new InterfaceOpcaoVaga();
     InterfaceOpcaoEstacionamento opEstaciona = new InterfaceOpcaoEstacionamento();
@@ -35,14 +36,15 @@ public class InterfaceInicial {
     ItensMenu menucg = new ItensMenu(); /* menucg = Menu de Cadastros Gerais */
     
     OperacoesCliente clie = new OperacoesCliente();
-    InterfarceListaTipoSemanas listasVS = new InterfarceListaTipoSemanas();
+    AuxiliarInterfarceListaTipoSemanas listasVS = new AuxiliarInterfarceListaTipoSemanas();
     
     byte opcao;
     byte opcao3;
     Scanner scanner = new Scanner(System.in);
+    DateTimeFormatter dataBonitinha = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm");
     DateTimeFormatter dataBonitinhaComSegundos = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm:ss");
-    DateTimeFormatter dataBonitinhaCalendario = DateTimeFormatter.ofPattern("dd/MM/yyyy");
-    
+    NumberFormat dinheiro = NumberFormat.getCurrencyInstance();
+   
     
     
 
@@ -80,13 +82,14 @@ public class InterfaceInicial {
                                 interMensagem("Digite a data de finalização do ticket (em dia/mês/ano horas:minutos:segundos):");
                                 String data = scanner.nextLine();
                                 LocalDateTime dataFinal = LocalDateTime.parse(data, dataBonitinhaComSegundos);
-                                Ticket testeT = tic.buscarTicket(tickets, codigo);
+                                Ticket testeT = opTicket.buscarTicket(tickets, codigo);
                                 if(testeT == null) {
                                     interMensagem("\nErro: Ticket não encontrado!\n");
                                 }                               
-                                testeT.setFim(dataFinal);                          
-                                double lucro = tic.totalFaturadoTicket(testeT);
-                                interMensagem("O lucro desse ticket foi de " + lucro + "\n");
+                                testeT.setFim(dataFinal); 
+                                double lucro = opTicket.totalFaturadoTicket(testeT);
+                                interMensagem("O lucro desse ticket foi de " + dinheiro.format(lucro) + "\n");
+                                testeT.setFim(null); 
                             break;
                             case 2: /*consultar veiculo*/
                                 interMensagem("Digite a placa do veículo:");
@@ -106,7 +109,7 @@ public class InterfaceInicial {
                                 List<DiaSemana> dias = new ArrayList<>();                        
                                 List<TipoVeiculo> tps = new ArrayList<>();
                                 listasVS.OperacaoListaTVDS(dias, tps);
-                                Tarifa tarife = tic.buscarTarifa(tarifas, data, dias, tps);
+                                Tarifa tarife = opTicket.buscarTarifa(tarifas, data, dias, tps);
                                 if(tarife == null){
                                     interMensagem("\nErro: Tarifa não encontrada!\n");
                                     break;
@@ -125,7 +128,7 @@ public class InterfaceInicial {
                             case 4: /*consultar Ticket*/
                                 interMensagem("Digite o código do ticket:");
                                 codigo = scanner.nextInt(); 
-                                Ticket tickete = tic.buscarTicket(tickets, codigo);
+                                Ticket tickete = opTicket.buscarTicket(tickets, codigo);
                                 if(tickete == null){
                                     interMensagem("\nErro: Ticket não encontrado!\n");
                                     break;
@@ -133,27 +136,33 @@ public class InterfaceInicial {
                                 interMensagem("\n///////////////////////////////////////////////////");
                                 interMensagem(tickete.toString());
                                 if(tickete.getFim() != null){
-                                    interMensagem("Status:" + tickete.getStatus());
-                                    /*mudei aqui de tarifa atual para tarifa!!!*/
-                                    interMensagem("Fim do ticket: " + tickete.getFim().format(tickete.getTarifaTicket().getDataBonitinha()));
+                                    interMensagem("Fim do ticket: " + tickete.getFim().format(dataBonitinha));
                                 }
                                 interMensagem("///////////////////////////////////////////////////\n");
                             break;
                             case 5: /*listar tickets ativo*/
-                                tic.ListarTicketAtivo(tickets);
+                                opTicket.ListarTicketAtivo(tickets);
                             break; 
+                            default:
+                            break;
                         }                        
                     }while(opcao3 != 6);                                                                        
                 break;        
                 case 5:
-                      interMensagem("Digite as datas que você deseja visualizar o valor que foi faturado em reais (em dia/mês/ano horas:minutos:segundos):"); 
+                      interMensagem("Digite as datas que você deseja visualizar o valor que foi faturado em reais (em dia/mês/ano):"); 
+                      interMensagem("Data inicial: ");
                       String iniS = scanner.nextLine();
+                      iniS = iniS + " 00:00:00";
+                      interMensagem("Data final: ");
                       String fimS = scanner.nextLine();
+                      fimS = fimS + " 00:00:00";
                       LocalDateTime inicio = LocalDateTime.parse(iniS, dataBonitinhaComSegundos);
                       LocalDateTime fim = LocalDateTime.parse(fimS, dataBonitinhaComSegundos);
-                      double resultado = tic.FaturadoPeriodo(tickets, inicio, fim);
-                      interMensagem("\nNesse período foi/foram faturado/s: "  + resultado + "\n");                     
-                break;                                    
+                      double resultado = opTicket.FaturadoPeriodo(tickets, inicio, fim);
+                      interMensagem("\nNesse período foi/foram faturado/s: "  + dinheiro.format(resultado) + "\n");                     
+                break;
+                default:
+                break;
             }
         }while (opcao != 6);
         scanner.close();
