@@ -13,9 +13,7 @@ import ufms.cptl.raymay.Enum.DiaSemana;
 import ufms.cptl.raymay.Enum.TipoVeiculo;
 import ufms.cptl.raymay.Externo.Automovel.Veiculo;
 import ufms.cptl.raymay.Externo.Individuo.Cliente;
-import static ufms.cptl.raymay.Interface.InterfaceEnumOpcao.OpcaoInicial.imprimeInicio;
 import static ufms.cptl.raymay.Interface.MostraMensagem.interMensagem;
-import static ufms.cptl.raymay.Interface.OperacaoMostraMensagem.operacaoMensagem;
 import ufms.cptl.raymay.Interno.Tarifa;
 import ufms.cptl.raymay.Interno.Ticket;
 import ufms.cptl.raymay.Interno.Vaga;
@@ -33,6 +31,8 @@ public class InterfaceInicial {
     InterfaceOpcaoCliente opCliente = new InterfaceOpcaoCliente();
     InterfaceOpcaoVaga opVaga = new InterfaceOpcaoVaga();
     InterfaceOpcaoEstacionamento opEstaciona = new InterfaceOpcaoEstacionamento();
+    ItensMenu menui = new ItensMenu(); /* menui = Menu Inicial */
+    ItensMenu menucg = new ItensMenu(); /* menucg = Menu de Cadastros Gerais */
     
     OperacoesCliente clie = new OperacoesCliente();
     InterfarceListaTipoSemanas listasVS = new InterfarceListaTipoSemanas();
@@ -48,9 +48,9 @@ public class InterfaceInicial {
 
     public void primeirasOpcoes(List<Cliente> clientes, List<Vaga> vagas, List<Ticket> tickets, List<Tarifa> tarifas) {  
         do {
-            /* Utiliza o método criado em OpcaoInicial no package InterfaceEnumOpcao, reduzindo o tamanho
-            de linhas das classes da interface */
-            imprimeInicio();
+            /* Utiliza o método criado em ItensMenu, reduzindo o tamanho
+            de linhas das Classes da interface */
+            menui.imprimeInicio();
             opcao = scanner.nextByte();
             scanner.nextLine();
             
@@ -66,13 +66,9 @@ public class InterfaceInicial {
                 break;
                 case 4:
                     do {
-                        /* Será que criamos um Enum aqui também? */
-                        interMensagem("1 - Teste de Ticket com Tarifa");
-                        interMensagem("2 - Consultar Veiculo");                  
-                        interMensagem("3 - Consultar Tarifa");
-                        interMensagem("4 - Consultar Ticket");
-                        interMensagem("5 - Listar Tickets Ativos");
-                        interMensagem("6 - Voltar");
+                        /* Utiliza o método criado em ItensMenu, reduzindo o tamanho
+                        de linhas das Classes da interface */
+                        menucg.imprimeCadastroGeral();
                         opcao3 = scanner.nextByte();
                         scanner.nextLine();
                         switch(opcao3) {
@@ -90,22 +86,22 @@ public class InterfaceInicial {
                                 }                               
                                 testeT.setFim(dataFinal);                          
                                 double lucro = tic.totalFaturadoTicket(testeT);
-                                interMensagem("O Lucro desse ticket foi de " + lucro + "\n");
+                                interMensagem("O lucro desse ticket foi de " + lucro + "\n");
                             break;
                             case 2: /*consultar veiculo*/
-                                interMensagem("Digite a placa do veiculo:");
+                                interMensagem("Digite a placa do veículo:");
                                 String placa = scanner.nextLine();
                                 Veiculo veicule = clie.verificarVeiculo(clientes, placa);
                                 if(veicule == null) {
                                     interMensagem("Erro: Veículo não encontrado!!");
                                     break;
                                 }
-                                operacaoMensagem("\n///////////////////////////////////////////////////");
+                                interMensagem("\n///////////////////////////////////////////////////");
                                 interMensagem(veicule.toString());
-                                operacaoMensagem("///////////////////////////////////////////////////\n");
+                                interMensagem("///////////////////////////////////////////////////\n");
                             break; 
                             case 3: /*consultar Tarifa*/
-                                interMensagem("Digite a data de inicio da Tarifa:");
+                                interMensagem("Digite a data de início da tarifa:");
                                 data = scanner.nextLine();                              
                                 List<DiaSemana> dias = new ArrayList<>();                        
                                 List<TipoVeiculo> tps = new ArrayList<>();
@@ -115,32 +111,33 @@ public class InterfaceInicial {
                                     interMensagem("\nErro: Tarifa não encontrada!\n");
                                     break;
                                 }
-                                operacaoMensagem("\n///////////////////////////////////////////////////");
+                                interMensagem("\n///////////////////////////////////////////////////");
                                 interMensagem(tarife.toString());
                                 for(DiaSemana ds : tarife.getDiasSemana()){
                                     System.out.print(ds.toString() + " ");
                                 }
-                                operacaoMensagem("\nTipo/s de Veiculo:");
+                                interMensagem("\nTipo/s de veículo:");
                                 for(TipoVeiculo tv : tarife.getTarifaVeiculos()){
                                     System.out.print(tv.toString() + " ");
                                 }
-                                operacaoMensagem("\n///////////////////////////////////////////////////\n");
+                                interMensagem("\n///////////////////////////////////////////////////\n");
                             break; 
                             case 4: /*consultar Ticket*/
-                                interMensagem("Digite o codigo do ticket:");
+                                interMensagem("Digite o código do ticket:");
                                 codigo = scanner.nextInt(); 
                                 Ticket tickete = tic.buscarTicket(tickets, codigo);
                                 if(tickete == null){
-                                    interMensagem("\nErro: Ticket não encontrada!\n");
+                                    interMensagem("\nErro: Ticket não encontrado!\n");
                                     break;
                                 }
-                                operacaoMensagem("\n///////////////////////////////////////////////////");
+                                interMensagem("\n///////////////////////////////////////////////////");
                                 interMensagem(tickete.toString());
                                 if(tickete.getFim() != null){
-                                    operacaoMensagem("Status:" + tickete.getStatus());
-                                    operacaoMensagem("Fim do Ticket: " + tickete.getFim().format(tickete.getTarifaAtual().getDataBonitinha()));
+                                    interMensagem("Status:" + tickete.getStatus());
+                                    /*mudei aqui de tarifa atual para tarifa!!!*/
+                                    interMensagem("Fim do ticket: " + tickete.getFim().format(tickete.getTarifaTicket().getDataBonitinha()));
                                 }
-                                operacaoMensagem("///////////////////////////////////////////////////\n");
+                                interMensagem("///////////////////////////////////////////////////\n");
                             break;
                             case 5: /*listar tickets ativo*/
                                 tic.ListarTicketAtivo(tickets);
@@ -149,13 +146,13 @@ public class InterfaceInicial {
                     }while(opcao3 != 6);                                                                        
                 break;        
                 case 5:
-                      operacaoMensagem("Digite as datas que você pretende ver quantos Reais foi faturado (em dia/mês/ano horas:minutos:segundos):"); 
+                      interMensagem("Digite as datas que você deseja visualizar o valor que foi faturado em reais (em dia/mês/ano horas:minutos:segundos):"); 
                       String iniS = scanner.nextLine();
                       String fimS = scanner.nextLine();
                       LocalDateTime inicio = LocalDateTime.parse(iniS, dataBonitinhaComSegundos);
                       LocalDateTime fim = LocalDateTime.parse(fimS, dataBonitinhaComSegundos);
                       double resultado = tic.FaturadoPeriodo(tickets, inicio, fim);
-                      operacaoMensagem("\nNesse período foi/foram faturado/s: "  + resultado + "\n");                     
+                      interMensagem("\nNesse período foi/foram faturado/s: "  + resultado + "\n");                     
                 break;                                    
             }
         }while (opcao != 6);

@@ -44,7 +44,7 @@ public class InterfaceCadastraVeiculo {
         String marca = scanner.nextLine();
         interMensagem("Digite o modelo: "); 
         String modelo = scanner.nextLine();        
-        interMensagem("Digite o tipo do Veículo(MOTOCICLETA, MEDIOPORTE, GRANDEPORTE):");
+        interMensagem("Digite o tipo do veículo(MOTOCICLETA, MEDIOPORTE, GRANDEPORTE):");
         String tipoV = scanner.nextLine();
         TipoVeiculo type = TipoVeiculo.valueOf(tipoV.toUpperCase());
         Modelo model = new Modelo(marca, modelo, type);

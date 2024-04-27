@@ -19,7 +19,7 @@ public class InterfarceListaTipoSemanas {
     
     public void OperacaoListaTVDS(List<DiaSemana> diaSmns, List<TipoVeiculo> listaTps){
         interMensagem("Digite o/s dia/s da semana dessa tarifa (Domingo, Segunda, Terça, Quarta, Quinta, Sexta, Sábado)");
-        interMensagem("Caso seja para todos os dias da Semana, digite: Todos");
+        interMensagem("Caso seja para todos os dias da semana, digite: Todos");
         
         String dias = scanner.nextLine();
         dias = dias.toUpperCase();
@@ -40,7 +40,7 @@ public class InterfarceListaTipoSemanas {
             diaSmns.add(DiaSemana.SABADO);
        
         
-        interMensagem("Digite o/s veículo/s dessa tarifa (MOTOCICLETA, MEDIOPORTE, GRANDEPORTE):");
+        interMensagem("Digite o/s tipo/s de veículo/s dessa tarifa (MOTOCICLETA, MEDIOPORTE, GRANDEPORTE):");
         interMensagem("Caso seja para todos os tipos de veículo, digite: Todos");
         String tipos = scanner.nextLine();
         tipos = tipos.toUpperCase();

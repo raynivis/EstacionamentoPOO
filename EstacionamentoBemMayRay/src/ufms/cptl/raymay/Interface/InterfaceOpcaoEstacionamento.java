@@ -15,8 +15,6 @@ import ufms.cptl.raymay.Enum.TipoVeiculo;
 import ufms.cptl.raymay.Enum.VagaStatus;
 import ufms.cptl.raymay.Externo.Automovel.Veiculo;
 import ufms.cptl.raymay.Externo.Individuo.Cliente;
-import static ufms.cptl.raymay.Interface.InterfaceEnumOpcao.OpcaoEstacionamento.imprimeEstacionamento;
-import static ufms.cptl.raymay.Interface.InterfaceEnumOpcao.OpcaoTarifa.imprimeTarifa;
 import static ufms.cptl.raymay.Interface.MostraMensagem.interMensagem;
 import ufms.cptl.raymay.Interno.Tarifa;
 import ufms.cptl.raymay.Interno.Ticket;
@@ -34,6 +32,9 @@ public class InterfaceOpcaoEstacionamento {
     OperacoesCliente clie = new OperacoesCliente();
     OperacoesTicket tic = new OperacoesTicket();
     InterfarceListaTipoSemanas listasVS = new InterfarceListaTipoSemanas();
+    ItensMenu menue = new ItensMenu(); /* menue = Menu de gerencia do Estacionamento */
+    ItensMenu menut = new ItensMenu(); /*menut = Menu de gerencia das Tarifas */
+    
     byte opcao2;
     byte opcao3;
     Scanner scanner = new Scanner(System.in);
@@ -43,12 +44,12 @@ public class InterfaceOpcaoEstacionamento {
         do{
             /* Utiliza o método criado em OpcaoEstacionamento no package InterfaceEnumOpcao, reduzindo o tamanho
             de linhas das classes da interface */
-            imprimeEstacionamento();
+            menue.imprimeEstacionamento();
             opcao2 = scanner.nextByte();
             scanner.nextLine();  
             switch (opcao2) {
                 case 1:
-                    /*estacionar*/                    
+                    /*estacionar*/   /* ARRUMAR CODIGO */                 
                     if(tarifas.isEmpty() == true) {
                         interMensagem("\nCadastre uma tarifa primeiro!\n");
                         break;
@@ -59,30 +60,42 @@ public class InterfaceOpcaoEstacionamento {
                     scanner.nextLine(); 
                     String ruaVaga = scanner.nextLine();
                     
-                    Vaga vaga = vag.consultarVaga(vagas, numeroRua, ruaVaga);
+                    
+                    Vaga vaga = vag.consultarVagaEstacionamento(vagas, numeroRua, ruaVaga);
                     if(vaga == null) {                       
                         interMensagem("\nErro: Vaga não econtrada!\n");
                         break;
                     }
                     if(vaga.getStatus() != VagaStatus.DISPONIVEL) {
-                        
+                        if(vaga.getStatus() == VagaStatus.OCUPADA) { /*colocar condicao para operando*/
+                            interMensagem("\nErro: A vaga possui um ticket de estacionamento ATIVO (OCUPADA)!\n");
+                            break;
+                        }
                         interMensagem("\nErro: Vaga indisponível!\n");
                         break;
                     }
                     
-                    vaga.setStatus(VagaStatus.OCUPADA);
-                    
-                    interMensagem("Digite a placa do veículo:");
+                    interMensagem("Vaga disponível!\nDigite a placa do veículo:");
                     String placa = scanner.nextLine();
+                  
                     Veiculo veiculo = clie.verificarVeiculo(clientes, placa);
                     
                     if(veiculo == null) {
                        interMensagem("\nErro: Veículo não econtrado!\n"); 
                        break;
                     }
+                    
+                    /* TEM QUE AJEITAR AQUI!!! */
+                    Ticket ticket = tic.verificaTicketVeiculo(clientes, placa, tickets);
+                    if(ticket != null){
+                        if(ticket.getStatus().equals(Operando.ATIVO)) {
+                            interMensagem("\nErro: O veículo já possui um ticket de estacionamento ATIVO (está estacionado)!\n");
+                            break;
+                        }
+                    }
                         
-                    if( veiculo.getModel().getTipoVeiculo() != vaga.getTipo()) {                       
-                        interMensagem("\nErro: O tipo de veículo não é compatível a o tipo de vaga!\n");
+                    if(veiculo.getModel().getTipoVeiculo() != vaga.getTipo()) {                       
+                        interMensagem("\nErro: O tipo de veículo não é compatível ao tipo de vaga!\n");
                         break;
                     }
                    
@@ -93,8 +106,8 @@ public class InterfaceOpcaoEstacionamento {
                         break;
                     }
                     
-                    Ticket novoTicket = new Ticket(numeroRua, ruaVaga, placa, atual);
-                    
+                    Ticket novoTicket = new Ticket(tarifaTicket, veiculoTicket, vagaTicket);
+                    vaga.setStatus(VagaStatus.OCUPADA);
                     
                     novoTicket.setStatus(Operando.ATIVO);
                     novoTicket.setInicio(LocalDateTime.now());
@@ -123,9 +136,9 @@ public class InterfaceOpcaoEstacionamento {
                 case 4:
                     /*Gerenciar tarifas*/
                     do{ 
-                        /* Utiliza o método criado em OpcaoTarifa no package InterfaceEnumOpcao, reduzindo o tamanho
-                        de linhas das classes da interface */
-                        imprimeTarifa();
+                        /* Utiliza o método criado em ItensMenu, reduzindo o tamanho
+                        de linhas das Classes da interface */
+                        menut.imprimeTarifa();
                         opcao3 = scanner.nextByte();
                         scanner.nextLine();
                         switch(opcao3){
@@ -145,11 +158,11 @@ public class InterfaceOpcaoEstacionamento {
                                     }
                                 }                                                              
                                                                             
-                                interMensagem("Digite o valor da Primeira Hora:");
+                                interMensagem("Digite o valor da primeira hora:");
                                 double precoPrimeira = scanner.nextDouble();
                                 scanner.nextLine();
                                 
-                                interMensagem("Digite o valor das Horas Subsequentes:");
+                                interMensagem("Digite o valor das horas subsequentes:");
                                 double precoHora = scanner.nextDouble();
                                 scanner.nextLine();
                                 
@@ -164,7 +177,7 @@ public class InterfaceOpcaoEstacionamento {
                                 interMensagem("\nTarifa de " + inicio.format(dataFormata) + " cadastrada com sucesso!\n");                                                     
                             break; 
                             case 2: /*excluir tarifa*/
-                                interMensagem("Digite a data da tarifa que deseja excluir iniciar tarifa (em dia/mês/ano horas:minutos) :");
+                                interMensagem("Digite a data da tarifa que deseja excluir tarifa (em dia/mês/ano horas:minutos) :");
                                 data = scanner.nextLine();                              
                                 List<DiaSemana> dias = new ArrayList<>();                        
                                 List<TipoVeiculo> tps = new ArrayList<>();
@@ -178,7 +191,7 @@ public class InterfaceOpcaoEstacionamento {
                                 interMensagem("\nTarifa Removida com sucesso!\n");
                             break;
                             case 3: /*editar tarifa*/
-                                interMensagem("Digite a data da tarifa que deseja excluir iniciar tarifa (em dia/mês/ano horas:minutos) :");
+                                interMensagem("Digite a data da tarifa que deseja editar tarifa (em dia/mês/ano horas:minutos) :");
                                 data = scanner.nextLine();
                                 
                                 dias = new ArrayList<>();                        
@@ -192,13 +205,13 @@ public class InterfaceOpcaoEstacionamento {
                                 interMensagem("Digite a nova data (em dia/mês/ano horas:minutos):");
                                 String novaData = scanner.nextLine();
                                 tarifaEx.setInicio(LocalDateTime.parse(novaData, dataFormata));
-                                interMensagem("Digite o novo valor da Primeira Hora:");
+                                interMensagem("Digite o novo valor da primeira hora:");
                                 double novaPH = scanner.nextDouble();
                                 tarifaEx.setValorPrimeiraHora(novaPH);
-                                interMensagem("Digite o novo valor da Horas Subsequentes");
+                                interMensagem("Digite o novo valor da horas subsequentes");
                                 double novaHS = scanner.nextDouble();
                                 tarifaEx.setValorHoraSubsequente(novaHS);               
-                                interMensagem("\nTarifa Editada com sucesso!\n");
+                                interMensagem("\nTarifa editada com sucesso!\n");
                             break;
                             case 4: /*imprimir tarifas*/
                                 tic.relatorioTarifa(tarifas);

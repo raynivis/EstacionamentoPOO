@@ -6,6 +6,7 @@ package ufms.cptl.raymay.Interno;
 
 import java.time.LocalDateTime;
 import ufms.cptl.raymay.Enum.Operando;
+import ufms.cptl.raymay.Externo.Automovel.Veiculo;
 
 
 /**
@@ -15,42 +16,29 @@ import ufms.cptl.raymay.Enum.Operando;
 public class Ticket {
 
     private static int proxCodigo = 1;
-    private final int codigo;
+    private final int codigo; /* código de identificação para cada ticket, começa em 1 */
     private Operando status;
     private LocalDateTime inicio;
     private LocalDateTime fim;
-    private int numeroVaga;
-    private String ruaVaga;
-    private String placaVeiOcupado;
-    private Tarifa tarifaAtual;    
     
-    public Ticket(int numeroVaga, String ruaVaga, String placaVeiOcupado, Tarifa tarifaAtual) {   
-        this.numeroVaga = numeroVaga;
-        this.ruaVaga = ruaVaga;
-        this.placaVeiOcupado = placaVeiOcupado;
-        this.tarifaAtual = tarifaAtual;
+    private Tarifa tarifaTicket;
+    private Veiculo veiculoTicket;
+    private Vaga vagaTicket;
+
+    public Ticket(Tarifa tarifaTicket, Veiculo veiculoTicket, Vaga vagaTicket) {
         this.codigo = proxCodigo;
+        this.tarifaTicket = tarifaTicket;
+        this.veiculoTicket = veiculoTicket;
+        this.vagaTicket = vagaTicket;
         proxCodigo++;
     }
-    
-    public int getCodigo() {
-        return codigo;
+
+    public static int getProxCodigo() {
+        return proxCodigo;
     }
 
-    public int getNumeroVaga() {
-        return numeroVaga;
-    }
-
-    public void setNumeroVaga(int numeroVaga) {
-        this.numeroVaga = numeroVaga;
-    }
-
-    public String getRuaVaga() {
-        return ruaVaga;
-    }
-
-    public void setRuaVaga(String ruaVaga) {
-        this.ruaVaga = ruaVaga;
+    public static void setProxCodigo(int proxCodigo) {
+        Ticket.proxCodigo = proxCodigo;
     }
 
     public Operando getStatus() {
@@ -60,7 +48,6 @@ public class Ticket {
     public void setStatus(Operando status) {
         this.status = status;
     }
-
 
     public LocalDateTime getInicio() {
         return inicio;
@@ -78,29 +65,32 @@ public class Ticket {
         this.fim = fim;
     }
 
-    public String getPlacaVeiOcupado() {
-        return placaVeiOcupado;
+    public Tarifa getTarifaTicket() {
+        return tarifaTicket;
     }
 
-    public void setPlacaVeiOcupado(String placaVeiOcupado) {
-        this.placaVeiOcupado = placaVeiOcupado;
+    public void setTarifaTicket(Tarifa tarifaTicket) {
+        this.tarifaTicket = tarifaTicket;
     }
 
-    public Tarifa getTarifaAtual() {
-        return tarifaAtual;
+    public Veiculo getVeiculoTicket() {
+        return veiculoTicket;
     }
 
-    public void setTarifaAtual(Tarifa tarifaAtual) {
-        this.tarifaAtual = tarifaAtual;
+    public void setVeiculoTicket(Veiculo veiculoTicket) {
+        this.veiculoTicket = veiculoTicket;
     }
 
-    @Override
-    public String toString() {
-        return "Codigo: " + codigo + "\nInicio do Ticket: " + inicio.format(tarifaAtual.getDataBonitinha()) + 
-        "\nNumero da Vaga: " + numeroVaga + "\nRua da Vaga: " + ruaVaga + "\nPlaca do Veículo Ocupado: " + placaVeiOcupado + 
-        "\nData da Tarifa do Ticket: " + tarifaAtual.getInicio().format(tarifaAtual.getDataBonitinha());
+    public Vaga getVagaTicket() {
+        return vagaTicket;
     }
 
-    
-    
+    public void setVagaTicket(Vaga vagaTicket) {
+        this.vagaTicket = vagaTicket;
+    }
+
+    public int getCodigo() {
+        return codigo;
+    }
+
 }

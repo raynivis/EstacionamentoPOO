@@ -6,8 +6,6 @@ package ufms.cptl.raymay.Interno;
 
 import ufms.cptl.raymay.Enum.TipoVeiculo;
 import ufms.cptl.raymay.Enum.VagaStatus;
-import ufms.cptl.raymay.Externo.Automovel.Modelo;
-
 /**
  *
  * @author ra
@@ -18,6 +16,7 @@ public class Vaga {
     private int numero;
     private String rua;
     private VagaStatus status;
+    /*  */
     public TipoVeiculo tipo;
 
     public Vaga(int numero, String rua, VagaStatus status, TipoVeiculo tipo) {

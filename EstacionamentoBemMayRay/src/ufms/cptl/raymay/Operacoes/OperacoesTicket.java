@@ -14,7 +14,7 @@ import ufms.cptl.raymay.Enum.TipoVeiculo;
 import ufms.cptl.raymay.Enum.VagaStatus;
 import ufms.cptl.raymay.Externo.Automovel.Veiculo;
 import ufms.cptl.raymay.Externo.Individuo.Cliente;
-import static ufms.cptl.raymay.Interface.OperacaoMostraMensagem.operacaoMensagem;
+import static ufms.cptl.raymay.Operacoes.OperacaoMostraMensagem.operacaoMensagem;
 import ufms.cptl.raymay.Interno.Tarifa;
 import ufms.cptl.raymay.Interno.Ticket;
 import ufms.cptl.raymay.Interno.Vaga;
@@ -24,14 +24,20 @@ import ufms.cptl.raymay.Interno.Vaga;
  * @author ra
  */
 public class OperacoesTicket {
+    OperacoesCliente opClie = new OperacoesCliente();
+    Vaga vag; /* Variavel do tipo Vaga utilizada em retirar, faz a comparação entre a vaga inserida*/
     
+    /*SERIA BOM MUDAR ESSA FUNÇÃO, ELA LE SO A PLACA A IDENTIFICA O TICKET*/
     public boolean retirar(List<Ticket> tickets, List<Vaga> vagas, int numero, String rua){
+        vag.setNumero(numero);
+        vag.setRua(rua);
+        
         for(Ticket t : tickets) {
-            if(t.getNumeroVaga() == numero && t.getRuaVaga().equals(rua) && t.getStatus() == Operando.ATIVO) {
+            if(t.getVagaTicket().equals(vag) && t.getStatus() == Operando.ATIVO) {
                 t.setStatus(Operando.DESATIVO);
                 t.setFim(LocalDateTime.now());
                 for(Vaga v : vagas) {
-                    if(v.getNumero() == (t.getNumeroVaga()) && v.getRua().equals(t.getRuaVaga())){
+                    if(v.equals(vag)){
                         v.setStatus(VagaStatus.DISPONIVEL);
                         return true;
                     }
@@ -40,7 +46,22 @@ public class OperacoesTicket {
         }
         return false;    
     }
-    
+
+    /* Método que verifica se o veículo inserido possui algum ticket ATIVO ou DESATIVO atrelado a ele. 
+    Primeiro faz a verificação se a placa já foi cadastrada com o método verificaTicketVeiculo, que retorna 
+    o veículo com a placa inserida. Após isso, é comparado os veículos dentro da lista de tickets com o 
+    veículo da placa inserida */
+    public Ticket verificaTicketVeiculo(List<Cliente> clientes, String placa, List<Ticket> tickets) {
+        if(opClie.verificarVeiculo(clientes, placa) != null) {
+            Veiculo v = opClie.verificarVeiculo(clientes, placa);
+        
+            for(Ticket t : tickets) {
+                if(t.getVeiculoTicket().equals(v));
+                return t;
+            }
+        }
+       return null;
+    }    
        
     public void cadastrosGerais(List<Cliente> clientes, List<Vaga> vagas){
         for(Cliente c : clientes){           
@@ -119,7 +140,7 @@ public class OperacoesTicket {
         
         LocalDateTime diaS = ticket.getInicio();
         
-        Tarifa tarifa  = ticket.getTarifaAtual();
+        Tarifa tarifa  = ticket.getTarifaTicket();
         
         total = tarifa.getValorPrimeiraHora();
         

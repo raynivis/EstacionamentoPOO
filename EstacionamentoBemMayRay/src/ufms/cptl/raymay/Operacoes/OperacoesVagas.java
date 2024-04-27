@@ -6,7 +6,7 @@ package ufms.cptl.raymay.Operacoes;
 import java.util.List;
 import ufms.cptl.raymay.Enum.TipoVeiculo;
 import ufms.cptl.raymay.Enum.VagaStatus;
-import static ufms.cptl.raymay.Interface.OperacaoMostraMensagem.operacaoMensagem;
+import static ufms.cptl.raymay.Operacoes.OperacaoMostraMensagem.operacaoMensagem;
 import ufms.cptl.raymay.Interno.Vaga;
 /**
  *
@@ -34,7 +34,17 @@ public class OperacoesVagas {
         }
         return null;
     }
-     /* Retorna true se foi excluída e false se não foi ou não existe */
+    
+    public Vaga consultarVagaEstacionamento(List<Vaga> vagas, int numero, String rua) {
+        for(Vaga v : vagas) {
+            if(v.getNumero() == numero && v.getRua().equals(rua)) {              
+                return v;
+            }
+        }
+        return null;
+    }
+    
+     /* Retorna true se foi excluída e false se não foi ou não existe */ /*ARRUMAR*/
     public boolean excluirVaga(List<Vaga> vagas, String rua, int numero) {
         for(Vaga v : vagas) {
             if(v.getRua().equals(rua) && v.getNumero() == numero) {
@@ -44,12 +54,12 @@ public class OperacoesVagas {
                     return true;
                 }
                 /* 1 condição que justifica não ser possível a exclusão da vaga -> Estar sendo utilizada */
-                operacaoMensagem("A vaga não pode ser excluída pois está sendo usada (OCUPADA)!");
+                operacaoMensagem("A vaga não pode ser excluída pois ela possui um ticket ATIVO (OCUPADA)!");
                 return false;
             }  
         }
         /* 2 condição que justifica não ser possível a exclusão da vaga -> Vaga inexistente */
-        operacaoMensagem("Vaga não existente!");
+        operacaoMensagem("Vaga inexistente!");
         return false;
     }
     public boolean editarVaga(List<Vaga> vagas, String rua, int numero, String novaRua, int novoNumero, TipoVeiculo novoTipo) {
