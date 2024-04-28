@@ -15,12 +15,13 @@ import ufms.cptl.raymay.Enum.TipoVeiculo;
  */
 public class Tarifa {
     
-   private DateTimeFormatter dataBonitinha = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm"); 
-   private LocalDateTime inicio;
-   private double valorPrimeiraHora;
-   private double valorHoraSubsequente;
-   private List<DiaSemana> diasSemana;
-   private List<TipoVeiculo> tarifaVeiculos;
+   /* Atributos característicos da tarifa */ 
+    private DateTimeFormatter dataBonitinha = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm"); 
+    private LocalDateTime inicio;
+    private double valorPrimeiraHora;
+    private double valorHoraSubsequente;
+    private List<DiaSemana> diasSemana;
+    private List<TipoVeiculo> tarifaVeiculos;
 
     public Tarifa(LocalDateTime inicio, double valorPrimeiraHora, double valorHoraSubsequente, List<DiaSemana> diasSemana, List<TipoVeiculo> tarifaVeiculos) {
         this.inicio = inicio;

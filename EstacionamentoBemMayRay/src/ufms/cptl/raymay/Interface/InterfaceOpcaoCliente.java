@@ -22,6 +22,7 @@ import ufms.cptl.raymay.Operacoes.OperacoesCliente;
  */
 public class InterfaceOpcaoCliente {
     OperacoesCliente opCliente = new OperacoesCliente();
+    
     ItensMenu menuc = new ItensMenu(); /* menuc = Menu de gerencia de Clientes */
     ItensMenu menuve = new ItensMenu(); /*menuve = Menu de gerencia de Veículos */
     
@@ -31,6 +32,9 @@ public class InterfaceOpcaoCliente {
     byte opcao3;
     Scanner scanner = new Scanner(System.in);
     
+    
+    /* Método geral das opções do cliente que será chamado na Classe InterfaceInicial e permite a realização das operações
+    relacionadas ao cliente */
     public void opcoesCliente(List<Cliente> clientes, List<Vaga> vagas, List<Ticket> tickets, List<Tarifa> tarifas) {       
         do{
             /* Utiliza o método criado em ItensMenu, reduzindo o tamanho
@@ -55,12 +59,15 @@ public class InterfaceOpcaoCliente {
                         List<Veiculo> veiculos = new ArrayList<>();
                         Cliente novoCliente = new Cliente(nome, cpf, telefone, veiculos);
                          
+                        interMensagem("\nAdicione informações do veículo do cliente");
                         Veiculo Novoveiculo = InVeiculo.receberVeiculo(clientes, novoCliente);                      
                         
                          if(Novoveiculo != null) {
                              novoCliente.setVeiculoNaLista(Novoveiculo);
                              clientes.add(novoCliente);
-                             interMensagem("\nCliente cadastrado com sucesso!\n");
+                             interMensagem("\nCadastro:");
+                             interMensagem(novoCliente.toString());
+                             interMensagem("Finalizado com sucesso!\n");
                          }
                          else {
                              /*limpar a variavel novo cliente*/
@@ -106,14 +113,17 @@ public class InterfaceOpcaoCliente {
                         opCliente.editarCliente(opCliente.verificarCliente(clientes, cpf), novoNome, novoTelefone);
                     break;    
                     case 5:
-                        /*gerenciar veiculos do cliente*/
+                        /*gerenciar veículos do cliente*/
                         interMensagem("Digite o CPF do cliente que deseja gerenciar os veículos:");
                         cpf = scanner.nextLine();
                         Cliente operador = opCliente.verificarCliente(clientes, cpf);
                         if(operador == null) {
                            interMensagem("\nErro: Cliente não econtrado!\n");
                             break; 
-                        } 
+                        }
+                        
+                        interMensagem("Os veículos do cliente de CPF " + cpf + " são:\n");
+                        opCliente.mostraVeiculos(clientes, cpf);
                         do{
                             /* Utiliza o método criado em ItensMenu, reduzindo o tamanho
                             de linhas das Classes da interface */
@@ -134,10 +144,8 @@ public class InterfaceOpcaoCliente {
                                 case 2: /*Remover um veiculo*/
                                     interMensagem("Digite a placa:");
                                     String placa = scanner.nextLine();
-                                    if(opCliente.apagaVeiculo(clientes, placa) == true) {
+                                    if(opCliente.apagaVeiculo(clientes, placa, tickets) == true) {
                                         interMensagem("\nVeículo excluído com sucesso!\n");
-                                    } else {
-                                        interMensagem("\nVeículo não encontrado!\n");
                                     }
                                 break;
                                 case 3: /*Editar um veiculo*/
@@ -159,6 +167,7 @@ public class InterfaceOpcaoCliente {
                                     }
                                 break;
                                 default:
+                                    interMensagem("\nInsira uma opção válida!\n");
                                 break;
                             }
                         }while(opcao3 != 4);
@@ -168,6 +177,7 @@ public class InterfaceOpcaoCliente {
                         opCliente.relatorioCliente(clientes);
                     break; 
                     default:
+                        interMensagem("\nInsira uma opção válida!\n");
                     break;
                 }
         }while(opcao2 != 7);

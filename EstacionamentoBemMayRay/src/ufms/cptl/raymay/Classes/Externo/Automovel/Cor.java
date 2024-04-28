@@ -9,13 +9,10 @@ package ufms.cptl.raymay.Classes.Externo.Automovel;
  * @author ra
  */
 public class Cor {
-    /*string para armazenar a cor do veiculo*/
     private String cor;
-    /*string para armazenar a descricao do veiculo*/
     private String descricao;
 
-    /*Deixando dois construtores, pois não é obrigatorio o Cliente especificar 
-    uma descricao do veiculo*/
+    
     public Cor(String cor) {
         this.cor = cor;
     }

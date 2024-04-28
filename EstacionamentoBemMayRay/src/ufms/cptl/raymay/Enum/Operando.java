@@ -9,5 +9,6 @@ package ufms.cptl.raymay.Enum;
  * @author ra
  */
 public enum Operando {
+    /* Auxilia na identificação de cada ticket e nas operações de exclusão de Cliente, Vaga e Tarifa*/
     ATIVO, DESATIVO 
 }

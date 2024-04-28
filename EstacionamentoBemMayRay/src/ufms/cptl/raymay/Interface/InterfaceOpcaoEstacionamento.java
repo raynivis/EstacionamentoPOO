@@ -31,7 +31,9 @@ public class InterfaceOpcaoEstacionamento {
     OperacoesVagas opVaga = new OperacoesVagas(); 
     OperacoesCliente opCliente = new OperacoesCliente();
     OperacoesTicket opTicket = new OperacoesTicket();
+    
     AuxiliarInterfarceListaTipoSemanas listasVS = new AuxiliarInterfarceListaTipoSemanas();
+    
     ItensMenu menue = new ItensMenu(); /* menue = Menu de gerencia do Estacionamento */
     ItensMenu menut = new ItensMenu(); /*menut = Menu de gerencia das Tarifas */
     
@@ -40,6 +42,9 @@ public class InterfaceOpcaoEstacionamento {
     Scanner scanner = new Scanner(System.in);
     DateTimeFormatter dataFormata = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm");
     
+    
+    /* Método geral das opções do estacionamento que será chamado na Classe InterfaceInicial e permite a realização das operações
+    relacionadas ao estacionamento */
     public void opcoesEstacionamento(List<Cliente> clientes, List<Vaga> vagas, List<Ticket> tickets, List<Tarifa> tarifas) {
         do{
             /* Utiliza o método criado em OpcaoEstacionamento no package InterfaceEnumOpcao, reduzindo o tamanho
@@ -49,7 +54,8 @@ public class InterfaceOpcaoEstacionamento {
             scanner.nextLine();  
             switch (opcao2) {
                 case 1:
-                    /*estacionar*/   /* ARRUMAR CODIGO */                 
+                    /*estacionar*/
+                    
                     if(tarifas.isEmpty() == true) {
                         interMensagem("\nCadastre uma tarifa primeiro!\n");
                         break;
@@ -62,13 +68,14 @@ public class InterfaceOpcaoEstacionamento {
                     String ruaVaga = scanner.nextLine();
                     
                     
-                    Vaga vaga = opVaga.consultarVagaEstacionamento(vagas, numeroRua, ruaVaga);
+                    Vaga vaga = opVaga.consultarVaga(vagas, numeroRua, ruaVaga);
                     if(vaga == null) {                       
                         interMensagem("\nErro: Vaga não econtrada!\n");
                         break;
                     }
+                    
                     if(vaga.getStatus() != VagaStatus.DISPONIVEL) {
-                        if(vaga.getStatus() == VagaStatus.OCUPADA) { /*colocar condicao para operando*/
+                        if(vaga.getStatus() == VagaStatus.OCUPADA) { 
                             interMensagem("\nErro: A vaga possui um ticket de estacionamento ATIVO (OCUPADA)!\n");
                             break;
                         }
@@ -76,7 +83,7 @@ public class InterfaceOpcaoEstacionamento {
                         break;
                     }
                     
-                    interMensagem("Vaga disponível!\nDigite a placa do veículo:");
+                    interMensagem("Vaga disponível!\nDigite a placa do veículo a ser estacionado:");
                     String placa = scanner.nextLine();
                   
                     Veiculo veiculo = opCliente.verificarVeiculo(clientes, placa);
@@ -93,7 +100,7 @@ public class InterfaceOpcaoEstacionamento {
                     }
                         
                     if(veiculo.getModel().getTipoVeiculo() != vaga.getTipo()) {                       
-                        interMensagem("\nErro: O tipo de veículo não é compatível ao tipo de vaga!\n");
+                        interMensagem("\nErro: O tipo de veículo não é compatível com o tipo de vaga!\n");
                         break;
                     }
                    
@@ -131,7 +138,7 @@ public class InterfaceOpcaoEstacionamento {
                     }
                 break;    
                 case 3:
-                    /*Listar todas as vagas disponíveis do estacionamento*/
+                    /*listar todas as vagas disponíveis do estacionamento*/
                     opVaga.listarVagasDisponiveis(vagas);
                 break;    
                 case 4:
@@ -173,7 +180,7 @@ public class InterfaceOpcaoEstacionamento {
                                 listasVS.OperacaoListaTVDS(diaSmns, listaTps);
                                 
                                 if(opTicket.buscarTarifa(tarifas, inicio.format(dataFormata), diaSmns, listaTps) != null){
-                                    interMensagem("Erro: Você ja cadastrou uma Tarifa desse tipo para essa data!");
+                                    interMensagem("\nErro: Você ja cadastrou uma Tarifa desse tipo para essa data!\n");
                                     break;
                                 }
                                                                               
@@ -193,8 +200,14 @@ public class InterfaceOpcaoEstacionamento {
                                     interMensagem("\nErro: Tarifa não encontrada!\n");
                                     break;
                                 }
+                                
+                                if(opTicket.procuraTarifaEmTicket(tarifaEx, tickets) == true) {
+                                    interMensagem("\nA tarifa não pode ser excluída pois ela possui um ticket cadastrado!\n");
+                                    break;
+                                }
+                                    
                                 tarifas.remove(tarifaEx);  
-                                interMensagem("\nTarifa Removida com sucesso!\n");
+                                interMensagem("\nTarifa removida com sucesso!\n");
                             break;
                             case 3: /*editar tarifa*/
                                 interMensagem("Digite a data da tarifa que deseja editar tarifa (em dia/mês/ano horas:minutos) :");
@@ -223,11 +236,13 @@ public class InterfaceOpcaoEstacionamento {
                                 opTicket.relatorioTarifa(tarifas);
                             break;
                             default:
+                                interMensagem("\nInsira uma opção válida!\n");
                             break;
                         }
                     }while(opcao3 != 5);
                 break; 
                 default:
+                    interMensagem("\nInsira uma opção válida!\n");
                 break;
             }    
         }while(opcao2 != 5);

@@ -10,14 +10,17 @@ import java.util.List;
  * @author ra
  */
 public class Cliente {
+    
+    /* Atributos característicos do cliente, possui também a lista de veículos pertencente ao cliente */
     private String nome;
-    private String cpf;
+    private String cpf; /* o CPF funciona como a chave primaria do cliente */
     private String telefone;
     private List<Veiculo> veiculos;
     
 
-    /*PARA CADASTRAR O CLIENTE É NECESSARIO CADASTRAR PELO MENOS UM VEICULO NA LISTA DE CARROS
-    ESTES CONSTRUTOR É INSTACIADO NO CADASTRO DE QUALQUER CLIENTE*/
+    
+    /* Para cadastrar o cliente é necessário cadastrar pelo menos um veículo na lista de veículos.
+    Este construtor é instanciado no cadastro de qualquer cliente */
     public Cliente(String nome, String cpf, String telefone, List<Veiculo> veiculos) {
         this.nome = nome;
         this.cpf = cpf;
@@ -26,7 +29,8 @@ public class Cliente {
         
     }
     
-    /*ADICIONAR UM NOVO VEICULO NA LISTA DE VEICULOS DO CLIENTE*/
+    
+    /* Método para adicionar um novo veículo na lista de veículos do cliente */
     public void setVeiculoNaLista(Veiculo novoVeiculo)
     {
         this.veiculos.add(novoVeiculo);
@@ -64,9 +68,9 @@ public class Cliente {
         this.telefone = telefone;
     }
 
-    @Override /*Java faz isso de precaucao?*/
+    @Override
     public String toString() {
-        return "Cliente: " + nome + "\nCPF: " + cpf + "\nTelefone: " + telefone;
+        return "   Cliente: " + nome + "\n   CPF: " + cpf + "\n   Telefone: " + telefone;
     } 
     
     

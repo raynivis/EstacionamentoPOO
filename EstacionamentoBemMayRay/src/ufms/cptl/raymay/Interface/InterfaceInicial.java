@@ -21,6 +21,7 @@ import ufms.cptl.raymay.Classes.Interno.Vaga;
 import ufms.cptl.raymay.Enum.Operando;
 import ufms.cptl.raymay.Operacoes.OperacoesCliente;
 import ufms.cptl.raymay.Operacoes.OperacoesTicket;
+import ufms.cptl.raymay.Operacoes.OperacoesVagas;
 
 /**
  *
@@ -28,26 +29,29 @@ import ufms.cptl.raymay.Operacoes.OperacoesTicket;
  */
 public class InterfaceInicial {
     
-    OperacoesTicket opTicket = new OperacoesTicket();
+    OperacoesTicket ticke = new OperacoesTicket();
+    OperacoesVagas vag = new OperacoesVagas();
+    OperacoesCliente clie = new OperacoesCliente();
+    
     InterfaceOpcaoCliente opCliente = new InterfaceOpcaoCliente();
     InterfaceOpcaoVaga opVaga = new InterfaceOpcaoVaga();
     InterfaceOpcaoEstacionamento opEstaciona = new InterfaceOpcaoEstacionamento();
     ItensMenu menui = new ItensMenu(); /* menui = Menu Inicial */
     ItensMenu menucg = new ItensMenu(); /* menucg = Menu de Cadastros Gerais */
     
-    OperacoesCliente clie = new OperacoesCliente();
     AuxiliarInterfarceListaTipoSemanas listasVS = new AuxiliarInterfarceListaTipoSemanas();
     
     byte opcao;
     byte opcao3;
+    
     Scanner scanner = new Scanner(System.in);
     DateTimeFormatter dataBonitinha = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm");
     DateTimeFormatter dataBonitinhaComSegundos = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm:ss");
     NumberFormat dinheiro = NumberFormat.getCurrencyInstance();
    
     
-    
-
+    /* Método geral das opções do menu que será chamado na Classe Main Estacionamento e permitirá que todo o
+    menu seja exibido ao usuário */
     public void primeirasOpcoes(List<Cliente> clientes, List<Vaga> vagas, List<Ticket> tickets, List<Tarifa> tarifas) {  
         do {
             /* Utiliza o método criado em ItensMenu, reduzindo o tamanho
@@ -82,13 +86,13 @@ public class InterfaceInicial {
                                 interMensagem("Digite a data de finalização do ticket (em dia/mês/ano horas:minutos:segundos):");
                                 String data = scanner.nextLine();
                                 LocalDateTime dataFinal = LocalDateTime.parse(data, dataBonitinhaComSegundos);
-                                Ticket testeT = opTicket.buscarTicket(tickets, codigo);
+                                Ticket testeT = ticke.buscarTicket(tickets, codigo);
                                 if(testeT == null) {
                                     interMensagem("\nErro: Ticket não encontrado!\n");
                                 }                               
                                 testeT.setFim(dataFinal); 
-                                double lucro = opTicket.totalFaturadoTicket(testeT);
-                                interMensagem("O lucro desse ticket foi de " + dinheiro.format(lucro) + "\n");
+                                double lucro = ticke.totalFaturadoTicket(testeT);
+                                interMensagem("\nO lucro desse ticket foi de " + dinheiro.format(lucro) + "\n");
                                 testeT.setFim(null); 
                             break;
                             case 2: /*consultar veiculo*/
@@ -109,7 +113,7 @@ public class InterfaceInicial {
                                 List<DiaSemana> dias = new ArrayList<>();                        
                                 List<TipoVeiculo> tps = new ArrayList<>();
                                 listasVS.OperacaoListaTVDS(dias, tps);
-                                Tarifa tarife = opTicket.buscarTarifa(tarifas, data, dias, tps);
+                                Tarifa tarife = ticke.buscarTarifa(tarifas, data, dias, tps);
                                 if(tarife == null){
                                     interMensagem("\nErro: Tarifa não encontrada!\n");
                                     break;
@@ -128,7 +132,7 @@ public class InterfaceInicial {
                             case 4: /*consultar Ticket*/
                                 interMensagem("Digite o código do ticket:");
                                 codigo = scanner.nextInt(); 
-                                Ticket tickete = opTicket.buscarTicket(tickets, codigo);
+                                Ticket tickete = ticke.buscarTicket(tickets, codigo);
                                 if(tickete == null){
                                     interMensagem("\nErro: Ticket não encontrado!\n");
                                     break;
@@ -140,13 +144,17 @@ public class InterfaceInicial {
                                 }
                                 interMensagem("///////////////////////////////////////////////////\n");
                             break;
-                            case 5: /*listar tickets ativo*/
-                                opTicket.ListarTicketAtivo(tickets);
+                            case 5: /* Listar tickets ativos */
+                                ticke.ListarTicketAtivo(tickets);
                             break; 
+                            case 6: /* Listar vagas cadastradas */
+                                vag.listarVagasCadastradas(vagas);
+                            break;    
                             default:
+                                interMensagem("\nInsira uma opção válida!\n");
                             break;
                         }                        
-                    }while(opcao3 != 6);                                                                        
+                    }while(opcao3 != 7);                                                                        
                 break;        
                 case 5:
                       interMensagem("Digite as datas que você deseja visualizar o valor que foi faturado em reais (em dia/mês/ano):"); 
@@ -158,10 +166,11 @@ public class InterfaceInicial {
                       fimS = fimS + " 00:00:00";
                       LocalDateTime inicio = LocalDateTime.parse(iniS, dataBonitinhaComSegundos);
                       LocalDateTime fim = LocalDateTime.parse(fimS, dataBonitinhaComSegundos);
-                      double resultado = opTicket.FaturadoPeriodo(tickets, inicio, fim);
+                      double resultado = ticke.FaturadoPeriodo(tickets, inicio, fim);
                       interMensagem("\nNesse período foi/foram faturado/s: "  + dinheiro.format(resultado) + "\n");                     
                 break;
                 default:
+                    interMensagem("\nInsira uma opção válida!\n");
                 break;
             }
         }while (opcao != 6);
