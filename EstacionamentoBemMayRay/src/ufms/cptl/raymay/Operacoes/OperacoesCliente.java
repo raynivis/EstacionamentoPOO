@@ -118,7 +118,7 @@ public class OperacoesCliente {
     }
     
     
-    /* */
+    /*Método para imprimir todos os clientes cadastrados no sistema*/
     public void relatorioCliente(List<Cliente> clientes) {
         for(Cliente c : clientes) {
             System.out.println(c.toString());
@@ -131,7 +131,7 @@ public class OperacoesCliente {
     }
     
     
-    /* */
+    /*Método com overload ou polimorfismo para printar apenas o cliente com o documento passado por referencia, (overload do metodo acima).*/
     public Cliente relatorioCliente(List<Cliente> clientes, String documento) {
         for(Cliente c : clientes) {
             if(c.getCpf().equals(documento)) {

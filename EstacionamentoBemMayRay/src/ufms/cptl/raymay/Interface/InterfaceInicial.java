@@ -18,7 +18,6 @@ import static ufms.cptl.raymay.Interface.MostraMensagem.interMensagem;
 import ufms.cptl.raymay.Classes.Interno.Tarifa;
 import ufms.cptl.raymay.Classes.Interno.Ticket;
 import ufms.cptl.raymay.Classes.Interno.Vaga;
-import ufms.cptl.raymay.Enum.Operando;
 import ufms.cptl.raymay.Operacoes.OperacoesCliente;
 import ufms.cptl.raymay.Operacoes.OperacoesTicket;
 import ufms.cptl.raymay.Operacoes.OperacoesVagas;
@@ -149,7 +148,9 @@ public class InterfaceInicial {
                             break; 
                             case 6: /* Listar vagas cadastradas */
                                 vag.listarVagasCadastradas(vagas);
-                            break;    
+                            break; 
+                            case 7:
+                            break;
                             default:
                                 interMensagem("\nInsira uma opção válida!\n");
                             break;
@@ -169,6 +170,8 @@ public class InterfaceInicial {
                       double resultado = ticke.FaturadoPeriodo(tickets, inicio, fim);
                       interMensagem("\nNesse período foi/foram faturado/s: "  + dinheiro.format(resultado) + "\n");                     
                 break;
+                case 6:
+                break;                    
                 default:
                     interMensagem("\nInsira uma opção válida!\n");
                 break;

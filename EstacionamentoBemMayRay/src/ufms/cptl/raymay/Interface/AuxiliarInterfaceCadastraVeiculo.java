@@ -20,6 +20,7 @@ import static ufms.cptl.raymay.Interface.MostraMensagem.interMensagem;
 public class AuxiliarInterfaceCadastraVeiculo {
     Scanner scanner = new Scanner(System.in);
     
+    /*método para facilitar o cadastro de um veiculo na interface, para assim não ficar repetindo codigo atoa.*/
     public Veiculo receberVeiculo(List<Cliente> clientes, Cliente cliente) {
         /*mensagem de interface para digitar um novo veiculo*/
         interMensagem("Digite a placa: ");

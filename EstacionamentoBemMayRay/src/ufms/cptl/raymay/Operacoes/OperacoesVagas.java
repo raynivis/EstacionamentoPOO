@@ -67,12 +67,11 @@ public class OperacoesVagas {
     /* O método recebe a lista de vagas, a rua e o número da vaga existente e seu novo número e rua,
     quando encontra a vaga na lista, substitui os atributos pelos novos inseridos e retorna true,
     caso não encontre a vaga retorna false */
-    public boolean editarVaga(List<Vaga> vagas, String rua, int numero, String novaRua, int novoNumero, TipoVeiculo novoTipo) {
+    public boolean editarVaga(List<Vaga> vagas, String rua, int numero, String novaRua, int novoNumero) {
         for(Vaga v : vagas) {
             if(v.getRua().equals(rua) && v.getNumero() == numero) {
                 v.setRua(novaRua);
                 v.setNumero(novoNumero);
-                v.setTipo(novoTipo);
                 return true;
             }
         }

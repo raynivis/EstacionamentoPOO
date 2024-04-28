@@ -17,6 +17,7 @@ import static ufms.cptl.raymay.Interface.MostraMensagem.interMensagem;
 public class AuxiliarInterfarceListaTipoSemanas {
     Scanner scanner = new Scanner(System.in);
     
+    /*Método para identificação e cadastro de listas de Dias da Semana e Listas de Veiculos, para não ficar repetindo codigo.*/
     public void OperacaoListaTVDS(List<DiaSemana> diaSmns, List<TipoVeiculo> listaTps){
         interMensagem("Digite o/s dia/s da semana dessa tarifa (Domingo, Segunda, Terça, Quarta, Quinta, Sexta, Sábado)");
         interMensagem("Caso seja para todos os dias da semana, digite: Todos");

@@ -102,22 +102,18 @@ public class InterfaceOpcaoVaga {
                     interMensagem("Digite a rua para a vaga que você deseja editar:");
                     rua = scanner.nextLine();                 
                     
-                    interMensagem("Agora insira a nova rua, o novo número e o novo tipo da vaga (MOTOCICLETA, MEDIOPORTE, GRANDEPORTE): ");
+                    interMensagem("Agora insira a nova rua, e logo em seguida o novo número:");
                     String ruaNova = scanner.nextLine();
                     int numeroNovo = scanner.nextInt();
                     scanner.nextLine();
                     
-                    tipo = scanner.nextLine();
-                    TipoVeiculo tipoN = TipoVeiculo.valueOf(tipo.toUpperCase());
-                    
-                    if(opVaga.editarVaga(vagas, rua, numero, ruaNova, numeroNovo, tipoN) == true) {
+                    if(opVaga.editarVaga(vagas, rua, numero, ruaNova, numeroNovo) == true) {
                         interMensagem("\nVaga editada com sucesso!\n");
                     }
                     else {
                         interMensagem("\nVaga não existente!\n");
                     }
-                break;  
-                
+                break;                 
                 case 5:
                     /*alterar disponibilidade da vaga*/
                     interMensagem("Digite o número da vaga para alterar sua disponibilidade:");
@@ -126,14 +122,20 @@ public class InterfaceOpcaoVaga {
                     
                     interMensagem("Digite a rua da vaga para alterar sua disponibilidade:");
                     rua = scanner.nextLine();   
-                    interMensagem("Digite o novo status da vaga (DISPONIVEL, OCUPADA ou INDISPONIVEL)");
+                    interMensagem("Digite o novo status da vaga (DISPONIVEL ou INDISPONIVEL)");
                             
                     String status = scanner.nextLine();
                     VagaStatus statusV = VagaStatus.valueOf(status.toUpperCase());
                     
+                    if(statusV == VagaStatus.OCUPADA) {
+                        interMensagem("\nErro: Não é possivel deixar a vaga Ocupada!\n");
+                        break;
+                    }                 
                     if(opVaga.alterarDispinibilidade(vagas, rua, numero, statusV) == true){
                         interMensagem("\nDisponibilidade da vaga alterada com sucesso!\n");
                     }
+                break;
+                case 6:
                 break;
                 default:
                     interMensagem("\nInsira uma opção válida!\n");

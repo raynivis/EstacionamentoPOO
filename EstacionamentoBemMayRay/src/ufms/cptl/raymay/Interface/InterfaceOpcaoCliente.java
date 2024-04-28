@@ -166,6 +166,8 @@ public class InterfaceOpcaoCliente {
                                         interMensagem("\nVeículo não encontrado!\n");
                                     }
                                 break;
+                                case 4:
+                                break;
                                 default:
                                     interMensagem("\nInsira uma opção válida!\n");
                                 break;
@@ -175,7 +177,9 @@ public class InterfaceOpcaoCliente {
                     case 6: 
                         /*listar todos os cadastros de cliente*/
                         opCliente.relatorioCliente(clientes);
-                    break; 
+                    break;
+                    case 7:
+                    break;
                     default:
                         interMensagem("\nInsira uma opção válida!\n");
                     break;

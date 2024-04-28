@@ -67,7 +67,8 @@ public class OperacoesTicket {
     }    
     
     
-    /* */ 
+    /*Método para faciltar a identificação de LocalDateTime.DayOfWeek para o Enum criado, pela data passada por paramêtro, ele retorna
+    o dia da semana pelo o Enum criado, para assim identificar os preços das tarifas*/ 
     public DiaSemana semanaToEnum(LocalDateTime data){
         DayOfWeek diaS = data.getDayOfWeek();
         DiaSemana tipo = null;
@@ -99,7 +100,8 @@ public class OperacoesTicket {
     }
     
     
-    /* */
+    /*Método para facilitar a busca de tarifa na interface, a tarifa é identificada pela data de inicio, os dias da semana dela e o tipo/s
+    de veiculo/s que a tarifa atende, o método retorna a tarifa se encontra-la, se não, retorna um ponteiro nulo*/
     public Tarifa buscarTarifa(List<Tarifa> tarifas, String inicio, List<DiaSemana> dias, List<TipoVeiculo> veiculos) {
         for(Tarifa t : tarifas) {
             if(t.getInicio().format(dataBonitinha).equals(inicio) 
@@ -123,7 +125,13 @@ public class OperacoesTicket {
     }
     
     
-    /**/
+    /*Método para achar a tarifa que o ticket vai usar, na lista de tarifas ele busca pelas tarifas que começaram antes da data passada por 
+    referencia, além de ver se ela contem o "dia da Semana" da data, se ela atender os requisitos, ela verifica se o Tipo de Veiculo é compativel
+    com essa tarifa.
+    Após isso, se for a primeira vez que ele entrar na condição da "linha 139" ele já vai receber a tarifa
+    Se mais de uma tarifa entrar nessa condição ele vai comparar qual a tarifa mais perto da data passada (comparando os segundos)
+    por referencia.
+    A melhor tarifa é escolhida e retornada, se não achar nenhum tarifa nas condições retorna um ponteiro null*/
     public Tarifa tarifaProxima(List<Tarifa> tarifas, LocalDateTime inicio, Veiculo veiculo) {
         Tarifa tarifaPerto = null;
         for(Tarifa t : tarifas) {
@@ -138,7 +146,10 @@ public class OperacoesTicket {
     }
     
     
-    /* */
+    /*Método para calcular quanto o ticket faturou, pela tarifa escolhida pelo ticket, ele ja adiciona o preço da primeira hora, logo
+    em seguida ele entra em um laço adicionando 1 hora para ir adicionando "o custo" e "o tempo que o veiculo ficou estacionado"
+    o laço para quando der a data de fim ou passar dela.
+    retorna o total faturado do ticket*/
     public double totalFaturadoTicket(Ticket ticket){
         double total;
         
@@ -158,7 +169,7 @@ public class OperacoesTicket {
     }
     
     
-    /* */
+    /*Método para printar as tarifas cadastrada no sistema para ter uma visualização*/
     public void relatorioTarifa(List<Tarifa> tarifas) {
         for(Tarifa t : tarifas) {
             System.out.println(t.toString());
@@ -187,7 +198,7 @@ public class OperacoesTicket {
     }
     
     
-    /* O método lsita todos os tickets ATIVOS */
+    /* O método lsita todos os tickets ATIVOS no momento */
     public void ListarTicketAtivo(List<Ticket> tickets) {
         for(Ticket t : tickets) {
             if(t.getStatus() == Operando.ATIVO){
@@ -198,7 +209,8 @@ public class OperacoesTicket {
     }
       
     
-    /* */
+    /*Método para ver quantos tickets faturou pelo periodo passado por referencia, ele usa o metodo de total faturado do ticket
+    retorna o total faturado no periodo*/
     public double FaturadoPeriodo(List<Ticket> tickets, LocalDateTime inicio, LocalDateTime fim){
         double soma = 0;
         for(Ticket t : tickets) {

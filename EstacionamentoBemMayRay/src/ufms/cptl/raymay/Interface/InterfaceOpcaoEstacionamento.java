@@ -235,12 +235,16 @@ public class InterfaceOpcaoEstacionamento {
                             case 4: /*imprimir tarifas*/
                                 opTicket.relatorioTarifa(tarifas);
                             break;
+                            case 5:
+                            break;
                             default:
                                 interMensagem("\nInsira uma opção válida!\n");
                             break;
                         }
                     }while(opcao3 != 5);
-                break; 
+                break;
+                case 5:
+                break;
                 default:
                     interMensagem("\nInsira uma opção válida!\n");
                 break;

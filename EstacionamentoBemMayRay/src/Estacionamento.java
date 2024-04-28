@@ -18,6 +18,7 @@ import ufms.cptl.raymay.Teste.ListasProntas;
  */
 public class Estacionamento {
     public static void main(String[] args){
+        /*Listas do sistema*/
         ListasProntas listaPrnts = new ListasProntas();
         InterfaceInicial inter = new InterfaceInicial();
         List<Cliente> clientes = new ArrayList<>();
@@ -25,6 +26,7 @@ public class Estacionamento {
         List<Ticket> tickets = new ArrayList<>();
         List<Tarifa> tarifas = new ArrayList<>();
         
+        /*opções para as listas prontas para teste*/
         int opcao = JOptionPane.showConfirmDialog(null, "Deseja inserir clientes e vagas prontos nas listas para testes?", "Selecione", JOptionPane.YES_NO_OPTION);
         switch(opcao) {
             case JOptionPane.YES_OPTION:
@@ -34,6 +36,7 @@ public class Estacionamento {
             break;
         }
         
+        /*primeira interace do programa Estaciona Bem!!*/
         inter.primeirasOpcoes(clientes, vagas, tickets, tarifas);   
         
    }
