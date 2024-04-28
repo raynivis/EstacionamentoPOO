@@ -12,12 +12,13 @@ import ufms.cptl.raymay.Enum.VagaStatus;
  */
 public class Vaga {
 
-    
+    /* A vaga contém uma chave composta => numero e rua */
     private int numero;
     private String rua;
-    private VagaStatus status;
-    /*  */
-    public TipoVeiculo tipo;
+    private VagaStatus status; /* OCUPADA, DISPONIVEL, INDISPONIVEL */
+    
+    /* A vaga possuirá somente UM tipo de veículo e somente esse tipo pode ser estacionado nela */
+    public TipoVeiculo tipo; 
 
     public Vaga(int numero, String rua, VagaStatus status, TipoVeiculo tipo) {
         this.numero = numero;

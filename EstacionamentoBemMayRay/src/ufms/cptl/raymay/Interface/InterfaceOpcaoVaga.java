@@ -25,7 +25,9 @@ public class InterfaceOpcaoVaga {
     byte opcao2;
     Scanner scanner = new Scanner(System.in);
     
-    public  void opcoesVaga(List<Cliente> clientes, List<Vaga> vagas, List<Ticket> tickets, List<Tarifa> tarifas) {      
+    /* Método geral das opções da vaga que será chamado na Classe InterfaceInicial e permite a realização das operações
+    relacionadas a vaga */
+    public void opcoesVaga(List<Cliente> clientes, List<Vaga> vagas, List<Ticket> tickets, List<Tarifa> tarifas) {      
         do{
             /* Utiliza o método criado em ItensMenu, reduzindo o tamanho
             de linhas das Classes da interface */
@@ -35,20 +37,24 @@ public class InterfaceOpcaoVaga {
             switch (opcao2) {
                 case 1:
                     /*cadastrar vaga*/
-                    interMensagem("Digite o número da vaga:");
+                    interMensagem("Digite o número da vaga a ser cadastrada:");
                     int numero = scanner.nextInt();
                     scanner.nextLine();
-                    interMensagem("Digite o nome da rua:");
+                    interMensagem("Digite o nome da rua da vaga a ser cadastrada:");
                     String rua = scanner.nextLine();                                      
-                                                    
+                                  
+                    /* Vaga acabou de ser cadastrada, portando está disponível até algum estacionamento de veículo
+                    ou até que se torne indisponível */
                     VagaStatus vagastatus = VagaStatus.DISPONIVEL;
                     
                     interMensagem("Digite o tipo de vaga(MOTOCICLETA, MEDIOPORTE, GRANDEPORTE):");
                     String tipo = scanner.nextLine();
+                    /* Transforma a String inserida em maiúsculo para fazer a comparação */
                     TipoVeiculo tipoV = TipoVeiculo.valueOf(tipo.toUpperCase());
                                         
                     Vaga novaVaga = new Vaga(numero, rua, vagastatus, tipoV);
                     
+                    /* O método cadastrarVaga já adiciona na lista de vagas se retornar true */
                     if (opVaga.cadastrarVaga(vagas, novaVaga, rua, numero) == true){
                         interMensagem("\nVaga cadastrada com sucesso!\n");
                     }
@@ -58,12 +64,13 @@ public class InterfaceOpcaoVaga {
                 break;  
                 
                 case 2:
-                    /*consultar vaga por numero*/
+                    /*consultar vaga por número*/
                     interMensagem("Digite o número da vaga que você deseja consultar:");
                     numero = scanner.nextInt();
                     scanner.nextLine();
                     interMensagem("Digite a rua da vaga que você deseja consultar:");
                     rua = scanner.nextLine();
+                    
                     Vaga vaga = opVaga.consultarVaga(vagas, numero, rua); 
                     if(vaga == null){
                         interMensagem("\nVaga inexistente!\n");
@@ -74,24 +81,25 @@ public class InterfaceOpcaoVaga {
     
                 case 3:
                     /*excluir vaga*/
-                    interMensagem("Digite o número da vaga:");
+                    interMensagem("Digite o número da vaga a ser excluída:");
                     numero = scanner.nextInt();
                     scanner.nextLine();
-                    interMensagem("Digite a rua da vaga ser excluída:");
+                    interMensagem("Digite a rua da vaga a ser excluída:");
                     rua = scanner.nextLine();
-                                       
-                    if(opVaga.excluirVaga(vagas, rua, numero) == true) {
-                        interMensagem("Vaga rua:" + rua + " número:" + numero + " excluída com sucesso!");
+                        
+                    /* O método excluirVaga realiza as verificações necessárias para a exclusão da vaga*/
+                    if(opVaga.excluirVaga(vagas, tickets, rua, numero) == true) {
+                        interMensagem("\nVaga rua:" + rua + " número:" + numero + " excluída com sucesso!\n");
                     }
                 break;  
                 
                 case 4:
                     /*editar vaga*/
-                    interMensagem("Digite a número da vaga:");
+                    interMensagem("Digite a número da vaga que você deseja editar:");
                     numero = scanner.nextInt();
                     scanner.nextLine();
                     
-                    interMensagem("Digite a rua para a vaga ser editada:");
+                    interMensagem("Digite a rua para a vaga que você deseja editar:");
                     rua = scanner.nextLine();                 
                     
                     interMensagem("Agora insira a nova rua, o novo número e o novo tipo da vaga (MOTOCICLETA, MEDIOPORTE, GRANDEPORTE): ");
@@ -101,6 +109,7 @@ public class InterfaceOpcaoVaga {
                     
                     tipo = scanner.nextLine();
                     TipoVeiculo tipoN = TipoVeiculo.valueOf(tipo.toUpperCase());
+                    
                     if(opVaga.editarVaga(vagas, rua, numero, ruaNova, numeroNovo, tipoN) == true) {
                         interMensagem("\nVaga editada com sucesso!\n");
                     }
@@ -111,11 +120,11 @@ public class InterfaceOpcaoVaga {
                 
                 case 5:
                     /*alterar disponibilidade da vaga*/
-                    interMensagem("Digite o número da vaga:");
+                    interMensagem("Digite o número da vaga para alterar sua disponibilidade:");
                     numero = scanner.nextInt();
                     scanner.nextLine();
                     
-                    interMensagem("Digite a rua da vaga ser editada:");
+                    interMensagem("Digite a rua da vaga para alterar sua disponibilidade:");
                     rua = scanner.nextLine();   
                     interMensagem("Digite o novo status da vaga (DISPONIVEL, OCUPADA ou INDISPONIVEL)");
                             
@@ -127,6 +136,7 @@ public class InterfaceOpcaoVaga {
                     }
                 break;
                 default:
+                    interMensagem("\nInsira uma opção válida!\n");
                 break;
             }    
         }while(opcao2 != 6);

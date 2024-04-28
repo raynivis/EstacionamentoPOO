@@ -13,7 +13,7 @@ public class OpcaoTarifa {
         CADASTRAR (1, "Cadastrar tarifa"),
         EXCLUIR (2, "Excluir tarifa"),
         EDITAR(3, "Editar tarifa"),
-        CONSULTAR(4, "Imprimir as Tarifas cadastradas"),
+        CONSULTAR(4, "Imprimir as tarifas cadastradas"),
         SAIR(5, "Voltar");
         
        /* Como esse enum trabalha com a impressão de menus, os atributos são private -> final <-  pois

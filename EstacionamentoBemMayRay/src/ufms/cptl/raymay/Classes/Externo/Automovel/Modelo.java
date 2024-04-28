@@ -11,15 +11,15 @@ import ufms.cptl.raymay.Enum.TipoVeiculo;
  * @author ra
  */
 public class Modelo {
-    /*Enumeração do tipo de veiculo, consideramos a melhor opção pra identificar
-    do veículo*/
+    /* Enumeração do tipo de veiculo, consideramos a melhor opção pra identificar
+    do veículo */
    
     
-    /*Marca do veículo a considerar pelo veículo*/
+    /* Marca do veículo a considerar pelo veículo */
     private String marca;
-    /*especificação do modelo do carro*/
+    /* especificação do modelo do carro */
     private String modelo;
-    /*especificação do tipo de automovel pelo porte de enum*/
+    /* especificação do tipo de automovel pelo porte de enum */
     private TipoVeiculo tipoVeiculo;
     
 

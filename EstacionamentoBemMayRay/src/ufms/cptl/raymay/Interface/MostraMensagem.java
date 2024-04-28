@@ -13,7 +13,7 @@ import java.io.UnsupportedEncodingException;
  */
 public class MostraMensagem {
     /* Método estático que mostra uma mensagem de texto na interface, será utilizada para casos 
-    específicos dentro das operações, no package de operações, e da interface */
+    específicos e mensagens indicadoras de operações e finalizadoras dentro da própria interface */
     public static void interMensagem(String mensagem){
         try {
             /* Impressão com caracteres especiais no formato UTF-8 */

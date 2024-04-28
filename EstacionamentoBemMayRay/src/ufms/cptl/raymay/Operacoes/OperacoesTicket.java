@@ -24,10 +24,17 @@ import ufms.cptl.raymay.Classes.Interno.Ticket;
  * @author ra
  */
 public class OperacoesTicket {
+    /* Essa Classe possui métodos que serão realizados com o ticket e as tarifas,
+    de acordo com a opção escolhida no Menu */
     
     OperacoesCliente opClie = new OperacoesCliente();
     DateTimeFormatter dataBonitinha = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm");
     
+    
+    /* O método percorre a lista de tickets a procura do ticket que possui a placa inserida e que
+    esteja ATIVO (pois pode conter mais de um ticket com a mesma placa, porém so haverá um ATIVO),
+    caso encontre o ativo, faz a retirada do veículo do estacionamento, torna a vaga disponível
+    e deixa o ticket DESATIVO */
     public boolean retirar(List<Ticket> tickets, Veiculo veiculoEstacio){             
         for(Ticket t : tickets) {
             if(t.getVeiculoTicket().equals(veiculoEstacio) && t.getStatus() == Operando.ATIVO) {
@@ -40,10 +47,12 @@ public class OperacoesTicket {
         return false;    
     }
 
-    /* Método que verifica se o veículo inserido possui algum ticket ATIVO ou DESATIVO atrelado a ele. 
-    Primeiro faz a verificação se a placa já foi cadastrada com o método verificaTicketVeiculo, que retorna 
-    o veículo com a placa inserida. Após isso, é comparado os veículos dentro da lista de tickets com os Tickets ativos e 
-    veículo da placa inserida */
+    
+    /* Método que verifica se o veículo inserido possui algum ticket ATIVO atrelado a ele. 
+    Primeiro faz a verificação se a placa já foi cadastrada no sistema, com o método verificarVeiculo,
+    que retorna o veículo com a placa respectiva. Após isso, passa pela lista de tickets, se estiver ativo
+    verifica se a respectiva placa está contida nesse ticket. Se encontrar, retorna o ticket, se não,
+    retorna null */
     public Ticket verificaTicketVeiculo(List<Cliente> clientes, String placa, List<Ticket> tickets) {
         if(opClie.verificarVeiculo(clientes, placa) != null) {
             Veiculo v = opClie.verificarVeiculo(clientes, placa);
@@ -57,7 +66,8 @@ public class OperacoesTicket {
        return null;
     }    
     
-      
+    
+    /* */ 
     public DiaSemana semanaToEnum(LocalDateTime data){
         DayOfWeek diaS = data.getDayOfWeek();
         DiaSemana tipo = null;
@@ -88,6 +98,8 @@ public class OperacoesTicket {
         return tipo;
     }
     
+    
+    /* */
     public Tarifa buscarTarifa(List<Tarifa> tarifas, String inicio, List<DiaSemana> dias, List<TipoVeiculo> veiculos) {
         for(Tarifa t : tarifas) {
             if(t.getInicio().format(dataBonitinha).equals(inicio) 
@@ -98,6 +110,9 @@ public class OperacoesTicket {
         return null;
     }
     
+    
+    /* O método recebe o código do ticket e a lista de tickets e percorre a lista de tickets fazendo
+    a procura do código, se encontrar retorna o ticket, se não, retorna null*/
     public Ticket buscarTicket(List<Ticket> tickets, int codigo) {
         for(Ticket t : tickets) {
             if(t.getCodigo() == codigo) {
@@ -106,7 +121,9 @@ public class OperacoesTicket {
         }
         return null;
     }
-      
+    
+    
+    /**/
     public Tarifa tarifaProxima(List<Tarifa> tarifas, LocalDateTime inicio, Veiculo veiculo) {
         Tarifa tarifaPerto = null;
         for(Tarifa t : tarifas) {
@@ -121,6 +138,7 @@ public class OperacoesTicket {
     }
     
     
+    /* */
     public double totalFaturadoTicket(Ticket ticket){
         double total;
         
@@ -139,6 +157,8 @@ public class OperacoesTicket {
         return total;
     }
     
+    
+    /* */
     public void relatorioTarifa(List<Tarifa> tarifas) {
         for(Tarifa t : tarifas) {
             System.out.println(t.toString());
@@ -154,6 +174,20 @@ public class OperacoesTicket {
         }
     }
     
+    
+    /* O método recebe a tarifa a ser procurada e a lsita de tickets, faz a procura dessa tarifa nos tickets
+    da lista e retorna true se encontrar, se não, retorna false */
+    public boolean procuraTarifaEmTicket(Tarifa tarifa, List<Ticket> tickets) {
+        for(Ticket t : tickets) {
+            if(t.getTarifaTicket().equals(tarifa)) {
+                return true;
+            }
+        }
+        return false;
+    }
+    
+    
+    /* O método lsita todos os tickets ATIVOS */
     public void ListarTicketAtivo(List<Ticket> tickets) {
         for(Ticket t : tickets) {
             if(t.getStatus() == Operando.ATIVO){
@@ -163,6 +197,8 @@ public class OperacoesTicket {
         }
     }
       
+    
+    /* */
     public double FaturadoPeriodo(List<Ticket> tickets, LocalDateTime inicio, LocalDateTime fim){
         double soma = 0;
         for(Ticket t : tickets) {

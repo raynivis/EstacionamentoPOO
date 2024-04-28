@@ -16,10 +16,13 @@ import ufms.cptl.raymay.Classes.Externo.Automovel.Veiculo;
  */
 public class Ticket {
 
+    /* Os códigos auxiliam na melhor organização e identificação do ticket na lista de tickets */
     private DateTimeFormatter dataBonitinha = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm"); 
-    private static int proxCodigo = 1;
+    private static int proxCodigo = 1; /* Incrementa o código para o proximo ticket a ser cadastrado */
     private final int codigo; /* código de identificação para cada ticket, começa em 1 */
-    private Operando status;
+    
+    /* Atributo que identifica os tickets ATIVOS e DESATIVOS, todos ficarão salvos na lista*/
+    private Operando status; 
     private LocalDateTime inicio;
     private LocalDateTime fim;  
     private Tarifa tarifaTicket;

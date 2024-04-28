@@ -20,11 +20,12 @@ import ufms.cptl.raymay.Interface.InterfaceEnumOpcao.OpcaoVeiculo;
  * @author maymi
  */
 public class ItensMenu {
-    
-    /*Esta Classe cria métodos de impressão (que percorrem o laço for do primeiro item do Enum até o ultimo)
+    /* Esta Classe cria métodos de impressão (que percorrem o laço for do primeiro item do Enum até o ultimo)
     para os enums criados no package InterfaceEnumOpcao, reduzindo a quantidade de linhas
     das Classes do package da interface e auxiliando no melhor entendimento do código,
     quando for relido/corrigido ou para realizar alterações */
+    
+    /* Todos os métodos da classe permitem a impressão com caracteres especiais na interface!!! */
     
     public void imprimeInicio(){
         try {

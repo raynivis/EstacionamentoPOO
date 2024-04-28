@@ -20,7 +20,8 @@ import ufms.cptl.raymay.Enum.VagaStatus;
  */
 public class ListasProntas {
     
-    
+    /* Instancia Clientes e Vagas para auxiliar os testes das operações/métodos a serem realizados */
+    /* Adiciona os objetos instanciados na lista de Clientes e Vagas */
     public void GerarListas(List<Cliente> clientes, List<Vaga> vagas) {
        List<Veiculo> veiculos1 = new ArrayList<>();
        Cor color = new Cor("Roxo", "Velho");

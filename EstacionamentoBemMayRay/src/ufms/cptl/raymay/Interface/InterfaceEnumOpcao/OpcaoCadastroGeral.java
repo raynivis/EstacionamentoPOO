@@ -16,7 +16,8 @@ public class OpcaoCadastroGeral {
         TARIFA(3, "Consultar tarifa"),
         TICKET(4, "Consultar ticket"),
         TICKETATIVO(5, "Listar tickets ativos"),
-        VOLTAR(6, "Voltar");
+        VAGA(6, "Listar vagas cadastradas"),
+        VOLTAR(7, "Voltar");
         
         /* Como esse enum trabalha com a impressão de menus, os atributos são private -> final <-  pois
         não serão alterados, caso fossem isso traria confusão ao usuário e perderia a característica

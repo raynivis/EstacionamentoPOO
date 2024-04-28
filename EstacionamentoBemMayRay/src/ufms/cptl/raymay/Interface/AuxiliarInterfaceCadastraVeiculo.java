@@ -51,7 +51,6 @@ public class AuxiliarInterfaceCadastraVeiculo {
 
                                           
         Veiculo novoV = new Veiculo(placa, model, color);
-                                
         return novoV;
     }
 }
