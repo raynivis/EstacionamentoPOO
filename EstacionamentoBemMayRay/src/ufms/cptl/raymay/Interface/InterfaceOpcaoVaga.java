@@ -42,17 +42,13 @@ public class InterfaceOpcaoVaga {
                     scanner.nextLine();
                     interMensagem("Digite o nome da rua da vaga a ser cadastrada:");
                     String rua = scanner.nextLine();                                      
-                                  
-                    /* Vaga acabou de ser cadastrada, portando está disponível até algum estacionamento de veículo
-                    ou até que se torne indisponível */
-                    VagaStatus vagastatus = VagaStatus.DISPONIVEL;
                     
                     interMensagem("Digite o tipo de vaga(MOTOCICLETA, MEDIOPORTE, GRANDEPORTE):");
                     String tipo = scanner.nextLine();
                     /* Transforma a String inserida em maiúsculo para fazer a comparação */
                     TipoVeiculo tipoV = TipoVeiculo.valueOf(tipo.toUpperCase());
                                         
-                    Vaga novaVaga = new Vaga(numero, rua, vagastatus, tipoV);
+                    Vaga novaVaga = new Vaga(numero, rua, tipoV);
                     
                     /* O método cadastrarVaga já adiciona na lista de vagas se retornar true */
                     if (opVaga.cadastrarVaga(vagas, novaVaga, rua, numero) == true){

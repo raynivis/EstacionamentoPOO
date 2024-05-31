@@ -29,8 +29,9 @@ public class Ticket {
     private Veiculo veiculoTicket;
     private Vaga vagaTicket;
 
-    public Ticket(Tarifa tarifaTicket, Veiculo veiculoTicket, Vaga vagaTicket) {
+    public Ticket(Tarifa tarifaTicket, Veiculo veiculoTicket, Vaga vagaTicket, LocalDateTime inicio) {
         this.codigo = proxCodigo;
+        this.inicio = inicio;
         this.tarifaTicket = tarifaTicket;
         this.veiculoTicket = veiculoTicket;
         this.vagaTicket = vagaTicket;

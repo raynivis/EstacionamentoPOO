@@ -110,17 +110,17 @@ public class InterfaceOpcaoEstacionamento {
                         interMensagem("\nErro: Não existe uma tarifa para esse tipo de vaga nesse período!\n");
                         break;
                     }
-                    
-                    Ticket novoTicket = new Ticket(atual, veiculo, vaga);
+                    LocalDateTime iniciotic = LocalDateTime.now();
+                    Ticket novoTicket = new Ticket(atual, veiculo, vaga, iniciotic);
                     vaga.setStatus(VagaStatus.OCUPADA);
                     
                     novoTicket.setStatus(Operando.ATIVO);
-                    novoTicket.setInicio(LocalDateTime.now());
                     
                     tickets.add(novoTicket);
                     
                     interMensagem("\nTicket de código " + novoTicket.getCodigo() + " criado com sucesso!\n");                   
                 break;    
+    
                 case 2:
                     /*retirar*/
                     interMensagem("Digite a placa do veículo que deseja retirar:");
