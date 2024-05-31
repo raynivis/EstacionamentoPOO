@@ -26,7 +26,7 @@ import ufms.cptl.raymay.Operacoes.OperacoesVagas;
  *
  * @author maymi
  */
-public class InterfaceInicial {
+public class InterfaceInicial{
     
     OperacoesTicket ticke = new OperacoesTicket();
     OperacoesVagas vag = new OperacoesVagas();
@@ -51,6 +51,7 @@ public class InterfaceInicial {
     
     /* Método geral das opções do menu que será chamado na Classe Main Estacionamento e permitirá que todo o
     menu seja exibido ao usuário */
+  
     public void primeirasOpcoes(List<Cliente> clientes, List<Vaga> vagas, List<Ticket> tickets, List<Tarifa> tarifas) {  
         do {
             /* Utiliza o método criado em ItensMenu, reduzindo o tamanho

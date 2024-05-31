@@ -20,10 +20,11 @@ public class Vaga {
     /* A vaga possuirá somente UM tipo de veículo e somente esse tipo pode ser estacionado nela */
     public TipoVeiculo tipo; 
 
-    public Vaga(int numero, String rua, VagaStatus status, TipoVeiculo tipo) {
+    public Vaga(int numero, String rua, TipoVeiculo tipo) {
         this.numero = numero;
         this.rua = rua;
-        this.status = status;
+        this.status = VagaStatus.DISPONIVEL; /* Vaga acabou de ser cadastrada, portando está disponível até
+        algum estacionamento de veículo ou até que se torne indisponível */
         this.tipo = tipo;
     }
 

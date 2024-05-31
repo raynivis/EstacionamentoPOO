@@ -63,7 +63,7 @@ public class InterfaceOpcaoCliente {
                         Veiculo Novoveiculo = InVeiculo.receberVeiculo(clientes, novoCliente);                      
                         
                          if(Novoveiculo != null) {
-                             novoCliente.setVeiculoNaLista(Novoveiculo);
+                             novoCliente.setAdicionaVeiculo(Novoveiculo);
                              clientes.add(novoCliente);
                              interMensagem("\nCadastro:");
                              interMensagem(novoCliente.toString());
@@ -134,7 +134,7 @@ public class InterfaceOpcaoCliente {
                                 case 1: /*Adicionar um veículo*/
                                     Veiculo veiculoAdicional = InVeiculo.receberVeiculo(clientes, operador); 
                                     if(veiculoAdicional != null) {
-                                        operador.setVeiculoNaLista(veiculoAdicional);
+                                        operador.setAdicionaVeiculo(veiculoAdicional);
                                         interMensagem("\nVeículo cadastrado com sucesso!!\n");
                                     }
                                     else {
