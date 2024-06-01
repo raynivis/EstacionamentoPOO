@@ -2,14 +2,16 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
-package ufms.cptl.raymay.Externo.Automovel;
+package ufms.cptl.raymay.Classes.Externo.Automovel;
 
 /**
  *
  * @author ra
  */
 public class Veiculo {
-    private String placa;
+    
+    /* Atributos característicos do veículo */
+    private String placa; /* A placa funciona como a chave primária do veículo */
     private Modelo model;
     private Cor color;
 
@@ -43,10 +45,12 @@ public class Veiculo {
         this.color = color;
     }
 
+    
     @Override
     public String toString() {
-        return "Placa: " + placa + "\nMarca: " + model.getMarca() +  "\nModelo: "+ model.getModelo() +
-        "\nTipo de Veiculo: " + model.getTipoVeiculo() +"\nCor: " +color.getCor()+ "\nDescrição: " + color.getDescricao();
+        return "   Placa: " + placa + "\n   Marca: " + model.getMarca() +  "\n   Modelo: "+ model.getModelo() +
+        "\n   Tipo de Veiculo: " + model.getTipoVeiculo() +"\n   Cor: " +color.getCor()+ "\n   Descrição: " + color.getDescricao()
+                + "\n";
     }
     
         

@@ -7,19 +7,20 @@ package ufms.cptl.raymay.Interface;
 import java.util.List;
 import java.util.Scanner;
 import ufms.cptl.raymay.Enum.TipoVeiculo;
-import ufms.cptl.raymay.Externo.Automovel.Cor;
-import ufms.cptl.raymay.Externo.Automovel.Modelo;
-import ufms.cptl.raymay.Externo.Automovel.Veiculo;
-import ufms.cptl.raymay.Externo.Individuo.Cliente;
+import ufms.cptl.raymay.Classes.Externo.Automovel.Cor;
+import ufms.cptl.raymay.Classes.Externo.Automovel.Modelo;
+import ufms.cptl.raymay.Classes.Externo.Automovel.Veiculo;
+import ufms.cptl.raymay.Classes.Externo.Individuo.Cliente;
 import static ufms.cptl.raymay.Interface.MostraMensagem.interMensagem;
 
 /**
  *
  * @author maymi
  */
-public class InterfaceCadastraVeiculo {
+public class AuxiliarInterfaceCadastraVeiculo {
     Scanner scanner = new Scanner(System.in);
     
+    /*método para facilitar o cadastro de um veiculo na interface, para assim não ficar repetindo codigo atoa.*/
     public Veiculo receberVeiculo(List<Cliente> clientes, Cliente cliente) {
         /*mensagem de interface para digitar um novo veiculo*/
         interMensagem("Digite a placa: ");
@@ -34,6 +35,10 @@ public class InterfaceCadastraVeiculo {
             }
         }
         
+        interMensagem("Digite o tipo do veículo(MOTO, CARRO ou ONIBUS):");
+        String tipoV = scanner.nextLine();
+        TipoVeiculo type = TipoVeiculo.valueOf(tipoV.toUpperCase());
+        
         interMensagem("Digite a cor: ");       
         String cor = scanner.nextLine();
         interMensagem("Digite a descrição: "); 
@@ -44,14 +49,10 @@ public class InterfaceCadastraVeiculo {
         String marca = scanner.nextLine();
         interMensagem("Digite o modelo: "); 
         String modelo = scanner.nextLine();        
-        interMensagem("Digite o tipo do veículo(MOTOCICLETA, MEDIOPORTE, GRANDEPORTE):");
-        String tipoV = scanner.nextLine();
-        TipoVeiculo type = TipoVeiculo.valueOf(tipoV.toUpperCase());
         Modelo model = new Modelo(marca, modelo, type);
 
                                           
         Veiculo novoV = new Veiculo(placa, model, color);
-                                
         return novoV;
     }
 }

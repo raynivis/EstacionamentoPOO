@@ -14,9 +14,10 @@ import static ufms.cptl.raymay.Interface.MostraMensagem.interMensagem;
  *
  * @author ra
  */
-public class InterfarceListaTipoSemanas {
+public class AuxiliarInterfarceListaTipoSemanas {
     Scanner scanner = new Scanner(System.in);
     
+    /*Método para identificação e cadastro de listas de Dias da Semana e Listas de Veiculos, para não ficar repetindo codigo.*/
     public void OperacaoListaTVDS(List<DiaSemana> diaSmns, List<TipoVeiculo> listaTps){
         interMensagem("Digite o/s dia/s da semana dessa tarifa (Domingo, Segunda, Terça, Quarta, Quinta, Sexta, Sábado)");
         interMensagem("Caso seja para todos os dias da semana, digite: Todos");
@@ -40,16 +41,16 @@ public class InterfarceListaTipoSemanas {
             diaSmns.add(DiaSemana.SABADO);
        
         
-        interMensagem("Digite o/s tipo/s de veículo/s dessa tarifa (MOTOCICLETA, MEDIOPORTE, GRANDEPORTE):");
+        interMensagem("Digite o/s tipo/s de veículo/s dessa tarifa (MOTO, CARRO, ONIBUS):");
         interMensagem("Caso seja para todos os tipos de veículo, digite: Todos");
         String tipos = scanner.nextLine();
         tipos = tipos.toUpperCase();
                     
-        if(tipos.contains("MOTOCICLETA") || tipos.contains("TODOS"))
-            listaTps.add(TipoVeiculo.MOTOCICLETA);
-        if(tipos.contains("MEDIOPORTE") || tipos.contains("TODOS"))
-            listaTps.add(TipoVeiculo.MEDIOPORTE); 
-        if(tipos.contains("GRANDEPORTE") || tipos.contains("TODOS"))
-            listaTps.add(TipoVeiculo.GRANDEPORTE); 
+        if(tipos.contains("MOTO") || tipos.contains("TODOS"))
+            listaTps.add(TipoVeiculo.MOTO);
+        if(tipos.contains("CARRO") || tipos.contains("TODOS"))
+            listaTps.add(TipoVeiculo.CARRO); 
+        if(tipos.contains("ONIBUS") || tipos.contains("TODOS"))
+            listaTps.add(TipoVeiculo.ONIBUS); 
     }
 }

@@ -4,28 +4,33 @@
  */
 package ufms.cptl.raymay.Operacoes;
 import java.util.List;
+import ufms.cptl.raymay.Classes.Interno.Tickets.Ticket;
 import ufms.cptl.raymay.Enum.TipoVeiculo;
 import ufms.cptl.raymay.Enum.VagaStatus;
 import static ufms.cptl.raymay.Operacoes.OperacaoMostraMensagem.operacaoMensagem;
-import ufms.cptl.raymay.Interno.Vaga;
+import ufms.cptl.raymay.Classes.Interno.Vaga;
 /**
  *
  * @author maymi
  */
 public class OperacoesVagas {
-    /*retorna true se a vaga foi cadastrada e false caso não já foi cadastrada ou não 
-    rpeenche os requisitos*/
+    
+    /* O método verifica o número e a rua da vaga a ser cadastrada, identifica se a chave composta
+    (número e rua) já existe na lista de vagas (nesse caso, retorna false), se não existe, a vaga é
+    cadastrada e adicionada a lista de vagas */
     public boolean cadastrarVaga(List<Vaga> vagas, Vaga novaVaga, String rua, int numero) {
         for (Vaga v : vagas) {
             if (v.getRua().equals(rua) && v.getNumero() == numero) {
                 return false;
             }
         }
-        vagas.add(novaVaga);
+       vagas.add(novaVaga);
        return true;
     }
 
-    /*Retorna a vaga*/
+    
+    /* O método recebe o número e a rua da vaga a ser consultada e a lista de vagas para realizar 
+    a procura, caso seja encontrada, retorna a própria vaga (objeto), se não, retorna null */
     public Vaga consultarVaga(List<Vaga> vagas, int numero, String rua) {
         for(Vaga v : vagas) {
             if(v.getNumero() == numero && v.getRua().equals(rua)) {              
@@ -35,46 +40,48 @@ public class OperacoesVagas {
         return null;
     }
     
-    public Vaga consultarVagaEstacionamento(List<Vaga> vagas, int numero, String rua) {
-        for(Vaga v : vagas) {
-            if(v.getNumero() == numero && v.getRua().equals(rua)) {              
-                return v;
-            }
-        }
-        return null;
-    }
     
-     /* Retorna true se foi excluída e false se não foi ou não existe */ /*ARRUMAR*/
-    public boolean excluirVaga(List<Vaga> vagas, String rua, int numero) {
+     /* O método realiza a procura pela vaga, se for encontrada percorre a lista de tickets para verificar
+    se existe algum ticket cadastrado (ATIVO OU DESATIVO), caso possua, a vaga não é excluída,
+    se não, ela é excluída*/
+    public boolean excluirVaga(List<Vaga> vagas, List<Ticket> tickets, String rua, int numero) {
         for(Vaga v : vagas) {
             if(v.getRua().equals(rua) && v.getNumero() == numero) {
-                if(v.getStatus() != VagaStatus.OCUPADA) {
-                    vagas.remove(v);
-                    /*interface para mostrar que foi removida*/
-                    return true;
+                for(Ticket t: tickets) {
+                    if(t.getVagaTicket().equals(v)) {
+                        /* 1 condição que justifica não ser possível a exclusão da vaga -> possui ticket */
+                        operacaoMensagem("\nA vaga não pode ser excluída pois ela possui um ticket cadastrado!\n");
+                        return false;
+                    }
                 }
-                /* 1 condição que justifica não ser possível a exclusão da vaga -> Estar sendo utilizada */
-                operacaoMensagem("A vaga não pode ser excluída pois ela possui um ticket ATIVO (OCUPADA)!");
-                return false;
+                vagas.remove(v);
+                return true;
             }  
         }
-        /* 2 condição que justifica não ser possível a exclusão da vaga -> Vaga inexistente */
-        operacaoMensagem("Vaga inexistente!");
+        /* 2 condição que justifica não ser possível a exclusão da vaga -> vaga inexistente */
+        operacaoMensagem("\nVaga inexistente!\n");
         return false;
     }
-    public boolean editarVaga(List<Vaga> vagas, String rua, int numero, String novaRua, int novoNumero, TipoVeiculo novoTipo) {
+    
+    
+    /* O método recebe a lista de vagas, a rua e o número da vaga existente e seu novo número e rua,
+    quando encontra a vaga na lista, substitui os atributos pelos novos inseridos e retorna true,
+    caso não encontre a vaga retorna false */
+    public boolean editarVaga(List<Vaga> vagas, String rua, int numero, String novaRua, int novoNumero) {
         for(Vaga v : vagas) {
             if(v.getRua().equals(rua) && v.getNumero() == numero) {
                 v.setRua(novaRua);
                 v.setNumero(novoNumero);
-                v.setTipo(novoTipo);
                 return true;
             }
         }
         return false;
     }
-    /* se o ticket referente a vaga não tiver voltado ao sistema, para ser descartado, 
-    não há possibilidade de alterar a disponibilidade da vaga*/ 
+    
+    
+    /* O método procura a vaga inserida (rua e número), se encontrar verifica se está OCUPADA, ou seja
+    possui um ticket ATIVO, se estiver não é possível a modificação da disponibilidade, se não, 
+    sua disponibilidade é alterada */
     public boolean alterarDispinibilidade(List<Vaga> vagas, String rua, int numero, VagaStatus novoStatus) {
         for(Vaga v : vagas){
             if(v.getRua().equals(rua) && v.getNumero() == numero) {
@@ -89,11 +96,24 @@ public class OperacoesVagas {
         operacaoMensagem("Vaga não existente!");
         return false;
     }
+    
+    
+    /* O método lista todas as vagas disponíveis na lista de vagas */
     public void listarVagasDisponiveis(List<Vaga> vagas) {
         for(Vaga v : vagas) {
             if(v.getStatus() == VagaStatus.DISPONIVEL) {
-                System.out.println(v.toString());
+                operacaoMensagem(v.toString());
             }
+            operacaoMensagem("///////////////////////////////////////////////////");
         }
     } 
+    
+    
+    /* O método lista TODAS as vagas cadastradas no sistema, presentes na lista de vagas */
+    public void listarVagasCadastradas(List<Vaga> vagas) {
+        for(Vaga v : vagas) {
+            operacaoMensagem(v.toString());
+            operacaoMensagem("///////////////////////////////////////////////////");
+        }
+    }    
 }

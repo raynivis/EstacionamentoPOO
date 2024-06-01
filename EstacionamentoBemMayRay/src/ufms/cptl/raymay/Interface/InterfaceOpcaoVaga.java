@@ -8,11 +8,11 @@ import java.util.List;
 import java.util.Scanner;
 import ufms.cptl.raymay.Enum.TipoVeiculo;
 import ufms.cptl.raymay.Enum.VagaStatus;
-import ufms.cptl.raymay.Externo.Individuo.Cliente;
+import ufms.cptl.raymay.Classes.Externo.Individuo.Cliente;
 import static ufms.cptl.raymay.Interface.MostraMensagem.interMensagem;
-import ufms.cptl.raymay.Interno.Tarifa;
-import ufms.cptl.raymay.Interno.Ticket;
-import ufms.cptl.raymay.Interno.Vaga;
+import ufms.cptl.raymay.Classes.Interno.Tarifas.Tarifa;
+import ufms.cptl.raymay.Classes.Interno.Tickets.Ticket;
+import ufms.cptl.raymay.Classes.Interno.Vaga;
 import ufms.cptl.raymay.Operacoes.OperacoesVagas;
 
 /**
@@ -20,12 +20,14 @@ import ufms.cptl.raymay.Operacoes.OperacoesVagas;
  * @author maymi
  */
 public class InterfaceOpcaoVaga {
-    OperacoesVagas vag = new OperacoesVagas(); 
+    OperacoesVagas opVaga = new OperacoesVagas(); 
     ItensMenu menuva = new ItensMenu(); /*menuva = Menu de gerencia das Vagas*/
     byte opcao2;
     Scanner scanner = new Scanner(System.in);
     
-    public  void opcoesVaga(List<Cliente> clientes, List<Vaga> vagas, List<Ticket> tickets, List<Tarifa> tarifas) {      
+    /* Método geral das opções da vaga que será chamado na Classe InterfaceInicial e permite a realização das operações
+    relacionadas a vaga */
+    public void opcoesVaga(List<Cliente> clientes, List<Vaga> vagas, List<Ticket> tickets, List<Tarifa> tarifas) {      
         do{
             /* Utiliza o método criado em ItensMenu, reduzindo o tamanho
             de linhas das Classes da interface */
@@ -35,21 +37,25 @@ public class InterfaceOpcaoVaga {
             switch (opcao2) {
                 case 1:
                     /*cadastrar vaga*/
-                    interMensagem("Digite o número da vaga:");
+                    interMensagem("Digite o número da vaga a ser cadastrada:");
                     int numero = scanner.nextInt();
                     scanner.nextLine();
-                    interMensagem("Digite o nome da rua:");
+                    interMensagem("Digite o nome da rua da vaga a ser cadastrada:");
                     String rua = scanner.nextLine();                                      
-                                                    
+                                  
+                    /* Vaga acabou de ser cadastrada, portando está disponível até algum estacionamento de veículo
+                    ou até que se torne indisponível */
                     VagaStatus vagastatus = VagaStatus.DISPONIVEL;
                     
-                    interMensagem("Digite o tipo de vaga(MOTOCICLETA, MEDIOPORTE, GRANDEPORTE):");
+                    interMensagem("Digite o tipo de vaga(MOTO, CARRO, ONIBUS):");
                     String tipo = scanner.nextLine();
+                    /* Transforma a String inserida em maiúsculo para fazer a comparação */
                     TipoVeiculo tipoV = TipoVeiculo.valueOf(tipo.toUpperCase());
                                         
                     Vaga novaVaga = new Vaga(numero, rua, vagastatus, tipoV);
                     
-                    if (vag.cadastrarVaga(vagas, novaVaga, rua, numero) == true){
+                    /* O método cadastrarVaga já adiciona na lista de vagas se retornar true */
+                    if (opVaga.cadastrarVaga(vagas, novaVaga, rua, numero) == true){
                         interMensagem("\nVaga cadastrada com sucesso!\n");
                     }
                     else{
@@ -58,13 +64,14 @@ public class InterfaceOpcaoVaga {
                 break;  
                 
                 case 2:
-                    /*consultar vaga por numero*/
+                    /*consultar vaga por número*/
                     interMensagem("Digite o número da vaga que você deseja consultar:");
                     numero = scanner.nextInt();
                     scanner.nextLine();
                     interMensagem("Digite a rua da vaga que você deseja consultar:");
                     rua = scanner.nextLine();
-                    Vaga vaga = vag.consultarVaga(vagas, numero, rua); 
+                    
+                    Vaga vaga = opVaga.consultarVaga(vagas, numero, rua); 
                     if(vaga == null){
                         interMensagem("\nVaga inexistente!\n");
                         break;
@@ -74,58 +81,65 @@ public class InterfaceOpcaoVaga {
     
                 case 3:
                     /*excluir vaga*/
-                    interMensagem("Digite o número da vaga:");
+                    interMensagem("Digite o número da vaga a ser excluída:");
                     numero = scanner.nextInt();
                     scanner.nextLine();
-                    interMensagem("Digite a rua da vaga ser excluída:");
+                    interMensagem("Digite a rua da vaga a ser excluída:");
                     rua = scanner.nextLine();
-                                       
-                    if(vag.excluirVaga(vagas, rua, numero) == true) {
-                        interMensagem("Vaga rua:" + rua + " número:" + numero + " excluída com sucesso!");
+                        
+                    /* O método excluirVaga realiza as verificações necessárias para a exclusão da vaga*/
+                    if(opVaga.excluirVaga(vagas, tickets, rua, numero) == true) {
+                        interMensagem("\nVaga rua:" + rua + " número:" + numero + " excluída com sucesso!\n");
                     }
                 break;  
                 
                 case 4:
                     /*editar vaga*/
-                    interMensagem("Digite a número da vaga:");
+                    interMensagem("Digite a número da vaga que você deseja editar:");
                     numero = scanner.nextInt();
                     scanner.nextLine();
                     
-                    interMensagem("Digite a rua para a vaga ser editada:");
+                    interMensagem("Digite a rua para a vaga que você deseja editar:");
                     rua = scanner.nextLine();                 
                     
-                    interMensagem("Agora insira a nova rua, o novo número e o novo tipo da vaga (MOTOCICLETA, MEDIOPORTE, GRANDEPORTE): ");
+                    interMensagem("Agora insira a nova rua, e logo em seguida o novo número:");
                     String ruaNova = scanner.nextLine();
                     int numeroNovo = scanner.nextInt();
                     scanner.nextLine();
                     
-                    tipo = scanner.nextLine();
-                    TipoVeiculo tipoN = TipoVeiculo.valueOf(tipo.toUpperCase());
-                    if(vag.editarVaga(vagas, rua, numero, ruaNova, numeroNovo, tipoN) == true) {
+                    if(opVaga.editarVaga(vagas, rua, numero, ruaNova, numeroNovo) == true) {
                         interMensagem("\nVaga editada com sucesso!\n");
                     }
                     else {
                         interMensagem("\nVaga não existente!\n");
                     }
-                break;  
-                
+                break;                 
                 case 5:
                     /*alterar disponibilidade da vaga*/
-                    interMensagem("Digite o número da vaga:");
+                    interMensagem("Digite o número da vaga para alterar sua disponibilidade:");
                     numero = scanner.nextInt();
                     scanner.nextLine();
                     
-                    interMensagem("Digite a rua da vaga ser editada:");
+                    interMensagem("Digite a rua da vaga para alterar sua disponibilidade:");
                     rua = scanner.nextLine();   
-                    interMensagem("Digite o novo status da vaga (DISPONIVEL, OCUPADA ou INDISPONIVEL)");
+                    interMensagem("Digite o novo status da vaga (DISPONIVEL ou INDISPONIVEL)");
                             
                     String status = scanner.nextLine();
                     VagaStatus statusV = VagaStatus.valueOf(status.toUpperCase());
                     
-                    if(vag.alterarDispinibilidade(vagas, rua, numero, statusV) == true){
+                    if(statusV == VagaStatus.OCUPADA) {
+                        interMensagem("\nErro: Não é possivel deixar a vaga Ocupada!\n");
+                        break;
+                    }                 
+                    if(opVaga.alterarDispinibilidade(vagas, rua, numero, statusV) == true){
                         interMensagem("\nDisponibilidade da vaga alterada com sucesso!\n");
                     }
-                break;    
+                break;
+                case 6:
+                break;
+                default:
+                    interMensagem("\nInsira uma opção válida!\n");
+                break;
             }    
         }while(opcao2 != 6);
                
