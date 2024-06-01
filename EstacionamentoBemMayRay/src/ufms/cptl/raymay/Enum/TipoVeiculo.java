@@ -9,5 +9,5 @@ package ufms.cptl.raymay.Enum;
  * @author ra
  */
 public enum TipoVeiculo {
-     MOTOCICLETA, MEDIOPORTE, GRANDEPORTE    
+     MOTO, CARRO, ONIBUS    
 }

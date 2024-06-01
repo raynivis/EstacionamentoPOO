@@ -35,6 +35,10 @@ public class AuxiliarInterfaceCadastraVeiculo {
             }
         }
         
+        interMensagem("Digite o tipo do veículo(MOTO, CARRO ou ONIBUS):");
+        String tipoV = scanner.nextLine();
+        TipoVeiculo type = TipoVeiculo.valueOf(tipoV.toUpperCase());
+       
         interMensagem("Digite a cor: ");       
         String cor = scanner.nextLine();
         interMensagem("Digite a descrição: "); 
@@ -45,9 +49,7 @@ public class AuxiliarInterfaceCadastraVeiculo {
         String marca = scanner.nextLine();
         interMensagem("Digite o modelo: "); 
         String modelo = scanner.nextLine();        
-        interMensagem("Digite o tipo do veículo(MOTOCICLETA, MEDIOPORTE, GRANDEPORTE):");
-        String tipoV = scanner.nextLine();
-        TipoVeiculo type = TipoVeiculo.valueOf(tipoV.toUpperCase());
+
         Modelo model = new Modelo(marca, modelo, type);
 
                                           

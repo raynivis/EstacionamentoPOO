@@ -10,8 +10,8 @@ import ufms.cptl.raymay.Enum.TipoVeiculo;
 import ufms.cptl.raymay.Enum.VagaStatus;
 import ufms.cptl.raymay.Classes.Externo.Individuo.Cliente;
 import static ufms.cptl.raymay.Interface.MostraMensagem.interMensagem;
-import ufms.cptl.raymay.Classes.Interno.Tarifa;
-import ufms.cptl.raymay.Classes.Interno.Ticket;
+import ufms.cptl.raymay.Classes.Interno.Tarifas.Tarifa;
+import ufms.cptl.raymay.Classes.Interno.Tickets.Ticket;
 import ufms.cptl.raymay.Classes.Interno.Vaga;
 import ufms.cptl.raymay.Operacoes.OperacoesVagas;
 
@@ -42,8 +42,12 @@ public class InterfaceOpcaoVaga {
                     scanner.nextLine();
                     interMensagem("Digite o nome da rua da vaga a ser cadastrada:");
                     String rua = scanner.nextLine();                                      
+                                  
+                    /* Vaga acabou de ser cadastrada, portando está disponível até algum estacionamento de veículo
+                    ou até que se torne indisponível */
+                    VagaStatus vagastatus = VagaStatus.DISPONIVEL;
                     
-                    interMensagem("Digite o tipo de vaga(MOTOCICLETA, MEDIOPORTE, GRANDEPORTE):");
+                    interMensagem("Digite o tipo de vaga(MOTO, CARRO, ONIBUS):");
                     String tipo = scanner.nextLine();
                     /* Transforma a String inserida em maiúsculo para fazer a comparação */
                     TipoVeiculo tipoV = TipoVeiculo.valueOf(tipo.toUpperCase());

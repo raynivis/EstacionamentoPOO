@@ -15,9 +15,14 @@ import ufms.cptl.raymay.Enum.TipoVeiculo;
 import ufms.cptl.raymay.Classes.Externo.Automovel.Veiculo;
 import ufms.cptl.raymay.Classes.Externo.Individuo.Cliente;
 import static ufms.cptl.raymay.Interface.MostraMensagem.interMensagem;
-import ufms.cptl.raymay.Classes.Interno.Tarifa;
-import ufms.cptl.raymay.Classes.Interno.Ticket;
+import ufms.cptl.raymay.Classes.Interno.Tarifas.Tarifa;
+import ufms.cptl.raymay.Classes.Interno.Tarifas.TarifaHorista;
+import ufms.cptl.raymay.Classes.Interno.Tarifas.TarifaMensalista;
+import ufms.cptl.raymay.Classes.Interno.Tickets.Ticket;
+import ufms.cptl.raymay.Classes.Interno.Tickets.TicketHorista;
+import ufms.cptl.raymay.Classes.Interno.Tickets.TicketMensalista;
 import ufms.cptl.raymay.Classes.Interno.Vaga;
+import ufms.cptl.raymay.Enum.Operando;
 import ufms.cptl.raymay.Operacoes.OperacoesCliente;
 import ufms.cptl.raymay.Operacoes.OperacoesTicket;
 import ufms.cptl.raymay.Operacoes.OperacoesVagas;
@@ -28,13 +33,14 @@ import ufms.cptl.raymay.Operacoes.OperacoesVagas;
  */
 public class InterfaceInicial{
     
-    OperacoesTicket ticke = new OperacoesTicket();
-    OperacoesVagas vag = new OperacoesVagas();
-    OperacoesCliente clie = new OperacoesCliente();
+    OperacoesTicket opTicket = new OperacoesTicket();
+    OperacoesVagas opVaga = new OperacoesVagas();
+    OperacoesCliente opCliente = new OperacoesCliente();
+
     
-    InterfaceOpcaoCliente opCliente = new InterfaceOpcaoCliente();
-    InterfaceOpcaoVaga opVaga = new InterfaceOpcaoVaga();
-    InterfaceOpcaoEstacionamento opEstaciona = new InterfaceOpcaoEstacionamento();
+    InterfaceOpcaoCliente interCliente = new InterfaceOpcaoCliente();
+    InterfaceOpcaoVaga interVaga = new InterfaceOpcaoVaga();
+    InterfaceOpcaoEstacionamento interEstaciona = new InterfaceOpcaoEstacionamento();
     ItensMenu menui = new ItensMenu(); /* menui = Menu Inicial */
     ItensMenu menucg = new ItensMenu(); /* menucg = Menu de Cadastros Gerais */
     
@@ -51,30 +57,33 @@ public class InterfaceInicial{
     
     /* Método geral das opções do menu que será chamado na Classe Main Estacionamento e permitirá que todo o
     menu seja exibido ao usuário */
-  
     public void primeirasOpcoes(List<Cliente> clientes, List<Vaga> vagas, List<Ticket> tickets, List<Tarifa> tarifas) {  
         do {
             /* Utiliza o método criado em ItensMenu, reduzindo o tamanho
             de linhas das Classes da interface */
             menui.imprimeInicio();
+            opTicket.verificarTicketsMensalista(tickets);
+            
             opcao = scanner.nextByte();
             scanner.nextLine();
             
             switch (opcao) {
                 case 1:
-                    opCliente.opcoesCliente(clientes, vagas, tickets, tarifas);
+                    interCliente.opcoesCliente(clientes, vagas, tickets, tarifas);
                 break;    
                 case 2:
-                    opVaga.opcoesVaga(clientes, vagas, tickets, tarifas);
+                    interVaga.opcoesVaga(clientes, vagas, tickets, tarifas);
                 break;
                 case 3:
-                    opEstaciona.opcoesEstacionamento(clientes, vagas, tickets, tarifas);
+                    interEstaciona.opcoesEstacionamento(clientes, vagas, tickets, tarifas);
                 break;
                 case 4:
                     do {
                         /* Utiliza o método criado em ItensMenu, reduzindo o tamanho
                         de linhas das Classes da interface */
                         menucg.imprimeCadastroGeral();
+                        opTicket.verificarTicketsMensalista(tickets);
+                        
                         opcao3 = scanner.nextByte();
                         scanner.nextLine();
                         switch(opcao3) {
@@ -82,23 +91,36 @@ public class InterfaceInicial{
                                 interMensagem("Digite o código do ticket:");
                                 int codigo = scanner.nextInt();
                                 scanner.nextLine();
-
-                                interMensagem("Digite a data de finalização do ticket (em dia/mês/ano horas:minutos:segundos):");
-                                String data = scanner.nextLine();
-                                LocalDateTime dataFinal = LocalDateTime.parse(data, dataBonitinhaComSegundos);
-                                Ticket testeT = ticke.buscarTicket(tickets, codigo);
-                                if(testeT == null) {
+                               
+                                Ticket testeT = opTicket.buscarTicket(tickets, codigo);
+                                 if(testeT == null) {
                                     interMensagem("\nErro: Ticket não encontrado!\n");
-                                }                               
-                                testeT.setFim(dataFinal); 
-                                double lucro = ticke.totalFaturadoTicket(testeT);
+                                    break;
+                                } 
+                                if(testeT.getStatus().equals(Operando.DESATIVO)) {
+                                    interMensagem("\nErro: Não é permetido testar um ticket finalizado!\n");
+                                    break;
+                                }
+                                double lucro;
+                                if(testeT instanceof TicketHorista){
+                                    interMensagem("Digite a data de finalização do ticket (em dia/mês/ano horas:minutos:segundos):");
+                                    String data = scanner.nextLine();
+                                    LocalDateTime dataFinal = LocalDateTime.parse(data, dataBonitinhaComSegundos);                                                             
+                                    testeT.setFim(dataFinal); 
+                                    lucro = ((TicketHorista)testeT).totalFaturadoTicket();
+                                    testeT.setFim(null); 
+                                }
+                                else {
+                                    lucro = ((TicketMensalista)testeT).totalFaturadoTicket();
+                                }
+                                
                                 interMensagem("\nO lucro desse ticket foi de " + dinheiro.format(lucro) + "\n");
-                                testeT.setFim(null); 
+                                
                             break;
                             case 2: /*consultar veiculo*/
                                 interMensagem("Digite a placa do veículo:");
                                 String placa = scanner.nextLine();
-                                Veiculo veicule = clie.verificarVeiculo(clientes, placa);
+                                Veiculo veicule = opCliente.verificarVeiculo(clientes, placa);
                                 if(veicule == null) {
                                     interMensagem("Erro: Veículo não encontrado!!");
                                     break;
@@ -108,31 +130,57 @@ public class InterfaceInicial{
                                 interMensagem("///////////////////////////////////////////////////\n");
                             break; 
                             case 3: /*consultar Tarifa*/
-                                interMensagem("Digite a data de início da tarifa:");
-                                data = scanner.nextLine();                              
+                                interMensagem("Digite o tipo de tarifa (Horista ou Mensalista): ");
+                                String tipe = scanner.nextLine();
+                                interMensagem("Digite a data de início da tarifa (em dia/mês/ano horas:minutos):");
+                                String data = scanner.nextLine();                              
                                 List<DiaSemana> dias = new ArrayList<>();                        
                                 List<TipoVeiculo> tps = new ArrayList<>();
                                 listasVS.OperacaoListaTVDS(dias, tps);
-                                Tarifa tarife = ticke.buscarTarifa(tarifas, data, dias, tps);
-                                if(tarife == null){
-                                    interMensagem("\nErro: Tarifa não encontrada!\n");
+                                                            
+                                if(tipe.equalsIgnoreCase("HORISTA") ){
+                                    TarifaHorista tarife = opTicket.buscarTarifaHorista(tarifas, data, dias, tps);
+                                    if(tarife == null){
+                                        interMensagem("\nErro: Tarifa não encontrada!\n");
+
                                     break;
-                                }
-                                interMensagem("\n///////////////////////////////////////////////////");
-                                interMensagem(tarife.toString());
-                                for(DiaSemana ds : tarife.getDiasSemana()){
+                                    }
+                                    interMensagem("\n///////////////////////////////////////////////////");
+                                    interMensagem(tarife.toString());                                   
+                                    for(DiaSemana ds : tarife.getDiasSemana()){
                                     System.out.print(ds.toString() + " ");
-                                }
-                                interMensagem("\nTipo/s de veículo:");
-                                for(TipoVeiculo tv : tarife.getTarifaVeiculos()){
-                                    System.out.print(tv.toString() + " ");
-                                }
-                                interMensagem("\n///////////////////////////////////////////////////\n");
+                                    }
+                                    interMensagem("\nTipo/s de veículo:");
+                                    for(TipoVeiculo tv : tarife.getTarifaVeiculos()){
+                                        System.out.print(tv.toString() + " ");
+                                    }
+                                    interMensagem("\n///////////////////////////////////////////////////\n");
+                                    
+                                } 
+                                else{
+                                    TarifaMensalista tarife = opTicket.buscarTarifaMensalista(tarifas, data, dias, tps);
+                                    if(tarife == null){
+                                        interMensagem("\nErro: Tarifa não encontrada!\n");
+                                    break;
+                                    }
+                                    interMensagem("\n///////////////////////////////////////////////////");
+                                    interMensagem(tarife.toString());
+                                    for(DiaSemana ds : tarife.getDiasSemana()){
+                                    System.out.print(ds.toString() + " ");
+                                    }
+                                    interMensagem("\nTipo/s de veículo:");
+                                    for(TipoVeiculo tv : tarife.getTarifaVeiculos()){
+                                        System.out.print(tv.toString() + " ");
+                                    }
+                                    interMensagem("\n///////////////////////////////////////////////////\n");
+                                }  
+                                          
                             break; 
                             case 4: /*consultar Ticket*/
                                 interMensagem("Digite o código do ticket:");
                                 codigo = scanner.nextInt(); 
-                                Ticket tickete = ticke.buscarTicket(tickets, codigo);
+                                Ticket tickete = opTicket.buscarTicket(tickets, codigo);
+
                                 if(tickete == null){
                                     interMensagem("\nErro: Ticket não encontrado!\n");
                                     break;
@@ -145,10 +193,11 @@ public class InterfaceInicial{
                                 interMensagem("///////////////////////////////////////////////////\n");
                             break;
                             case 5: /* Listar tickets ativos */
-                                ticke.ListarTicketAtivo(tickets);
+                                opTicket.ListarTicketAtivo(tickets);
                             break; 
                             case 6: /* Listar vagas cadastradas */
-                                vag.listarVagasCadastradas(vagas);
+                                opVaga.listarVagasCadastradas(vagas);
+
                             break; 
                             case 7:
                             break;
@@ -168,7 +217,8 @@ public class InterfaceInicial{
                       fimS = fimS + " 00:00:00";
                       LocalDateTime inicio = LocalDateTime.parse(iniS, dataBonitinhaComSegundos);
                       LocalDateTime fim = LocalDateTime.parse(fimS, dataBonitinhaComSegundos);
-                      double resultado = ticke.FaturadoPeriodo(tickets, inicio, fim);
+                      double resultado = opTicket.FaturadoPeriodo(tickets, inicio, fim);
+
                       interMensagem("\nNesse período foi/foram faturado/s: "  + dinheiro.format(resultado) + "\n");                     
                 break;
                 case 6:

@@ -28,10 +28,9 @@ public class Cliente {
         this.veiculos = veiculos;
         
     }
-    
-    
+     
     /* Método para adicionar um novo veículo na lista de veículos do cliente */
-    public void setAdicionaVeiculo(Veiculo novoVeiculo) /* Antigo setVeiculoNaLista */
+    public void addVeiculo(Veiculo novoVeiculo)
     {
         this.veiculos.add(novoVeiculo);
     }

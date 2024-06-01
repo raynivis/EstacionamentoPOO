@@ -20,6 +20,7 @@ public class Vaga {
     /* A vaga possuirá somente UM tipo de veículo e somente esse tipo pode ser estacionado nela */
     public TipoVeiculo tipo; 
 
+
     public Vaga(int numero, String rua, TipoVeiculo tipo) {
         this.numero = numero;
         this.rua = rua;

@@ -8,7 +8,7 @@ import java.util.List;
 import ufms.cptl.raymay.Enum.Operando;
 import ufms.cptl.raymay.Classes.Externo.Automovel.Veiculo;
 import ufms.cptl.raymay.Classes.Externo.Individuo.Cliente;
-import ufms.cptl.raymay.Classes.Interno.Ticket;
+import ufms.cptl.raymay.Classes.Interno.Tickets.Ticket;
 import static ufms.cptl.raymay.Operacoes.OperacaoMostraMensagem.operacaoMensagem;
 /**
  *

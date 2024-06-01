@@ -41,16 +41,18 @@ public class AuxiliarInterfarceListaTipoSemanas {
             diaSmns.add(DiaSemana.SABADO);
        
         
-        interMensagem("Digite o/s tipo/s de veículo/s dessa tarifa (MOTOCICLETA, MEDIOPORTE, GRANDEPORTE):");
+        interMensagem("Digite o/s tipo/s de veículo/s dessa tarifa (MOTO, CARRO, ONIBUS):");
+
         interMensagem("Caso seja para todos os tipos de veículo, digite: Todos");
         String tipos = scanner.nextLine();
         tipos = tipos.toUpperCase();
                     
-        if(tipos.contains("MOTOCICLETA") || tipos.contains("TODOS"))
-            listaTps.add(TipoVeiculo.MOTOCICLETA);
-        if(tipos.contains("MEDIOPORTE") || tipos.contains("TODOS"))
-            listaTps.add(TipoVeiculo.MEDIOPORTE); 
-        if(tipos.contains("GRANDEPORTE") || tipos.contains("TODOS"))
-            listaTps.add(TipoVeiculo.GRANDEPORTE); 
+        if(tipos.contains("MOTO") || tipos.contains("TODOS"))
+            listaTps.add(TipoVeiculo.MOTO);
+        if(tipos.contains("CARRO") || tipos.contains("TODOS"))
+            listaTps.add(TipoVeiculo.CARRO); 
+        if(tipos.contains("ONIBUS") || tipos.contains("TODOS"))
+            listaTps.add(TipoVeiculo.ONIBUS); 
+
     }
 }

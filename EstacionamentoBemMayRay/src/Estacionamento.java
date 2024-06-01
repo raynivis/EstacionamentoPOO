@@ -3,8 +3,8 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
 import ufms.cptl.raymay.Classes.Externo.Individuo.Cliente;
-import ufms.cptl.raymay.Classes.Interno.Tarifa;
-import ufms.cptl.raymay.Classes.Interno.Ticket;
+import ufms.cptl.raymay.Classes.Interno.Tarifas.Tarifa;
+import ufms.cptl.raymay.Classes.Interno.Tickets.Ticket;
 import ufms.cptl.raymay.Classes.Interno.Vaga;
 import ufms.cptl.raymay.Interface.InterfaceInicial;
 import java.util.ArrayList;
@@ -29,9 +29,11 @@ public class Estacionamento {
         /*opções para as listas prontas para teste*/
         int opcao = JOptionPane.showConfirmDialog(null, "Deseja inserir clientes e vagas prontos nas listas para testes?", "Selecione", JOptionPane.YES_NO_OPTION);
 
+
         if(opcao == JOptionPane.YES_OPTION){
             listaPrnts.GerarListas(clientes, vagas);
         }
+
         /*primeira interace do programa Estaciona Bem!!*/
         inter.primeirasOpcoes(clientes, vagas, tickets, tarifas);   
         

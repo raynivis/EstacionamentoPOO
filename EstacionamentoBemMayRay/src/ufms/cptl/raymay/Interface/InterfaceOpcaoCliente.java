@@ -12,8 +12,8 @@ import ufms.cptl.raymay.Classes.Externo.Automovel.Cor;
 import ufms.cptl.raymay.Classes.Externo.Automovel.Veiculo;
 import ufms.cptl.raymay.Classes.Externo.Individuo.Cliente;
 import static ufms.cptl.raymay.Interface.MostraMensagem.interMensagem;
-import ufms.cptl.raymay.Classes.Interno.Tarifa;
-import ufms.cptl.raymay.Classes.Interno.Ticket;
+import ufms.cptl.raymay.Classes.Interno.Tarifas.Tarifa;
+import ufms.cptl.raymay.Classes.Interno.Tickets.Ticket;
 import ufms.cptl.raymay.Classes.Interno.Vaga;
 import ufms.cptl.raymay.Operacoes.OperacoesCliente;
 /**
@@ -63,7 +63,8 @@ public class InterfaceOpcaoCliente {
                         Veiculo Novoveiculo = InVeiculo.receberVeiculo(clientes, novoCliente);                      
                         
                          if(Novoveiculo != null) {
-                             novoCliente.setAdicionaVeiculo(Novoveiculo);
+                             novoCliente.addVeiculo(Novoveiculo);
+
                              clientes.add(novoCliente);
                              interMensagem("\nCadastro:");
                              interMensagem(novoCliente.toString());
@@ -122,7 +123,8 @@ public class InterfaceOpcaoCliente {
                             break; 
                         }
                         
-                        interMensagem("Os veículos do cliente de CPF " + cpf + " são:\n");
+                        interMensagem("Os veículos do cliente " + operador.getNome() + " são:\n");
+
                         opCliente.mostraVeiculos(clientes, cpf);
                         do{
                             /* Utiliza o método criado em ItensMenu, reduzindo o tamanho
@@ -134,7 +136,9 @@ public class InterfaceOpcaoCliente {
                                 case 1: /*Adicionar um veículo*/
                                     Veiculo veiculoAdicional = InVeiculo.receberVeiculo(clientes, operador); 
                                     if(veiculoAdicional != null) {
-                                        operador.setAdicionaVeiculo(veiculoAdicional);
+
+                                        operador.addVeiculo(veiculoAdicional);
+
                                         interMensagem("\nVeículo cadastrado com sucesso!!\n");
                                     }
                                     else {

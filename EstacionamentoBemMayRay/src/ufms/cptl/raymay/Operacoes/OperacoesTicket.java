@@ -16,8 +16,13 @@ import ufms.cptl.raymay.Enum.VagaStatus;
 import ufms.cptl.raymay.Classes.Externo.Automovel.Veiculo;
 import ufms.cptl.raymay.Classes.Externo.Individuo.Cliente;
 import static ufms.cptl.raymay.Operacoes.OperacaoMostraMensagem.operacaoMensagem;
-import ufms.cptl.raymay.Classes.Interno.Tarifa;
-import ufms.cptl.raymay.Classes.Interno.Ticket;
+import ufms.cptl.raymay.Classes.Interno.Tarifas.Tarifa;
+import ufms.cptl.raymay.Classes.Interno.Tarifas.TarifaHorista;
+import ufms.cptl.raymay.Classes.Interno.Tarifas.TarifaMensalista;
+import ufms.cptl.raymay.Classes.Interno.Tickets.Ticket;
+import ufms.cptl.raymay.Classes.Interno.Tickets.TicketHorista;
+import ufms.cptl.raymay.Classes.Interno.Tickets.TicketMensalista;
+
 
 /**
  *
@@ -37,15 +42,34 @@ public class OperacoesTicket {
     e deixa o ticket DESATIVO */
     public boolean retirar(List<Ticket> tickets, Veiculo veiculoEstacio){             
         for(Ticket t : tickets) {
-            if(t.getVeiculoTicket().equals(veiculoEstacio) && t.getStatus() == Operando.ATIVO) {
-                t.setStatus(Operando.DESATIVO);
-                t.setFim(LocalDateTime.now());
-                t.getVagaTicket().setStatus(VagaStatus.DISPONIVEL);
-                return true;
+            if(t instanceof TicketHorista) {
+                TicketHorista tH = (TicketHorista) t;
+                if(tH.getVeiculoTicket().equals(veiculoEstacio) && tH.getStatus() == Operando.ATIVO) {
+                    tH.setStatus(Operando.DESATIVO);
+                    tH.setFim(LocalDateTime.now());
+                    tH.getVagaTicket().setStatus(VagaStatus.DISPONIVEL);
+                    return true;
+                }
+
             }
         }
         return false;    
     }
+
+    /*Método para verificar se a vaga esta liberada para uso nos tickets mensalistas, ele é iniciado sempre após entrar em interfaces de
+    estascionamento*/
+    public void verificarTicketsMensalista(List<Ticket> tickets) {
+        for(Ticket t : tickets){
+            if(t instanceof TicketMensalista && t.getStatus().equals(Operando.ATIVO)){
+               TicketMensalista tM = (TicketMensalista) t; 
+               if(tM.getFim().isBefore(LocalDateTime.now()) || tM.getFim().isEqual(LocalDateTime.now())){
+                   tM.setStatus(Operando.DESATIVO);
+                   tM.getVagaTicket().setStatus(VagaStatus.DISPONIVEL);
+               }
+            }
+        }
+    }
+    
 
     
     /* Método que verifica se o veículo inserido possui algum ticket ATIVO atrelado a ele. 
@@ -100,14 +124,28 @@ public class OperacoesTicket {
     }
     
     
-    /*Método para facilitar a busca de tarifa na interface, a tarifa é identificada pela data de inicio, os dias da semana dela e o tipo/s
+    /*Métodos para facilitar a busca de tarifa na interface, a tarifa é identificada pela data de inicio, os dias da semana dela e o tipo/s
     de veiculo/s que a tarifa atende, o método retorna a tarifa se encontra-la, se não, retorna um ponteiro nulo*/
-    public Tarifa buscarTarifa(List<Tarifa> tarifas, String inicio, List<DiaSemana> dias, List<TipoVeiculo> veiculos) {
+    public TarifaHorista buscarTarifaHorista(List<Tarifa> tarifas, String inicio, List<DiaSemana> dias, List<TipoVeiculo> veiculos) {
         for(Tarifa t : tarifas) {
-            if(t.getInicio().format(dataBonitinha).equals(inicio) 
-            && t.getDiasSemana().equals(dias) && t.getTarifaVeiculos().equals(veiculos)) {
-                return t;
-            }            
+            if(t instanceof TarifaHorista) {
+                if(t.getInicio().format(dataBonitinha).equals(inicio) 
+                && t.getDiasSemana().equals(dias) && t.getTarifaVeiculos().equals(veiculos)) {
+                    return (TarifaHorista) t;
+                } 
+            }
+        }
+        return null;
+    }
+    public TarifaMensalista buscarTarifaMensalista(List<Tarifa> tarifas, String inicio, List<DiaSemana> dias, List<TipoVeiculo> veiculos) {
+        for(Tarifa t : tarifas) {
+            if(t instanceof TarifaMensalista) {
+                if(t.getInicio().format(dataBonitinha).equals(inicio) 
+                && t.getDiasSemana().equals(dias) && t.getTarifaVeiculos().equals(veiculos)) {
+                    return (TarifaMensalista) t;
+                }
+            }
+
         }
         return null;
     }
@@ -132,47 +170,44 @@ public class OperacoesTicket {
     Se mais de uma tarifa entrar nessa condição ele vai comparar qual a tarifa mais perto da data passada (comparando os segundos)
     por referencia.
     A melhor tarifa é escolhida e retornada, se não achar nenhum tarifa nas condições retorna um ponteiro null*/
-    public Tarifa tarifaProxima(List<Tarifa> tarifas, LocalDateTime inicio, Veiculo veiculo) {
+    public Tarifa tarifaProxima(List<Tarifa> tarifas, LocalDateTime inicio, Veiculo veiculo, String tipoTi) { 
         Tarifa tarifaPerto = null;
-        for(Tarifa t : tarifas) {
-            if(t.getInicio().isBefore(inicio) && t.getDiasSemana().contains(semanaToEnum(LocalDateTime.now())) )
+        if(tipoTi.equalsIgnoreCase("HORISTA")){
+            for(Tarifa t : tarifas) {
+            if(t instanceof TarifaHorista && t.getInicio().isBefore(inicio) && t.getDiasSemana().contains(semanaToEnum(LocalDateTime.now())) )
                 if(t.getTarifaVeiculos().contains(veiculo.getModel().getTipoVeiculo())) {               	
                     if(tarifaPerto == null || Duration.between(t.getInicio(), inicio).getSeconds() <= Duration.between(tarifaPerto.getInicio(), inicio).getSeconds() ) {
                          tarifaPerto = t;  
                     }                               
                 }
-	}
-        return tarifaPerto;
-    }
-    
-    
-    /*Método para calcular quanto o ticket faturou, pela tarifa escolhida pelo ticket, ele ja adiciona o preço da primeira hora, logo
-    em seguida ele entra em um laço adicionando 1 hora para ir adicionando "o custo" e "o tempo que o veiculo ficou estacionado"
-    o laço para quando der a data de fim ou passar dela.
-    retorna o total faturado do ticket*/
-    public double totalFaturadoTicket(Ticket ticket){
-        double total;
-        
-        LocalDateTime diaS = ticket.getInicio();
-        
-        Tarifa tarifa  = ticket.getTarifaTicket();
-        
-        total = tarifa.getValorPrimeiraHora();
-        
-        diaS = diaS.plusHours(1);
-        
-        while(diaS.isEqual(ticket.getFim()) != true && diaS.isAfter(ticket.getFim()) != true){
-            total = total + tarifa.getValorHoraSubsequente();
-            diaS = diaS.plusHours(1);
+            }
         }
-        return total;
+        else {
+            for(Tarifa t : tarifas) {
+            if(t instanceof TarifaMensalista && t.getInicio().isBefore(inicio) && t.getDiasSemana().contains(semanaToEnum(LocalDateTime.now())) )
+                if(t.getTarifaVeiculos().contains(veiculo.getModel().getTipoVeiculo())) {               	
+                    if(tarifaPerto == null || Duration.between(t.getInicio(), inicio).getSeconds() <= Duration.between(tarifaPerto.getInicio(), inicio).getSeconds() ) {
+                         tarifaPerto = t;  
+                    }                               
+                }
+            }
+        }
+        
+        return tarifaPerto;
     }
     
     
     /*Método para printar as tarifas cadastrada no sistema para ter uma visualização*/
     public void relatorioTarifa(List<Tarifa> tarifas) {
         for(Tarifa t : tarifas) {
-            System.out.println(t.toString());
+            if(t instanceof TarifaHorista) {
+                TarifaHorista tH = (TarifaHorista) t;
+                System.out.println(tH.toString());
+            }
+            else {
+                TarifaMensalista tM = (TarifaMensalista) t;
+                System.out.println(tM.toString());
+            }
             operacaoMensagem("Dia/s da Semana:");
             for(DiaSemana ds : t.getDiasSemana()){
                 System.out.print(ds.toString() + " ");
@@ -214,8 +249,16 @@ public class OperacoesTicket {
     public double FaturadoPeriodo(List<Ticket> tickets, LocalDateTime inicio, LocalDateTime fim){
         double soma = 0;
         for(Ticket t : tickets) {
-            if(t.getFim().isAfter(inicio) && t.getFim().isBefore(fim)) {
-                soma = soma + totalFaturadoTicket(t);
+            if(t.getFim().isAfter(inicio)) {
+                if(t instanceof TicketHorista && t.getFim().isBefore(fim)){
+                    TicketHorista tH = (TicketHorista) t;
+                    soma = soma + tH.totalFaturadoTicket();
+                }
+                
+                if (t instanceof TicketMensalista){
+                    TicketMensalista tM = (TicketMensalista) t;
+                    soma = soma + tM.totalFaturadoTicket();
+                }                
             }
         }
         return soma;
