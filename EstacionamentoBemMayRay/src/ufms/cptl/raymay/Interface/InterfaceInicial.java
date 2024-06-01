@@ -31,11 +31,12 @@ import ufms.cptl.raymay.Operacoes.OperacoesVagas;
  *
  * @author maymi
  */
-public class InterfaceInicial {
+public class InterfaceInicial{
     
     OperacoesTicket opTicket = new OperacoesTicket();
     OperacoesVagas opVaga = new OperacoesVagas();
     OperacoesCliente opCliente = new OperacoesCliente();
+
     
     InterfaceOpcaoCliente interCliente = new InterfaceOpcaoCliente();
     InterfaceOpcaoVaga interVaga = new InterfaceOpcaoVaga();
@@ -90,7 +91,7 @@ public class InterfaceInicial {
                                 interMensagem("Digite o código do ticket:");
                                 int codigo = scanner.nextInt();
                                 scanner.nextLine();
-                                
+                               
                                 Ticket testeT = opTicket.buscarTicket(tickets, codigo);
                                  if(testeT == null) {
                                     interMensagem("\nErro: Ticket não encontrado!\n");
@@ -141,6 +142,7 @@ public class InterfaceInicial {
                                     TarifaHorista tarife = opTicket.buscarTarifaHorista(tarifas, data, dias, tps);
                                     if(tarife == null){
                                         interMensagem("\nErro: Tarifa não encontrada!\n");
+
                                     break;
                                     }
                                     interMensagem("\n///////////////////////////////////////////////////");
@@ -178,6 +180,7 @@ public class InterfaceInicial {
                                 interMensagem("Digite o código do ticket:");
                                 codigo = scanner.nextInt(); 
                                 Ticket tickete = opTicket.buscarTicket(tickets, codigo);
+
                                 if(tickete == null){
                                     interMensagem("\nErro: Ticket não encontrado!\n");
                                     break;
@@ -194,6 +197,7 @@ public class InterfaceInicial {
                             break; 
                             case 6: /* Listar vagas cadastradas */
                                 opVaga.listarVagasCadastradas(vagas);
+
                             break; 
                             case 7:
                             break;
@@ -214,6 +218,7 @@ public class InterfaceInicial {
                       LocalDateTime inicio = LocalDateTime.parse(iniS, dataBonitinhaComSegundos);
                       LocalDateTime fim = LocalDateTime.parse(fimS, dataBonitinhaComSegundos);
                       double resultado = opTicket.FaturadoPeriodo(tickets, inicio, fim);
+
                       interMensagem("\nNesse período foi/foram faturado/s: "  + dinheiro.format(resultado) + "\n");                     
                 break;
                 case 6:

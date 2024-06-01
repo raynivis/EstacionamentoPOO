@@ -64,6 +64,7 @@ public class InterfaceOpcaoCliente {
                         
                          if(Novoveiculo != null) {
                              novoCliente.addVeiculo(Novoveiculo);
+
                              clientes.add(novoCliente);
                              interMensagem("\nCadastro:");
                              interMensagem(novoCliente.toString());
@@ -123,6 +124,7 @@ public class InterfaceOpcaoCliente {
                         }
                         
                         interMensagem("Os veículos do cliente " + operador.getNome() + " são:\n");
+
                         opCliente.mostraVeiculos(clientes, cpf);
                         do{
                             /* Utiliza o método criado em ItensMenu, reduzindo o tamanho
@@ -134,7 +136,9 @@ public class InterfaceOpcaoCliente {
                                 case 1: /*Adicionar um veículo*/
                                     Veiculo veiculoAdicional = InVeiculo.receberVeiculo(clientes, operador); 
                                     if(veiculoAdicional != null) {
+
                                         operador.addVeiculo(veiculoAdicional);
+
                                         interMensagem("\nVeículo cadastrado com sucesso!!\n");
                                     }
                                     else {

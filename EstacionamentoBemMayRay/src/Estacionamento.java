@@ -28,14 +28,12 @@ public class Estacionamento {
         
         /*opções para as listas prontas para teste*/
         int opcao = JOptionPane.showConfirmDialog(null, "Deseja inserir clientes e vagas prontos nas listas para testes?", "Selecione", JOptionPane.YES_NO_OPTION);
-        switch(opcao) {
-            case JOptionPane.YES_OPTION:
-                listaPrnts.GerarListas(clientes, vagas);
-            break;
-            default:
-            break;
+
+
+        if(opcao == JOptionPane.YES_OPTION){
+            listaPrnts.GerarListas(clientes, vagas);
         }
-        
+
         /*primeira interace do programa Estaciona Bem!!*/
         inter.primeirasOpcoes(clientes, vagas, tickets, tarifas);   
         

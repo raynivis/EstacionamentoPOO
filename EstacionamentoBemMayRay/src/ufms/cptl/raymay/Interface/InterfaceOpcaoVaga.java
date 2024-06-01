@@ -52,7 +52,7 @@ public class InterfaceOpcaoVaga {
                     /* Transforma a String inserida em maiúsculo para fazer a comparação */
                     TipoVeiculo tipoV = TipoVeiculo.valueOf(tipo.toUpperCase());
                                         
-                    Vaga novaVaga = new Vaga(numero, rua, vagastatus, tipoV);
+                    Vaga novaVaga = new Vaga(numero, rua, tipoV);
                     
                     /* O método cadastrarVaga já adiciona na lista de vagas se retornar true */
                     if (opVaga.cadastrarVaga(vagas, novaVaga, rua, numero) == true){

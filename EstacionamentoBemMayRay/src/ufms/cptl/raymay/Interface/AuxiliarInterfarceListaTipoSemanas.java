@@ -42,6 +42,7 @@ public class AuxiliarInterfarceListaTipoSemanas {
        
         
         interMensagem("Digite o/s tipo/s de veículo/s dessa tarifa (MOTO, CARRO, ONIBUS):");
+
         interMensagem("Caso seja para todos os tipos de veículo, digite: Todos");
         String tipos = scanner.nextLine();
         tipos = tipos.toUpperCase();
@@ -52,5 +53,6 @@ public class AuxiliarInterfarceListaTipoSemanas {
             listaTps.add(TipoVeiculo.CARRO); 
         if(tipos.contains("ONIBUS") || tipos.contains("TODOS"))
             listaTps.add(TipoVeiculo.ONIBUS); 
+
     }
 }

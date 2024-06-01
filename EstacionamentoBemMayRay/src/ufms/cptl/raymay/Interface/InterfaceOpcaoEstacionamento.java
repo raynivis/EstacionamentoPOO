@@ -115,6 +115,7 @@ public class InterfaceOpcaoEstacionamento {
                     interMensagem("O cliente deseja estacionar como Horista ou Mensalista?");
                     String tipoTi = scanner.nextLine();
                     Tarifa atual = opTicket.tarifaProxima(tarifas, LocalDateTime.now(), veiculo, tipoTi);
+
                     if(atual == null){
                         interMensagem("\nErro: Não existe uma tarifa para esse tipo de vaga nesse período!\n");
                         break;
@@ -133,6 +134,7 @@ public class InterfaceOpcaoEstacionamento {
                     vaga.setStatus(VagaStatus.OCUPADA);
                                                        
                 break;    
+    
                 case 2:
                     /*retirar*/
                     interMensagem("Digite a placa do veículo que deseja retirar:");
@@ -146,6 +148,7 @@ public class InterfaceOpcaoEstacionamento {
                     
                     if(opTicket.retirar(tickets, retirar) == false) {
                         interMensagem("\nO Veiculo não pode ser retirado\n");
+
                     } else {
                         interMensagem("\nTicket liberado e vaga liberada!\n");
                     }
@@ -192,6 +195,7 @@ public class InterfaceOpcaoEstacionamento {
                                     interMensagem("Digite o valor da primeira hora:");
                                     double precoPrimeira = scanner.nextDouble();
                                     scanner.nextLine();
+
 
                                     interMensagem("Digite o valor das horas subsequentes:");
                                     double precoHora = scanner.nextDouble();
@@ -256,6 +260,7 @@ public class InterfaceOpcaoEstacionamento {
                                      tarifas.remove(tarifaEx);
                                 }
                                                             
+
                                 interMensagem("\nTarifa removida com sucesso!\n");
                             break;
                             case 3: /*editar tarifa*/
@@ -297,6 +302,7 @@ public class InterfaceOpcaoEstacionamento {
                                     interMensagem("Digite o novo valor da primeira hora:");
                                     double novaH = scanner.nextDouble();
                                     tarifaEx.setValorUnico(novaH);
+
                                 }
                                                                 
                                 interMensagem("\nTarifa editada com sucesso!\n");

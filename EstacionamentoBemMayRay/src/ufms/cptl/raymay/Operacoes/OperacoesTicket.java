@@ -23,6 +23,7 @@ import ufms.cptl.raymay.Classes.Interno.Tickets.Ticket;
 import ufms.cptl.raymay.Classes.Interno.Tickets.TicketHorista;
 import ufms.cptl.raymay.Classes.Interno.Tickets.TicketMensalista;
 
+
 /**
  *
  * @author ra
@@ -49,10 +50,12 @@ public class OperacoesTicket {
                     tH.getVagaTicket().setStatus(VagaStatus.DISPONIVEL);
                     return true;
                 }
+
             }
         }
         return false;    
     }
+
     /*Método para verificar se a vaga esta liberada para uso nos tickets mensalistas, ele é iniciado sempre após entrar em interfaces de
     estascionamento*/
     public void verificarTicketsMensalista(List<Ticket> tickets) {
@@ -67,6 +70,7 @@ public class OperacoesTicket {
         }
     }
     
+
     
     /* Método que verifica se o veículo inserido possui algum ticket ATIVO atrelado a ele. 
     Primeiro faz a verificação se a placa já foi cadastrada no sistema, com o método verificarVeiculo,
@@ -141,6 +145,7 @@ public class OperacoesTicket {
                     return (TarifaMensalista) t;
                 }
             }
+
         }
         return null;
     }
@@ -165,7 +170,7 @@ public class OperacoesTicket {
     Se mais de uma tarifa entrar nessa condição ele vai comparar qual a tarifa mais perto da data passada (comparando os segundos)
     por referencia.
     A melhor tarifa é escolhida e retornada, se não achar nenhum tarifa nas condições retorna um ponteiro null*/
-    public Tarifa tarifaProxima(List<Tarifa> tarifas, LocalDateTime inicio, Veiculo veiculo, String tipoTi) {
+    public Tarifa tarifaProxima(List<Tarifa> tarifas, LocalDateTime inicio, Veiculo veiculo, String tipoTi) { 
         Tarifa tarifaPerto = null;
         if(tipoTi.equalsIgnoreCase("HORISTA")){
             for(Tarifa t : tarifas) {
