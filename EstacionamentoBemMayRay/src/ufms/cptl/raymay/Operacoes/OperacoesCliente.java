@@ -5,7 +5,7 @@ package ufms.cptl.raymay.Operacoes;
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
 import java.util.List;
-import ufms.cptl.raymay.Enum.Operando;
+import ufms.cptl.raymay.Classes.Enum.Operando;
 import ufms.cptl.raymay.Classes.Externo.Automovel.Veiculo;
 import ufms.cptl.raymay.Classes.Externo.Individuo.Cliente;
 import ufms.cptl.raymay.Classes.Interno.Tickets.Ticket;

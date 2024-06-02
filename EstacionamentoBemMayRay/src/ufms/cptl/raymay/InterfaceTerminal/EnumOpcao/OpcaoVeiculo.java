@@ -2,29 +2,26 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
-package ufms.cptl.raymay.Interface.InterfaceEnumOpcao;
+package ufms.cptl.raymay.InterfaceTerminal.EnumOpcao;
 /**
  *
  * @author maymi
  */
-public class OpcaoCliente {
+public class OpcaoVeiculo {
 
-    public enum InterCliente{
-        CADASTRAR_CLIENTE(1, "Cadastrar"),
-        CONSULTA_DOC(2, "Consultar por documento"),
-        EXCLUIR(3, "Excluir"),
-        EDITAR(4, "Editar"),
-        GERENCIAR_VEICULOS(5, "Gerenciar veículos"),
-        LISTAR_CADASTROS(6, "Listar todos os cadastros"),
-        VOLTAR(7, "Voltar");
+    public enum InterVeiculo{
+        CADASTRAR (1, "Cadastrar novo veículo"),
+        EXCLUIR (2, "Excluir veículo"),
+        EDITAR(3, "Editar veículo"),
+        SAIR(4, "Voltar");
         
-       /* Como esse enum trabalha com a impressão de menus, os atributos são private -> final <-  pois
+        /* Como esse enum trabalha com a impressão de menus, os atributos são private -> final <-  pois
         não serão alterados, caso fossem isso traria confusão ao usuário e perderia a característica
         imutável dos enums */
-        private final int valorOpcao;
-        private final String desc;
+        public int valorOpcao;
+        public String desc;
 
-        private InterCliente(int valorOpcao, String desc) {
+        private InterVeiculo(int valorOpcao, String desc) {
             this.valorOpcao = valorOpcao;
             this.desc = desc;
         }
@@ -36,6 +33,6 @@ public class OpcaoCliente {
 
         public String getDesc() {
             return desc;
-        }   
-    }    
+        }
+    }  
 }

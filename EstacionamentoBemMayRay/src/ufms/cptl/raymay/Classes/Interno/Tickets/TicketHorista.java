@@ -10,7 +10,7 @@ import ufms.cptl.raymay.Classes.Externo.Automovel.Veiculo;
 import ufms.cptl.raymay.Classes.Interno.Tarifas.Tarifa;
 import ufms.cptl.raymay.Classes.Interno.Tarifas.TarifaHorista;
 import ufms.cptl.raymay.Classes.Interno.Vaga;
-import ufms.cptl.raymay.Enum.TipoVeiculo;
+import ufms.cptl.raymay.Classes.Enum.TipoVeiculo;
 
 /**
  *
@@ -52,7 +52,6 @@ public class TicketHorista extends Ticket{
             
             diaS = diaS.plusHours(1);
             if((diaS.isAfter(dataMulta) || diaS.isEqual(dataMulta) ) && ( fim.isAfter(dataMulta) || fim.isEqual(dataMulta)) ){
-                System.out.println("Multado");
                 multa = true;
             }
             if(multa == true){

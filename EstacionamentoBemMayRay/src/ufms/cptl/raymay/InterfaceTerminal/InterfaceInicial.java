@@ -2,7 +2,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
-package ufms.cptl.raymay.Interface;
+package ufms.cptl.raymay.InterfaceTerminal;
 
 import java.text.NumberFormat;
 import java.time.LocalDateTime;
@@ -10,11 +10,11 @@ import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
-import ufms.cptl.raymay.Enum.DiaSemana;
-import ufms.cptl.raymay.Enum.TipoVeiculo;
+import ufms.cptl.raymay.Classes.Enum.DiaSemana;
+import ufms.cptl.raymay.Classes.Enum.TipoVeiculo;
 import ufms.cptl.raymay.Classes.Externo.Automovel.Veiculo;
 import ufms.cptl.raymay.Classes.Externo.Individuo.Cliente;
-import static ufms.cptl.raymay.Interface.MostraMensagem.interMensagem;
+import static ufms.cptl.raymay.InterfaceTerminal.MostraMensagem.interMensagem;
 import ufms.cptl.raymay.Classes.Interno.Tarifas.Tarifa;
 import ufms.cptl.raymay.Classes.Interno.Tarifas.TarifaHorista;
 import ufms.cptl.raymay.Classes.Interno.Tarifas.TarifaMensalista;
@@ -22,7 +22,7 @@ import ufms.cptl.raymay.Classes.Interno.Tickets.Ticket;
 import ufms.cptl.raymay.Classes.Interno.Tickets.TicketHorista;
 import ufms.cptl.raymay.Classes.Interno.Tickets.TicketMensalista;
 import ufms.cptl.raymay.Classes.Interno.Vaga;
-import ufms.cptl.raymay.Enum.Operando;
+import ufms.cptl.raymay.Classes.Enum.Operando;
 import ufms.cptl.raymay.Operacoes.OperacoesCliente;
 import ufms.cptl.raymay.Operacoes.OperacoesTicket;
 import ufms.cptl.raymay.Operacoes.OperacoesVagas;

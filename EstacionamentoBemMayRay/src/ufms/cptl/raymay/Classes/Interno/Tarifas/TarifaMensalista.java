@@ -6,8 +6,8 @@ package ufms.cptl.raymay.Classes.Interno.Tarifas;
 
 import java.time.LocalDateTime;
 import java.util.List;
-import ufms.cptl.raymay.Enum.DiaSemana;
-import ufms.cptl.raymay.Enum.TipoVeiculo;
+import ufms.cptl.raymay.Classes.Enum.DiaSemana;
+import ufms.cptl.raymay.Classes.Enum.TipoVeiculo;
 
 /**
  *

@@ -6,8 +6,8 @@ package ufms.cptl.raymay.Operacoes;
 import java.util.List;
 
 import ufms.cptl.raymay.Classes.Interno.Tickets.Ticket;
-import ufms.cptl.raymay.Enum.TipoVeiculo;
-import ufms.cptl.raymay.Enum.VagaStatus;
+import ufms.cptl.raymay.Classes.Enum.TipoVeiculo;
+import ufms.cptl.raymay.Classes.Enum.VagaStatus;
 import static ufms.cptl.raymay.Operacoes.OperacaoMostraMensagem.operacaoMensagem;
 import ufms.cptl.raymay.Classes.Interno.Vaga;
 /**
@@ -104,8 +104,8 @@ public class OperacoesVagas {
         for(Vaga v : vagas) {
             if(v.getStatus() == VagaStatus.DISPONIVEL) {
                 operacaoMensagem(v.toString());
-            }
-            operacaoMensagem("///////////////////////////////////////////////////");
+                operacaoMensagem("///////////////////////////////////////////////////");
+            }           
         }
     } 
     

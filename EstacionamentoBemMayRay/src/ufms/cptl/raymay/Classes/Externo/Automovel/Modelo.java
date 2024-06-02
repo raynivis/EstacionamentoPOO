@@ -4,7 +4,7 @@
  */
 package ufms.cptl.raymay.Classes.Externo.Automovel;
 
-import ufms.cptl.raymay.Enum.TipoVeiculo;
+import ufms.cptl.raymay.Classes.Enum.TipoVeiculo;
 
 /**
  *

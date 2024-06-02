@@ -4,8 +4,8 @@
  */
 package ufms.cptl.raymay.Classes.Interno;
 
-import ufms.cptl.raymay.Enum.TipoVeiculo;
-import ufms.cptl.raymay.Enum.VagaStatus;
+import ufms.cptl.raymay.Classes.Enum.TipoVeiculo;
+import ufms.cptl.raymay.Classes.Enum.VagaStatus;
 /**
  *
  * @author ra

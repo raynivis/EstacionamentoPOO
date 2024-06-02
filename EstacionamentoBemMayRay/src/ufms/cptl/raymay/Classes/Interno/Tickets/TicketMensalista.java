@@ -9,7 +9,7 @@ import ufms.cptl.raymay.Classes.Externo.Automovel.Veiculo;
 import ufms.cptl.raymay.Classes.Interno.Tarifas.Tarifa;
 import ufms.cptl.raymay.Classes.Interno.Tarifas.TarifaMensalista;
 import ufms.cptl.raymay.Classes.Interno.Vaga;
-import ufms.cptl.raymay.Enum.TipoVeiculo;
+import ufms.cptl.raymay.Classes.Enum.TipoVeiculo;
 
 /**
  *
@@ -20,7 +20,6 @@ public class TicketMensalista extends Ticket {
     public TicketMensalista(Tarifa tarifaTicket, Veiculo veiculoTicket, Vaga vagaTicket) {
         super(tarifaTicket, veiculoTicket, vagaTicket);
         this.fim = LocalDateTime.now().plusDays(30);
-        System.out.println(fim);
     }
      /*Método para calcular quanto o ticket faturou, pela tarifa escolhida pelo ticket, ele ja adiciona o preço unico, logo
     em seguida verifica o tipo de veiculo para calcular sua porcetagem e retorna o total faturado do ticket*/

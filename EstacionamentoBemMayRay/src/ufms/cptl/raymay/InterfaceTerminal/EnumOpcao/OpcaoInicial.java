@@ -2,30 +2,28 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
-package ufms.cptl.raymay.Interface.InterfaceEnumOpcao;
-
+package ufms.cptl.raymay.InterfaceTerminal.EnumOpcao;
 /**
  *
  * @author maymi
  */
-public class OpcaoCadastroGeral {
-    
-    public enum InterCadastroGeral{
-        TICKET_TARIFA(1, "Teste de ticket com tarifa"),
-        VEICULO(2, "Consultar veículo"),
-        TARIFA(3, "Consultar tarifa"),
-        TICKET(4, "Consultar ticket"),
-        TICKETATIVO(5, "Listar tickets ativos"),
-        VAGA(6, "Listar vagas cadastradas"),
-        VOLTAR(7, "Voltar");
+public class OpcaoInicial {
+
+    public enum InterInicial{
+        GERENCIAR_CLIENTES(1, "Gerenciar clientes"),
+        GERENCIAR_VAGAS(2, "Gerenciar vagas"),
+        GERENCIAR_ESTACIONAMENTO(3, "Gerenciar estacionamento"),
+        CADASTROS_GERAIS(4, "Cadastros gerais"),
+        TOTAL_FATURADO(5, "Consultar total faturado em um período"),
+        SAIR(6, "Sair do programa");
         
         /* Como esse enum trabalha com a impressão de menus, os atributos são private -> final <-  pois
         não serão alterados, caso fossem isso traria confusão ao usuário e perderia a característica
         imutável dos enums */
-        private final int valorOpcao;
-        private final String desc;
+        public int valorOpcao;
+        public String desc;
 
-        private InterCadastroGeral(int valorOpcao, String desc) {
+        private InterInicial(int valorOpcao, String desc) {
             this.valorOpcao = valorOpcao;
             this.desc = desc;
         }
@@ -37,6 +35,6 @@ public class OpcaoCadastroGeral {
 
         public String getDesc() {
             return desc;
-        }
-    }
+        }  
+    } 
 }

@@ -9,10 +9,10 @@ import java.time.Duration;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
-import ufms.cptl.raymay.Enum.DiaSemana;
-import ufms.cptl.raymay.Enum.Operando;
-import ufms.cptl.raymay.Enum.TipoVeiculo;
-import ufms.cptl.raymay.Enum.VagaStatus;
+import ufms.cptl.raymay.Classes.Enum.DiaSemana;
+import ufms.cptl.raymay.Classes.Enum.Operando;
+import ufms.cptl.raymay.Classes.Enum.TipoVeiculo;
+import ufms.cptl.raymay.Classes.Enum.VagaStatus;
 import ufms.cptl.raymay.Classes.Externo.Automovel.Veiculo;
 import ufms.cptl.raymay.Classes.Externo.Individuo.Cliente;
 import static ufms.cptl.raymay.Operacoes.OperacaoMostraMensagem.operacaoMensagem;
@@ -55,6 +55,7 @@ public class OperacoesTicket {
             else {
                 if(t.getStatus() == Operando.ATIVO && t.getVeiculoTicket().equals(veiculoEstacio)){
                     t.getVagaTicket().setStatus(VagaStatus.DISPONIVEL);
+                    t.setVagaTicket(null);
                     return true;
                 }         
             }
@@ -108,12 +109,11 @@ public class OperacoesTicket {
                         return t;
                     }
                 }
-                else {
-                    if(t.getVagaTicket().getStatus() == VagaStatus.OCUPADA) {
+                else if (t instanceof TicketHorista) {
+                    if(t.getVeiculoTicket().equals(v) && t.getVagaTicket().getStatus() == VagaStatus.OCUPADA) {
                         return t;
                     }
-                }
-                
+                }              
             }
         }
        return null;

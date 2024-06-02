@@ -7,7 +7,7 @@ package ufms.cptl.raymay.Classes.Interno.Tickets;
 import ufms.cptl.raymay.Classes.Interno.Tarifas.Tarifa;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
-import ufms.cptl.raymay.Enum.Operando;
+import ufms.cptl.raymay.Classes.Enum.Operando;
 import ufms.cptl.raymay.Classes.Externo.Automovel.Veiculo;
 import ufms.cptl.raymay.Classes.Interno.Tarifas.TarifaMensalista;
 import ufms.cptl.raymay.Classes.Interno.Vaga;
@@ -104,6 +104,7 @@ public abstract class Ticket {
     @Override
     public String toString() {
         String tarifa;
+        String vaga = ""; 
         if(tarifaTicket instanceof TarifaMensalista){
             tarifa = "\nTarifa: Mensalista";
         }
@@ -111,9 +112,13 @@ public abstract class Ticket {
             tarifa = "\nTarifa: Horista";
         }
         
+        if(vagaTicket != null){
+            vaga = "\nVaga: " + vagaTicket.getNumero() + " " + vagaTicket.getRua();
+        }
+        
         return  "Codigo: " + codigo + "\nStatus: " + status + "\nInicio do ticket: " + inicio.format(dataBonitinha) + tarifa +
                 "\nData da Tarifa: " + tarifaTicket.getInicio().format(dataBonitinha) + "\nPlaca do Ticket: " 
-                + veiculoTicket.getPlaca() + "\nVaga: " + vagaTicket.getNumero() + " " + vagaTicket.getRua();
+                + veiculoTicket.getPlaca() + vaga;
     }
     
     

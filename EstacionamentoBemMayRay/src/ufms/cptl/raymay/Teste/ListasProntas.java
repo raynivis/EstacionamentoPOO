@@ -11,8 +11,8 @@ import ufms.cptl.raymay.Classes.Externo.Automovel.Modelo;
 import ufms.cptl.raymay.Classes.Externo.Automovel.Veiculo;
 import ufms.cptl.raymay.Classes.Externo.Individuo.Cliente;
 import ufms.cptl.raymay.Classes.Interno.Vaga;
-import ufms.cptl.raymay.Enum.TipoVeiculo;
-import ufms.cptl.raymay.Enum.VagaStatus;
+import ufms.cptl.raymay.Classes.Enum.TipoVeiculo;
+import ufms.cptl.raymay.Classes.Enum.VagaStatus;
 
 /**
  *
@@ -31,6 +31,7 @@ public class ListasProntas {
        veiculos1.add(novoV);     
        Cliente novoCliente1 = new Cliente("Ray", "1", "18", veiculos1);
        
+       
        List<Veiculo> veiculos2 = new ArrayList<>();     
        Cor color2 = new Cor("Vinho", "Velho");
 
@@ -44,12 +45,26 @@ public class ListasProntas {
        veiculos2.add(novoV3);
        Cliente novoCliente2 = new Cliente("May", "2", "20", veiculos2);
        
+          
        List<Veiculo> veiculos3 = new ArrayList<>();
        Cor color4 = new Cor("Azul Marinho", "Novo");
        Modelo model4 = new Modelo("Yamaha", "C166", TipoVeiculo.ONIBUS);
 
        Veiculo novoV4 = new Veiculo("IJK", model4, color4);
        veiculos3.add(novoV4);
+       
+       Cor color5 = new Cor("Azul Marinho", "Novo");
+       Modelo model5 = new Modelo("Yamaha", "C166", TipoVeiculo.CARRO);
+
+       Veiculo novoV5 = new Veiculo("LMN", model5, color5);
+       veiculos3.add(novoV5);
+       
+       Cor color6 = new Cor("Azul Marinho", "Novo");
+       Modelo model6 = new Modelo("Yamaha", "C166", TipoVeiculo.CARRO);
+
+       Veiculo novoV6 = new Veiculo("OPQ", model6, color6);
+       veiculos3.add(novoV6);
+       
        Cliente novoCliente3 = new Cliente("Humberto", "3", "21", veiculos3);
        
        clientes.add(novoCliente1);
@@ -57,15 +72,20 @@ public class ListasProntas {
        clientes.add(novoCliente3);
        
        Vaga novaVaga1 = new Vaga(1, "Jose", TipoVeiculo.MOTO);
-       Vaga novaVaga2 = new Vaga(2, "Jose", TipoVeiculo.CARRO);
-       Vaga novaVaga3 = new Vaga(1, "Maria", TipoVeiculo.ONIBUS);
-       Vaga novaVaga4 = new Vaga(3, "Nana", TipoVeiculo.CARRO);
+       Vaga novaVaga2 = new Vaga(1, "Maria", TipoVeiculo.MOTO);
+       Vaga novaVaga3 = new Vaga(2, "Jose", TipoVeiculo.CARRO);
+       Vaga novaVaga4 = new Vaga(2, "Maria", TipoVeiculo.CARRO);
+       Vaga novaVaga5 = new Vaga(3, "Jose", TipoVeiculo.ONIBUS);
+       Vaga novaVaga6 = new Vaga(3, "Maria", TipoVeiculo.ONIBUS);
+       Vaga novaVaga7 = new Vaga(3, "Nana", TipoVeiculo.CARRO);
 
        
        vagas.add(novaVaga1);
        vagas.add(novaVaga2);
        vagas.add(novaVaga3);
        vagas.add(novaVaga4);
-        
+       vagas.add(novaVaga5);
+       vagas.add(novaVaga6);
+       vagas.add(novaVaga7);
     }
 }
