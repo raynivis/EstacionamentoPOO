@@ -2,7 +2,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
-package ufms.cptl.raymay.InterfaceTerminal;
+package ufms.cptl.raymay.Interface.Terminal;
 
 import java.text.NumberFormat;
 import java.time.LocalDateTime;
@@ -14,7 +14,7 @@ import ufms.cptl.raymay.Classes.Enum.DiaSemana;
 import ufms.cptl.raymay.Classes.Enum.TipoVeiculo;
 import ufms.cptl.raymay.Classes.Externo.Automovel.Veiculo;
 import ufms.cptl.raymay.Classes.Externo.Individuo.Cliente;
-import static ufms.cptl.raymay.InterfaceTerminal.MostraMensagem.interMensagem;
+import static ufms.cptl.raymay.Interface.Terminal.MostraMensagem.interMensagem;
 import ufms.cptl.raymay.Classes.Interno.Tarifas.Tarifa;
 import ufms.cptl.raymay.Classes.Interno.Tarifas.TarifaHorista;
 import ufms.cptl.raymay.Classes.Interno.Tarifas.TarifaMensalista;
@@ -31,16 +31,16 @@ import ufms.cptl.raymay.Operacoes.OperacoesVagas;
  *
  * @author maymi
  */
-public class InterfaceInicial{
+public class TerminalInterfaceInicial{
     
     OperacoesTicket opTicket = new OperacoesTicket();
     OperacoesVagas opVaga = new OperacoesVagas();
     OperacoesCliente opCliente = new OperacoesCliente();
 
     
-    InterfaceOpcaoCliente interCliente = new InterfaceOpcaoCliente();
-    InterfaceOpcaoVaga interVaga = new InterfaceOpcaoVaga();
-    InterfaceOpcaoEstacionamento interEstaciona = new InterfaceOpcaoEstacionamento();
+    TerminalInterfaceOpcaoCliente interCliente = new TerminalInterfaceOpcaoCliente();
+    TerminalInterfaceOpcaoVaga interVaga = new TerminalInterfaceOpcaoVaga();
+    TerminalInterfaceOpcaoEstacionamento interEstaciona = new TerminalInterfaceOpcaoEstacionamento();
     ItensMenu menui = new ItensMenu(); /* menui = Menu Inicial */
     ItensMenu menucg = new ItensMenu(); /* menucg = Menu de Cadastros Gerais */
     

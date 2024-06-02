@@ -2,7 +2,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
-package ufms.cptl.raymay.InterfaceTerminal;
+package ufms.cptl.raymay.Interface.Terminal;
 
 import java.util.List;
 import java.util.Scanner;
@@ -13,13 +13,13 @@ import ufms.cptl.raymay.Classes.Interno.Tarifas.Tarifa;
 import ufms.cptl.raymay.Classes.Interno.Tickets.Ticket;
 import ufms.cptl.raymay.Classes.Interno.Vaga;
 import ufms.cptl.raymay.Operacoes.OperacoesVagas;
-import static ufms.cptl.raymay.InterfaceTerminal.MostraMensagem.interMensagem;
+import static ufms.cptl.raymay.Interface.Terminal.MostraMensagem.interMensagem;
 
 /**
  *
  * @author maymi
  */
-public class InterfaceOpcaoVaga {
+public class TerminalInterfaceOpcaoVaga {
     OperacoesVagas opVaga = new OperacoesVagas(); 
     ItensMenu menuva = new ItensMenu(); /*menuva = Menu de gerencia das Vagas*/
     byte opcao2;

@@ -2,18 +2,18 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
-package ufms.cptl.raymay.InterfaceTerminal;
+package ufms.cptl.raymay.Interface.Terminal;
 
 import java.io.PrintStream;
 import java.io.UnsupportedEncodingException;
 import java.nio.charset.StandardCharsets;
-import ufms.cptl.raymay.InterfaceTerminal.EnumOpcao.OpcaoCadastroGeral;
-import ufms.cptl.raymay.InterfaceTerminal.EnumOpcao.OpcaoCliente;
-import ufms.cptl.raymay.InterfaceTerminal.EnumOpcao.OpcaoEstacionamento;
-import ufms.cptl.raymay.InterfaceTerminal.EnumOpcao.OpcaoInicial;
-import ufms.cptl.raymay.InterfaceTerminal.EnumOpcao.OpcaoTarifa;
-import ufms.cptl.raymay.InterfaceTerminal.EnumOpcao.OpcaoVaga;
-import ufms.cptl.raymay.InterfaceTerminal.EnumOpcao.OpcaoVeiculo;
+import ufms.cptl.raymay.Interface.Terminal.EnumOpcao.OpcaoCadastroGeral;
+import ufms.cptl.raymay.Interface.Terminal.EnumOpcao.OpcaoCliente;
+import ufms.cptl.raymay.Interface.Terminal.EnumOpcao.OpcaoEstacionamento;
+import ufms.cptl.raymay.Interface.Terminal.EnumOpcao.OpcaoInicial;
+import ufms.cptl.raymay.Interface.Terminal.EnumOpcao.OpcaoTarifa;
+import ufms.cptl.raymay.Interface.Terminal.EnumOpcao.OpcaoVaga;
+import ufms.cptl.raymay.Interface.Terminal.EnumOpcao.OpcaoVeiculo;
 
 /**
  *

@@ -6,7 +6,7 @@ import ufms.cptl.raymay.Classes.Externo.Individuo.Cliente;
 import ufms.cptl.raymay.Classes.Interno.Tarifas.Tarifa;
 import ufms.cptl.raymay.Classes.Interno.Tickets.Ticket;
 import ufms.cptl.raymay.Classes.Interno.Vaga;
-import ufms.cptl.raymay.InterfaceTerminal.InterfaceInicial;
+import ufms.cptl.raymay.Interface.Terminal.TerminalInterfaceInicial;
 import java.util.ArrayList;
 import java.util.List;
 import javax.swing.JOptionPane;
@@ -20,7 +20,7 @@ public class Estacionamento {
     public static void main(String[] args){
         /*Listas do sistema*/
         ListasProntas listaPrnts = new ListasProntas();
-        InterfaceInicial inter = new InterfaceInicial();
+        TerminalInterfaceInicial inter = new TerminalInterfaceInicial();
         List<Cliente> clientes = new ArrayList<>();
         List<Vaga> vagas = new ArrayList<>();
         List<Ticket> tickets = new ArrayList<>();
