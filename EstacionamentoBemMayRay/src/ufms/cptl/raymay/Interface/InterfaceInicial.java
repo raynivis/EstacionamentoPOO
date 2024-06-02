@@ -62,7 +62,7 @@ public class InterfaceInicial{
             /* Utiliza o método criado em ItensMenu, reduzindo o tamanho
             de linhas das Classes da interface */
             menui.imprimeInicio();
-            opTicket.verificarTicketsMensalista(tickets);
+            opTicket.verificarTicketsMensalista30dias(tickets);
             
             opcao = scanner.nextByte();
             scanner.nextLine();
@@ -82,7 +82,7 @@ public class InterfaceInicial{
                         /* Utiliza o método criado em ItensMenu, reduzindo o tamanho
                         de linhas das Classes da interface */
                         menucg.imprimeCadastroGeral();
-                        opTicket.verificarTicketsMensalista(tickets);
+                        opTicket.verificarTicketsMensalista30dias(tickets);
                         
                         opcao3 = scanner.nextByte();
                         scanner.nextLine();
@@ -214,7 +214,7 @@ public class InterfaceInicial{
                       iniS = iniS + " 00:00:00";
                       interMensagem("Data final: ");
                       String fimS = scanner.nextLine();
-                      fimS = fimS + " 00:00:00";
+                      fimS = fimS + " 23:59:59";
                       LocalDateTime inicio = LocalDateTime.parse(iniS, dataBonitinhaComSegundos);
                       LocalDateTime fim = LocalDateTime.parse(fimS, dataBonitinhaComSegundos);
                       double resultado = opTicket.FaturadoPeriodo(tickets, inicio, fim);

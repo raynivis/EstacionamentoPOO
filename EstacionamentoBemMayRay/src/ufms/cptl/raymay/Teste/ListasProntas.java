@@ -56,10 +56,10 @@ public class ListasProntas {
        clientes.add(novoCliente2);
        clientes.add(novoCliente3);
        
-       Vaga novaVaga1 = new Vaga(1, "Jose", VagaStatus.DISPONIVEL, TipoVeiculo.MOTO);
-       Vaga novaVaga2 = new Vaga(2, "Jose", VagaStatus.DISPONIVEL, TipoVeiculo.CARRO);
-       Vaga novaVaga3 = new Vaga(1, "Maria", VagaStatus.DISPONIVEL, TipoVeiculo.ONIBUS);
-       Vaga novaVaga4 = new Vaga(3, "Nana", VagaStatus.DISPONIVEL, TipoVeiculo.CARRO);
+       Vaga novaVaga1 = new Vaga(1, "Jose", TipoVeiculo.MOTO);
+       Vaga novaVaga2 = new Vaga(2, "Jose", TipoVeiculo.CARRO);
+       Vaga novaVaga3 = new Vaga(1, "Maria", TipoVeiculo.ONIBUS);
+       Vaga novaVaga4 = new Vaga(3, "Nana", TipoVeiculo.CARRO);
 
        
        vagas.add(novaVaga1);

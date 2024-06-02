@@ -22,6 +22,7 @@ import ufms.cptl.raymay.Classes.Interno.Tarifas.TarifaMensalista;
 import ufms.cptl.raymay.Classes.Interno.Tickets.Ticket;
 import ufms.cptl.raymay.Classes.Interno.Tickets.TicketHorista;
 import ufms.cptl.raymay.Classes.Interno.Tickets.TicketMensalista;
+import ufms.cptl.raymay.Classes.Interno.Vaga;
 
 
 /**
@@ -50,7 +51,12 @@ public class OperacoesTicket {
                     tH.getVagaTicket().setStatus(VagaStatus.DISPONIVEL);
                     return true;
                 }
-
+            }
+            else {
+                if(t.getStatus() == Operando.ATIVO && t.getVeiculoTicket().equals(veiculoEstacio)){
+                    t.getVagaTicket().setStatus(VagaStatus.DISPONIVEL);
+                    return true;
+                }         
             }
         }
         return false;    
@@ -58,7 +64,7 @@ public class OperacoesTicket {
 
     /*Método para verificar se a vaga esta liberada para uso nos tickets mensalistas, ele é iniciado sempre após entrar em interfaces de
     estascionamento*/
-    public void verificarTicketsMensalista(List<Ticket> tickets) {
+    public void verificarTicketsMensalista30dias(List<Ticket> tickets) {
         for(Ticket t : tickets){
             if(t instanceof TicketMensalista && t.getStatus().equals(Operando.ATIVO)){
                TicketMensalista tM = (TicketMensalista) t; 
@@ -69,6 +75,21 @@ public class OperacoesTicket {
             }
         }
     }
+    
+    public boolean verificarEstacionarTicketMensalistaParaVeiculo(List<Ticket> tickets, Veiculo veiculoT, Vaga vagaT) {
+        for(Ticket t : tickets){
+            if(t instanceof TicketMensalista && t.getStatus().equals(Operando.ATIVO)){
+               TicketMensalista tM = (TicketMensalista) t; 
+               if(tM.getVeiculoTicket().equals(veiculoT)) {                 
+                   tM.setVagaTicket(vagaT);
+                   tM.getVagaTicket().setStatus(VagaStatus.OCUPADA);
+                   return true;
+               }
+            }
+        }
+        return false;
+    }
+    
     
 
     
@@ -81,10 +102,18 @@ public class OperacoesTicket {
         if(opClie.verificarVeiculo(clientes, placa) != null) {
             Veiculo v = opClie.verificarVeiculo(clientes, placa);
             for(Ticket t : tickets) {
-                if(t.getStatus() == Operando.ATIVO) {
+                if(t instanceof TicketHorista) {
+                    if(t.getStatus() == Operando.ATIVO) {
                     if(t.getVeiculoTicket().equals(v))
                         return t;
+                    }
                 }
+                else {
+                    if(t.getVagaTicket().getStatus() == VagaStatus.OCUPADA) {
+                        return t;
+                    }
+                }
+                
             }
         }
        return null;

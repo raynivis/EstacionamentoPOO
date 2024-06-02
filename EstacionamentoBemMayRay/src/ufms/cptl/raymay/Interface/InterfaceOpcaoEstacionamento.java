@@ -54,7 +54,7 @@ public class InterfaceOpcaoEstacionamento {
             /* Utiliza o método criado em OpcaoEstacionamento no package InterfaceEnumOpcao, reduzindo o tamanho
             de linhas das classes da interface */
             menue.imprimeEstacionamento();
-            opTicket.verificarTicketsMensalista(tickets);
+            opTicket.verificarTicketsMensalista30dias(tickets);
             
             opcao2 = scanner.nextByte();
             scanner.nextLine();  
@@ -110,8 +110,12 @@ public class InterfaceOpcaoEstacionamento {
                         break;
                     }
                    
-                    /*Achar a tarifa que pertence ao ticket*/
+                    if(opTicket.verificarEstacionarTicketMensalistaParaVeiculo(tickets, veiculo, vaga)){
+                        interMensagem("\nVeículo estacionado com sucesso!\n");
+                        break;
+                    }
                     
+                    /*Achar a tarifa que pertence ao ticket*/                  
                     interMensagem("O cliente deseja estacionar como Horista ou Mensalista?");
                     String tipoTi = scanner.nextLine();
                     Tarifa atual = opTicket.tarifaProxima(tarifas, LocalDateTime.now(), veiculo, tipoTi);
@@ -140,19 +144,20 @@ public class InterfaceOpcaoEstacionamento {
                     interMensagem("Digite a placa do veículo que deseja retirar:");
                     placa = scanner.nextLine();
                     
-                    Veiculo retirar = opCliente.verificarVeiculo(clientes, placa);
-                    if(retirar == null) {
+                    Veiculo veiculoRetirar = opCliente.verificarVeiculo(clientes, placa);
+                    if(veiculoRetirar == null) {
                         interMensagem("\nVeiculo não encontrado nos Clientes!\n");
                         break;
                     }
                     
-                    if(opTicket.retirar(tickets, retirar) == false) {
+                    if(opTicket.retirar(tickets, veiculoRetirar) == false) {
                         interMensagem("\nO Veiculo não pode ser retirado\n");
 
                     } else {
-                        interMensagem("\nTicket liberado e vaga liberada!\n");
+                        interMensagem("\nVaga liberada!\n");
                     }
                 break;    
+    
                 case 3:
                     /*listar todas as vagas disponíveis do estacionamento*/
                     opVaga.listarVagasDisponiveis(vagas);
@@ -163,7 +168,7 @@ public class InterfaceOpcaoEstacionamento {
                         /* Utiliza o método criado em ItensMenu, reduzindo o tamanho
                         de linhas das Classes da interface */
                         menut.imprimeTarifa();
-                        opTicket.verificarTicketsMensalista(tickets);
+                        opTicket.verificarTicketsMensalista30dias(tickets);
                         
                         opcao3 = scanner.nextByte();
                         scanner.nextLine();
