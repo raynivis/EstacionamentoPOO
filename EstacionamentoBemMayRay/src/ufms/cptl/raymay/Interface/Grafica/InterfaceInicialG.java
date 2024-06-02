@@ -2,7 +2,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
-package ufms.cptl.raymay.Interface;
+package ufms.cptl.raymay.Interface.Grafica;
 
 import java.text.NumberFormat;
 import java.time.LocalDateTime;
@@ -14,10 +14,11 @@ import ufms.cptl.raymay.Enum.DiaSemana;
 import ufms.cptl.raymay.Enum.TipoVeiculo;
 import ufms.cptl.raymay.Classes.Externo.Automovel.Veiculo;
 import ufms.cptl.raymay.Classes.Externo.Individuo.Cliente;
-import static ufms.cptl.raymay.Interface.MostraMensagem.interMensagem;
+import static ufms.cptl.raymay.Interface.Terminal.MostraMensagem.interMensagem;
 import ufms.cptl.raymay.Classes.Interno.Tarifa;
 import ufms.cptl.raymay.Classes.Interno.Ticket;
 import ufms.cptl.raymay.Classes.Interno.Vaga;
+import ufms.cptl.raymay.Interface.Userinterface.UserInterface;
 import ufms.cptl.raymay.Operacoes.OperacoesCliente;
 import ufms.cptl.raymay.Operacoes.OperacoesTicket;
 import ufms.cptl.raymay.Operacoes.OperacoesVagas;
@@ -26,19 +27,19 @@ import ufms.cptl.raymay.Operacoes.OperacoesVagas;
  *
  * @author maymi
  */
-public class InterfaceInicial{
+public class InterfaceInicialG implements UserInterface{
     
     OperacoesTicket ticke = new OperacoesTicket();
     OperacoesVagas vag = new OperacoesVagas();
     OperacoesCliente clie = new OperacoesCliente();
     
-    InterfaceOpcaoCliente opCliente = new InterfaceOpcaoCliente();
-    InterfaceOpcaoVaga opVaga = new InterfaceOpcaoVaga();
-    InterfaceOpcaoEstacionamento opEstaciona = new InterfaceOpcaoEstacionamento();
-    ItensMenu menui = new ItensMenu(); /* menui = Menu Inicial */
-    ItensMenu menucg = new ItensMenu(); /* menucg = Menu de Cadastros Gerais */
+    InterfaceOpcaoClienteG opCliente = new InterfaceOpcaoClienteG();
+    InterfaceOpcaoVagaG opVaga = new InterfaceOpcaoVagaG();
+    InterfaceOpcaoEstacionamentoG opEstaciona = new InterfaceOpcaoEstacionamentoG();
+    ItensMenuG menui = new ItensMenuG(); /* menui = Menu Inicial */
+    ItensMenuG menucg = new ItensMenuG(); /* menucg = Menu de Cadastros Gerais */
     
-    AuxiliarInterfarceListaTipoSemanas listasVS = new AuxiliarInterfarceListaTipoSemanas();
+    AuxiliarInterfarceListaTipoSemanasG listasVS = new AuxiliarInterfarceListaTipoSemanasG();
     
     byte opcao;
     byte opcao3;

@@ -2,7 +2,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
-package ufms.cptl.raymay.Interface;
+package ufms.cptl.raymay.Interface.Grafica;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
@@ -15,7 +15,7 @@ import ufms.cptl.raymay.Enum.TipoVeiculo;
 import ufms.cptl.raymay.Enum.VagaStatus;
 import ufms.cptl.raymay.Classes.Externo.Automovel.Veiculo;
 import ufms.cptl.raymay.Classes.Externo.Individuo.Cliente;
-import static ufms.cptl.raymay.Interface.MostraMensagem.interMensagem;
+import static ufms.cptl.raymay.Interface.Terminal.MostraMensagem.interMensagem;
 import ufms.cptl.raymay.Classes.Interno.Tarifa;
 import ufms.cptl.raymay.Classes.Interno.Ticket;
 import ufms.cptl.raymay.Classes.Interno.Vaga;
@@ -27,15 +27,15 @@ import ufms.cptl.raymay.Operacoes.OperacoesVagas;
  *
  * @author maymi
  */
-public class InterfaceOpcaoEstacionamento {
+public class InterfaceOpcaoEstacionamentoG {
     OperacoesVagas opVaga = new OperacoesVagas(); 
     OperacoesCliente opCliente = new OperacoesCliente();
     OperacoesTicket opTicket = new OperacoesTicket();
     
-    AuxiliarInterfarceListaTipoSemanas listasVS = new AuxiliarInterfarceListaTipoSemanas();
+    AuxiliarInterfarceListaTipoSemanasG listasVS = new AuxiliarInterfarceListaTipoSemanasG();
     
-    ItensMenu menue = new ItensMenu(); /* menue = Menu de gerencia do Estacionamento */
-    ItensMenu menut = new ItensMenu(); /*menut = Menu de gerencia das Tarifas */
+    ItensMenuG menue = new ItensMenuG(); /* menue = Menu de gerencia do Estacionamento */
+    ItensMenuG menut = new ItensMenuG(); /*menut = Menu de gerencia das Tarifas */
     
     byte opcao2;
     byte opcao3;

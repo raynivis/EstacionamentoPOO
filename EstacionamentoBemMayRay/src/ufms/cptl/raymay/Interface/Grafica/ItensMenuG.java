@@ -2,7 +2,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
-package ufms.cptl.raymay.Interface;
+package ufms.cptl.raymay.Interface.Grafica;
 
 import java.io.PrintStream;
 import java.io.UnsupportedEncodingException;
@@ -19,7 +19,7 @@ import ufms.cptl.raymay.Interface.InterfaceEnumOpcao.OpcaoVeiculo;
  *
  * @author maymi
  */
-public class ItensMenu {
+public class ItensMenuG {
     /* Esta Classe cria métodos de impressão (que percorrem o laço for do primeiro item do Enum até o ultimo)
     para os enums criados no package InterfaceEnumOpcao, reduzindo a quantidade de linhas
     das Classes do package da interface e auxiliando no melhor entendimento do código,

@@ -2,14 +2,14 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
-package ufms.cptl.raymay.Interface;
-
+package ufms.cptl.raymay.Interface.Grafica;
 import java.util.List;
 import java.util.Scanner;
+import javax.swing.JOptionPane;
 import ufms.cptl.raymay.Enum.TipoVeiculo;
 import ufms.cptl.raymay.Enum.VagaStatus;
 import ufms.cptl.raymay.Classes.Externo.Individuo.Cliente;
-import static ufms.cptl.raymay.Interface.MostraMensagem.interMensagem;
+import static ufms.cptl.raymay.Interface.Terminal.MostraMensagem.interMensagem;
 import ufms.cptl.raymay.Classes.Interno.Tarifa;
 import ufms.cptl.raymay.Classes.Interno.Ticket;
 import ufms.cptl.raymay.Classes.Interno.Vaga;
@@ -19,9 +19,9 @@ import ufms.cptl.raymay.Operacoes.OperacoesVagas;
  *
  * @author maymi
  */
-public class InterfaceOpcaoVaga {
+public class InterfaceOpcaoVagaG {
     OperacoesVagas opVaga = new OperacoesVagas(); 
-    ItensMenu menuva = new ItensMenu(); /*menuva = Menu de gerencia das Vagas*/
+    ItensMenuG menuva = new ItensMenuG(); /*menuva = Menu de gerencia das Vagas*/
     byte opcao2;
     Scanner scanner = new Scanner(System.in);
     
@@ -37,11 +37,17 @@ public class InterfaceOpcaoVaga {
             switch (opcao2) {
                 case 1:
                     /*cadastrar vaga*/
-                    interMensagem("Digite o número da vaga a ser cadastrada:");
-                    int numero = scanner.nextInt();
-                    scanner.nextLine();
-                    interMensagem("Digite o nome da rua da vaga a ser cadastrada:");
-                    String rua = scanner.nextLine();                                      
+                    String rnumero = JOptionPane.showInputDialog("Digite o número da vaga a ser cadastrada");
+                    if(rnumero == null) {
+                        JOptionPane.showMessageDialog(null, "Erro", "Resposta não inserida", JOptionPane.ERROR_MESSAGE);
+                        break;
+                    }
+                    int numero = Integer.parseInt(rnumero);
+                    String rua = JOptionPane.showInputDialog("Digite o nome da rua da vaga a ser cadastrada");
+                    if(rua == null) {
+                        JOptionPane.showMessageDialog(null, "Erro", "Resposta não inserida", JOptionPane.ERROR_MESSAGE);
+                        break;
+                    }
                     
                     interMensagem("Digite o tipo de vaga(MOTOCICLETA, MEDIOPORTE, GRANDEPORTE):");
                     String tipo = scanner.nextLine();
