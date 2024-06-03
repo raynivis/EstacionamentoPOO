@@ -190,7 +190,7 @@ public class InterfaceOpcaoEstacionamento{
                                 }                                                              
                                 List<DiaSemana> diaSmns = new  ArrayList<>();                        
                                 List<TipoVeiculo> listaTps = new  ArrayList<>();
-                                listasVS.OperacaoListaTVDS(diaSmns, listaTps);
+                                /*listasVS.OperacaoListaTVDS(diaSmns, listaTps);*/
                                  
                                 if(tipo.equalsIgnoreCase("HORISTA")){                            
                                     interMensagem("Digite o valor da primeira hora:");
@@ -231,7 +231,7 @@ public class InterfaceOpcaoEstacionamento{
                                 data = scanner.nextLine();                              
                                 List<DiaSemana> dias = new ArrayList<>();                        
                                 List<TipoVeiculo> tps = new ArrayList<>();
-                                listasVS.OperacaoListaTVDS(dias, tps);
+                                /*listasVS.OperacaoListaTVDS(dias, tps);*/
                                 
                                 if(tipo.equalsIgnoreCase("HORISTA")){                            
                                      TarifaHorista tarifaEx = opTicket.buscarTarifaHorista(tarifas, data, dias, tps);
@@ -272,7 +272,8 @@ public class InterfaceOpcaoEstacionamento{
                                 
                                 dias = new ArrayList<>();                        
                                 tps = new ArrayList<>();
-                                listasVS.OperacaoListaTVDS(dias, tps);
+                                /*listasVS.OperacaoListaTVDS(dias, tps);*/
+                                        
                                 
                                 if(tipo.equalsIgnoreCase("HORISTA")){                            
                                     TarifaHorista tarifaEx = opTicket.buscarTarifaHorista(tarifas, data, dias, tps);
