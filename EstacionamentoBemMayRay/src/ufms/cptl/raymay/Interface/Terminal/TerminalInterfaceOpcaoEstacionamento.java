@@ -61,8 +61,28 @@ public class TerminalInterfaceOpcaoEstacionamento {
                 case 1:
                     /*estacionar*/
                     
-                    if(tarifas.isEmpty() == true) {
+                    if(tarifas.isEmpty() == true) { /*verificando se tem tarifa*/
                         interMensagem("\nCadastre uma tarifa primeiro!\n");
+                        break;
+                    }
+                     interMensagem("Digite a placa do veículo a ser estacionado:");
+                    String placa = scanner.nextLine();
+                  
+                    Veiculo veiculo = opCliente.verificarVeiculo(clientes, placa);
+                    
+                    if(veiculo == null) {
+                       interMensagem("\nErro: Veículo não econtrado!\n"); 
+                       break;
+                    }
+                    
+                    Ticket veriTicket = opTicket.verificaTicketVeiculo(clientes, placa, tickets);
+                    if(veriTicket != null){                       
+                        interMensagem("\nErro: O veículo já está estacionado!\n");
+                        break;
+                    }                                      
+                   
+                    if(opTicket.verificarEstacionarTicketMensalistaParaVeiculo(tickets, veiculo)){ /*verificando o veiculo possui um ticket mensalista*/
+                        interMensagem("\nVeículo Mensalista estacionado com sucesso!\n");
                         break;
                     }
                     
@@ -79,6 +99,11 @@ public class TerminalInterfaceOpcaoEstacionamento {
                         break;
                     }
                     
+                     if(veiculo.getModel().getTipoVeiculo() != vaga.getTipo()) {                       
+                        interMensagem("\nErro: O tipo de veículo não é compatível com o tipo de vaga!\n");
+                        break;
+                    }
+                    
                     if(vaga.getStatus() != VagaStatus.DISPONIVEL) {
                         if(vaga.getStatus() == VagaStatus.OCUPADA) { 
                             interMensagem("\nErro: A vaga possui um ticket de estacionamento ATIVO (OCUPADA)!\n");
@@ -86,33 +111,7 @@ public class TerminalInterfaceOpcaoEstacionamento {
                         }
                         interMensagem("\nErro: Vaga indisponível!\n");
                         break;
-                    }
-                    
-                    interMensagem("Vaga disponível!\nDigite a placa do veículo a ser estacionado:");
-                    String placa = scanner.nextLine();
-                  
-                    Veiculo veiculo = opCliente.verificarVeiculo(clientes, placa);
-                    
-                    if(veiculo == null) {
-                       interMensagem("\nErro: Veículo não econtrado!\n"); 
-                       break;
-                    }
-                    
-                    Ticket veriTicket = opTicket.verificaTicketVeiculo(clientes, placa, tickets);
-                    if(veriTicket != null){                       
-                        interMensagem("\nErro: O veículo já possui um ticket de estacionamento ATIVO (está estacionado)!\n");
-                        break;
-                    }
-                        
-                    if(veiculo.getModel().getTipoVeiculo() != vaga.getTipo()) {                       
-                        interMensagem("\nErro: O tipo de veículo não é compatível com o tipo de vaga!\n");
-                        break;
-                    }
-                   
-                    if(opTicket.verificarEstacionarTicketMensalistaParaVeiculo(tickets, veiculo, vaga)){
-                        interMensagem("\nVeículo estacionado com sucesso!\n");
-                        break;
-                    }
+                    }                
                     
                     /*Achar a tarifa que pertence ao ticket*/                  
                     interMensagem("O cliente deseja estacionar como Horista ou Mensalista?");
@@ -133,9 +132,7 @@ public class TerminalInterfaceOpcaoEstacionamento {
                         TicketMensalista novoTicket = new TicketMensalista(atual, veiculo, vaga);
                         tickets.add(novoTicket);
                         interMensagem("\nTicket Mensalista de código " + novoTicket.getCodigo() + " criado com sucesso!\n");  
-                    }
-                    vaga.setStatus(VagaStatus.OCUPADA);
-                                                       
+                    }                                                     
                 break;    
     
                 case 2:
@@ -153,7 +150,7 @@ public class TerminalInterfaceOpcaoEstacionamento {
                         interMensagem("\nO Veiculo não pode ser retirado\n");
 
                     } else {
-                        interMensagem("\nVaga liberada!\n");
+                        interMensagem("\nVeiculo Retirado com sucesso!\n");
                     }
                 break;    
     
@@ -200,7 +197,6 @@ public class TerminalInterfaceOpcaoEstacionamento {
                                     double precoPrimeira = scanner.nextDouble();
                                     scanner.nextLine();
 
-
                                     interMensagem("Digite o valor das horas subsequentes:");
                                     double precoHora = scanner.nextDouble();
                                     scanner.nextLine();
@@ -211,6 +207,7 @@ public class TerminalInterfaceOpcaoEstacionamento {
                                     }
                                     TarifaHorista novaTarifa = new TarifaHorista(precoPrimeira, precoHora, inicio, diaSmns, listaTps);
                                     tarifas.add(novaTarifa);
+                                    interMensagem("\nTarifa Horista de " + inicio.format(dataFormata) + " cadastrada com sucesso!\n");    
                                 }                               
                                 else{                            
                                     interMensagem("Digite o valor da Tarifa:");
@@ -223,9 +220,8 @@ public class TerminalInterfaceOpcaoEstacionamento {
                                     }
                                     TarifaMensalista novaTarifa = new TarifaMensalista(preco, inicio, diaSmns, listaTps);
                                     tarifas.add(novaTarifa);
-                                }
-                              
-                                interMensagem("\nTarifa de " + inicio.format(dataFormata) + " cadastrada com sucesso!\n");                                                     
+                                    interMensagem("\nTarifa Mensalista de " + inicio.format(dataFormata) + " cadastrada com sucesso!\n");    
+                                }                                                              
                             break; 
                             case 2: /*excluir tarifa*/                              
                                 interMensagem("Digite o Tipo de Tarifa que deseja excluir (Horista ou Mensalista):");

@@ -22,7 +22,7 @@ import ufms.cptl.raymay.Classes.Interno.Tarifas.TarifaMensalista;
 import ufms.cptl.raymay.Classes.Interno.Tickets.Ticket;
 import ufms.cptl.raymay.Classes.Interno.Tickets.TicketHorista;
 import ufms.cptl.raymay.Classes.Interno.Tickets.TicketMensalista;
-import ufms.cptl.raymay.Classes.Interno.Vaga;
+
 
 
 /**
@@ -37,10 +37,12 @@ public class OperacoesTicket {
     DateTimeFormatter dataBonitinha = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm");
     
     
-    /* O método percorre a lista de tickets a procura do ticket que possui a placa inserida e que
+    /* O método percorre a lista de tickets a procura do ticket horista que possui a placa inserida e que
     esteja ATIVO (pois pode conter mais de um ticket com a mesma placa, porém so haverá um ATIVO),
     caso encontre o ativo, faz a retirada do veículo do estacionamento, torna a vaga disponível
     e deixa o ticket DESATIVO */
+    /*No caso do ticket mensalista ele verifica se o ticket mensalista está ativo e o veiculo passado por referencia 
+    pertence a ele, se ele satisfazer as duas condições, retorna true*/
     public boolean retirar(List<Ticket> tickets, Veiculo veiculoEstacio){             
         for(Ticket t : tickets) {
             if(t instanceof TicketHorista) {
@@ -52,10 +54,9 @@ public class OperacoesTicket {
                     return true;
                 }
             }
-            else {
-                if(t.getStatus() == Operando.ATIVO && t.getVeiculoTicket().equals(veiculoEstacio)){
-                    t.getVagaTicket().setStatus(VagaStatus.DISPONIVEL);
-                    t.setVagaTicket(null);
+            else{ /*Sem esse "t instanceof TicketMensalista" o IDE estava reclamando*/
+                if(t instanceof TicketMensalista && t.getStatus() == Operando.ATIVO && t.getVeiculoTicket().equals(veiculoEstacio)){
+                    t.getVagaTicket().setStatus(VagaStatus.INDISPONIVEL);
                     return true;
                 }         
             }
@@ -64,7 +65,7 @@ public class OperacoesTicket {
     }
 
     /*Método para verificar se a vaga esta liberada para uso nos tickets mensalistas, ele é iniciado sempre após entrar em interfaces de
-    estascionamento*/
+    estascionamento. Lembrando que ao criar um ticket mensalista ele ja define a data final do ticket*/
     public void verificarTicketsMensalista30dias(List<Ticket> tickets) {
         for(Ticket t : tickets){
             if(t instanceof TicketMensalista && t.getStatus().equals(Operando.ATIVO)){
@@ -77,12 +78,15 @@ public class OperacoesTicket {
         }
     }
     
-    public boolean verificarEstacionarTicketMensalistaParaVeiculo(List<Ticket> tickets, Veiculo veiculoT, Vaga vagaT) {
+    /*Metodo para verificar se o existe um ticket mensalista para o veiculo ser estacionado na Vaga destinada do ticket
+    ele olha para todos os tickets que possuem a estancia de Ticket mensalista e está ativo e retorna verdade se o veiculo 
+    estiver vinculado a o Ticket Mensalista*/
+    /*retorna true se o veiculo estiver vinculado ao um ticket mensalista e falso se não estiver*/
+    public boolean verificarEstacionarTicketMensalistaParaVeiculo(List<Ticket> tickets, Veiculo veiculoT) {
         for(Ticket t : tickets){
             if(t instanceof TicketMensalista && t.getStatus().equals(Operando.ATIVO)){
                TicketMensalista tM = (TicketMensalista) t; 
-               if(tM.getVeiculoTicket().equals(veiculoT)) {                 
-                   tM.setVagaTicket(vagaT);
+               if(tM.getVeiculoTicket().equals(veiculoT) && tM.getVagaTicket().getStatus() == VagaStatus.INDISPONIVEL) {                 
                    tM.getVagaTicket().setStatus(VagaStatus.OCUPADA);
                    return true;
                }
@@ -91,8 +95,6 @@ public class OperacoesTicket {
         return false;
     }
     
-    
-
     
     /* Método que verifica se o veículo inserido possui algum ticket ATIVO atrelado a ele. 
     Primeiro faz a verificação se a placa já foi cadastrada no sistema, com o método verificarVeiculo,
@@ -109,7 +111,7 @@ public class OperacoesTicket {
                         return t;
                     }
                 }
-                else if (t instanceof TicketHorista) {
+                else if (t instanceof TicketMensalista) {
                     if(t.getVeiculoTicket().equals(v) && t.getVagaTicket().getStatus() == VagaStatus.OCUPADA) {
                         return t;
                     }
@@ -151,8 +153,7 @@ public class OperacoesTicket {
         }  
         return tipo;
     }
-    
-    
+     
     /*Métodos para facilitar a busca de tarifa na interface, a tarifa é identificada pela data de inicio, os dias da semana dela e o tipo/s
     de veiculo/s que a tarifa atende, o método retorna a tarifa se encontra-la, se não, retorna um ponteiro nulo*/
     public TarifaHorista buscarTarifaHorista(List<Tarifa> tarifas, String inicio, List<DiaSemana> dias, List<TipoVeiculo> veiculos) {

@@ -24,7 +24,8 @@ public class TicketHorista extends Ticket{
 
     /*Método para calcular quanto o ticket faturou, pela tarifa escolhida pelo ticket, ele ja adiciona o preço da primeira hora, logo
     em seguida ele entra em um laço adicionando 1 hora para ir adicionando "o custo" e "o tempo que o veiculo ficou estacionado"
-    o laço para quando der a data de fim ou passar dela. Logo depois, verifica o tipo de veiculo para calcular sua porcetagem e
+    o laço para quando der a data de fim ou passar dela. Se a data de fim for em outro dia ele adiciona o dobro da primeira hora 
+    a cada hora subsquente. Logo depois, verifica o tipo de veiculo para calcular sua porcetagem e
     retorna o total faturado do ticket*/
     @Override
      public double totalFaturadoTicket(){

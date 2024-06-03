@@ -8,6 +8,7 @@ import ufms.cptl.raymay.Classes.Interno.Tarifas.Tarifa;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import ufms.cptl.raymay.Classes.Enum.Operando;
+import ufms.cptl.raymay.Classes.Enum.VagaStatus;
 import ufms.cptl.raymay.Classes.Externo.Automovel.Veiculo;
 import ufms.cptl.raymay.Classes.Interno.Tarifas.TarifaMensalista;
 import ufms.cptl.raymay.Classes.Interno.Vaga;
@@ -39,6 +40,7 @@ public abstract class Ticket {
         this.tarifaTicket = tarifaTicket;
         this.veiculoTicket = veiculoTicket;
         this.vagaTicket = vagaTicket;
+        this.vagaTicket.setStatus(VagaStatus.OCUPADA);
         proxCodigo++;
     }
 
@@ -103,22 +105,17 @@ public abstract class Ticket {
     
     @Override
     public String toString() {
-        String tarifa;
-        String vaga = ""; 
+        String tarifa; 
         if(tarifaTicket instanceof TarifaMensalista){
             tarifa = "\nTarifa: Mensalista";
         }
         else {
             tarifa = "\nTarifa: Horista";
         }
-        
-        if(vagaTicket != null){
-            vaga = "\nVaga: " + vagaTicket.getNumero() + " " + vagaTicket.getRua();
-        }
-        
+             
         return  "Codigo: " + codigo + "\nStatus: " + status + "\nInicio do ticket: " + inicio.format(dataBonitinha) + tarifa +
-                "\nData da Tarifa: " + tarifaTicket.getInicio().format(dataBonitinha) + "\nPlaca do Ticket: " 
-                + veiculoTicket.getPlaca() + vaga;
+                "\nData da Tarifa: " + tarifaTicket.getInicio().format(dataBonitinha) + "\nPlaca do Veiculo: " 
+                + veiculoTicket.getPlaca() + "\nVaga: " + vagaTicket.getNumero() + " " + vagaTicket.getRua();
     }
     
     
