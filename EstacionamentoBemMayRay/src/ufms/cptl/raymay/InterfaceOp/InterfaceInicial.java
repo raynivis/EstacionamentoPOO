@@ -81,7 +81,7 @@ public class InterfaceInicial{
                     interVaga.opcoesVaga(clientes, vagas, tickets, tarifas);
                 break;
                 case 3:
-                    interEstaciona.opcoesEstacionamento(clientes, vagas, tickets, tarifas);
+                    interEstaciona.opcoesEstacionamento(clientes, vagas, tickets, tarifas, inter, face);
                 break;
                 case 4:
                     do {                      
@@ -338,7 +338,6 @@ public class InterfaceInicial{
                                     InterfaceTerminal interfaces = (InterfaceTerminal) inter;
                                     for(String s : lista){
                                         interfaces.mensagem(s);
-                                        interfaces.mensagem("///////////////////////////////////////////////////");
                                     }
                                 }
                                 else {
@@ -353,8 +352,7 @@ public class InterfaceInicial{
                                 if(face == 0) {
                                     InterfaceTerminal interfaces = (InterfaceTerminal) inter;
                                     for(String s : listaV){
-                                        interfaces.mensagem(s);
-                                        interfaces.mensagem("///////////////////////////////////////////////////");
+                                        interfaces.mensagem(s);                                   
                                     }
                                 }
                                 else {

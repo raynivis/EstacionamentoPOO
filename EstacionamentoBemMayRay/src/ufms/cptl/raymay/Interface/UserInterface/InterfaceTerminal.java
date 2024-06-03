@@ -10,7 +10,9 @@ import java.nio.charset.StandardCharsets;
 import java.util.Scanner;
 import javax.swing.JOptionPane;
 import ufms.cptl.raymay.Interface.EnumOpcao.OpcaoCadastroGeral;
+import ufms.cptl.raymay.Interface.EnumOpcao.OpcaoEstacionamento;
 import ufms.cptl.raymay.Interface.EnumOpcao.OpcaoInicial;
+import ufms.cptl.raymay.Interface.EnumOpcao.OpcaoTarifa;
 import static ufms.cptl.raymay.InterfaceOp.MostraMensagem.interMensagem;
 
 /**
@@ -64,6 +66,32 @@ public class InterfaceTerminal implements UserInterface{
         return valor;
     }
     
+    public int imprimeEstacionamento(){
+         try {
+                PrintStream out = new PrintStream(System.out, true, StandardCharsets.UTF_8.toString());
+                for (OpcaoEstacionamento.InterEstacionamento op : OpcaoEstacionamento.InterEstacionamento.values()) {
+                    out.println(op.getValorOpcao() + " - " + op.getDesc());
+                }
+        } catch (UnsupportedEncodingException e) {
+        }  
+        int opcao2 = scanner.nextInt();
+        scanner.nextLine();
+        return opcao2;
+    }
+    
+    
+    public int imprimeTarifa(){
+        try {
+            PrintStream out = new PrintStream(System.out, true, StandardCharsets.UTF_8.toString());
+            for (OpcaoTarifa.InterTarifa op : OpcaoTarifa.InterTarifa.values()) {
+                out.println(op.getValorOpcao() + " - " + op.getDesc());
+            }
+        } catch (UnsupportedEncodingException e) {
+        }
+        int opcao3 = scanner.nextByte();
+        scanner.nextLine();
+        return opcao3;
+    }
 }   
   
     

@@ -229,26 +229,20 @@ public class OperacoesTicket {
     
     
     /*Método para printar as tarifas cadastrada no sistema para ter uma visualização*/
-    public void relatorioTarifa(List<Tarifa> tarifas) {
+    public List<String> relatorioTarifa(List<Tarifa> tarifas) {
+        List<String> lista = new ArrayList<>();  
         for(Tarifa t : tarifas) {
             if(t instanceof TarifaHorista) {
                 TarifaHorista tH = (TarifaHorista) t;
-                System.out.println(tH.toString());
+                lista.add(tH.toString());
             }
             else {
                 TarifaMensalista tM = (TarifaMensalista) t;
-                System.out.println(tM.toString());
+                lista.add(tM.toString());              
             }
-            operacaoMensagem("Dia/s da Semana:");
-            for(DiaSemana ds : t.getDiasSemana()){
-                System.out.print(ds.toString() + " ");
-            }
-            operacaoMensagem("\nTipo/s de Veiculo:");
-            for(TipoVeiculo tv : t.getTarifaVeiculos()){
-                System.out.print(tv.toString() + " ");
-            }
-            operacaoMensagem("\n///////////////////////////////////////////////////");
+             
         }
+        return lista;
     }
     
     

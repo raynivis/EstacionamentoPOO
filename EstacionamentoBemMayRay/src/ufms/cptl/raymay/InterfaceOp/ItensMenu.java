@@ -140,83 +140,8 @@ public class ItensMenu {
         }
     }
      
-    public int imprimeEstacionamento(int num){
-        if(num == 0) {
-            try {
-                PrintStream out = new PrintStream(System.out, true, StandardCharsets.UTF_8.toString());
-                for (OpcaoEstacionamento.InterEstacionamento op : OpcaoEstacionamento.InterEstacionamento.values()) {
-                    out.println(op.getValorOpcao() + " - " + op.getDesc());
-                }
-            } catch (UnsupportedEncodingException e) {
-            }  
-            return 0;
-        } else {
-            OpcaoEstacionamento.InterEstacionamento[] op = OpcaoEstacionamento.InterEstacionamento.values();
-            String[] opDesc = new String[op.length];
-            for (int i = 0; i < op.length; i++) {
-                opDesc[i] = op[i].getValorOpcao() + ". " + op[i].getDesc();
-            }
-
-            String escolha = (String) JOptionPane.showInputDialog(
-                    null,
-                    "Escolha uma opção:",
-                    "Menu Estacionamento",
-                    JOptionPane.INFORMATION_MESSAGE,
-                    null,
-                    opDesc,
-                    opDesc[0]);
-
-            // Converte a escolha para o enum correspondente e obtém o valor da opção
-            if (escolha != null) {
-                for (OpcaoEstacionamento.InterEstacionamento opcao : op) {
-                    if (escolha.equals(opcao.getValorOpcao() + ". " + opcao.getDesc())) {
-                        return opcao.getValorOpcao();
-                    }
-                }    
-            }
-            /* Opcao inválida, tera um break na interface */
-            return -1;
-        }
-    }
     
-    public int imprimeTarifa(int num){
-        if(num == 0) {
-            try {
-                PrintStream out = new PrintStream(System.out, true, StandardCharsets.UTF_8.toString());
-                for (OpcaoTarifa.InterTarifa op : OpcaoTarifa.InterTarifa.values()) {
-                    out.println(op.getValorOpcao() + " - " + op.getDesc());
-                }
-            } catch (UnsupportedEncodingException e) {
-            }
-            return 0;
-        } else {
-            OpcaoTarifa.InterTarifa[] op = OpcaoTarifa.InterTarifa.values();
-            String[] opDesc = new String[op.length];
-            for (int i = 0; i < op.length; i++) {
-                opDesc[i] = op[i].getValorOpcao() + ". " + op[i].getDesc();
-            }
-
-            String escolha = (String) JOptionPane.showInputDialog(
-                    null,
-                    "Escolha uma opção:",
-                    "Menu Tarifa",
-                    JOptionPane.INFORMATION_MESSAGE,
-                    null,
-                    opDesc,
-                    opDesc[0]);
-
-            // Converte a escolha para o enum correspondente e obtém o valor da opção
-            if (escolha != null) {
-                for (OpcaoTarifa.InterTarifa opcao : op) {
-                    if (escolha.equals(opcao.getValorOpcao() + ". " + opcao.getDesc())) {
-                        return opcao.getValorOpcao();
-                    }
-                }    
-            }
-            /* Opcao inválida, tera um break na interface */
-            return -1;
-        }
-    } 
+    
     
    
 }

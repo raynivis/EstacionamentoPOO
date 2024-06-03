@@ -102,13 +102,17 @@ public class OperacoesVagas {
     
     
     /* O método lista todas as vagas disponíveis na lista de vagas */
-    public void listarVagasDisponiveis(List<Vaga> vagas) {
-        for(Vaga v : vagas) {
+    public List<String> listarVagasDisponiveis(List<Vaga> vagas) {
+        List<String> lista = new ArrayList<>();   
+        for(Vaga v : vagas) {         
             if(v.getStatus() == VagaStatus.DISPONIVEL) {
-                operacaoMensagem(v.toString());
-                operacaoMensagem("///////////////////////////////////////////////////");
+                String vaga;
+                vaga = "\n" + v.toString() + "\n";
+                vaga = vaga + "\n" + "///////////////////////////////////////////////////";  
+                lista.add(vaga);
             }           
         }
+        return lista;
     } 
     
     
@@ -118,7 +122,7 @@ public class OperacoesVagas {
         for(Vaga v : vagas) { 
             String vaga;
             vaga = "\n" + v.toString() + "\n";
-            vaga = vaga + "\n" + "///////////////////////////////////////////////////" + "\n";  
+            vaga = vaga + "\n" + "///////////////////////////////////////////////////";  
             lista.add(vaga);
         }
         return lista; 

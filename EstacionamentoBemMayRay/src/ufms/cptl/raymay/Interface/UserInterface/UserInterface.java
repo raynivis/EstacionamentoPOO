@@ -19,4 +19,10 @@ public interface UserInterface{
         public int imprimeCadastroGeral();
         
         public String receberString(String mensagem);
+               
+        public int imprimeEstacionamento();
+        
+        
+        public int imprimeTarifa();
+         
     }    
