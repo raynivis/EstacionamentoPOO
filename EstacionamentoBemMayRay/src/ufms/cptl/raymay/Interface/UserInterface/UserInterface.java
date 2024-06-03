@@ -4,11 +4,6 @@
  */
 package ufms.cptl.raymay.Interface.UserInterface;
 
-import java.util.List;
-import ufms.cptl.raymay.Classes.Externo.Individuo.Cliente;
-import ufms.cptl.raymay.Classes.Interno.Tarifas.Tarifa;
-import ufms.cptl.raymay.Classes.Interno.Tickets.Ticket;
-import ufms.cptl.raymay.Classes.Interno.Vaga;
 
 
 /**
@@ -16,6 +11,12 @@ import ufms.cptl.raymay.Classes.Interno.Vaga;
  * @author maymi
  */
 public interface UserInterface{
-        public void primeirasOpcoes(List<Cliente> clientes, List<Vaga> vagas, List<Ticket> tickets, List<Tarifa> tarifas);
-
+    
+        public void mensagem(String mensagem);
+        
+        public int imprimeInicio();
+          
+        public int imprimeCadastroGeral();
+        
+        public String receberString(String mensagem);
     }    

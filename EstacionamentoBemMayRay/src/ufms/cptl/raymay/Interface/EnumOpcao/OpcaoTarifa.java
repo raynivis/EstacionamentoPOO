@@ -2,26 +2,27 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
-package ufms.cptl.raymay.Interface.Terminal.EnumOpcao;
+package ufms.cptl.raymay.Interface.EnumOpcao;
 /**
  *
  * @author maymi
  */
-public class OpcaoVeiculo {
+public class OpcaoTarifa {
 
-    public enum InterVeiculo{
-        CADASTRAR (1, "Cadastrar novo veículo"),
-        EXCLUIR (2, "Excluir veículo"),
-        EDITAR(3, "Editar veículo"),
-        SAIR(4, "Voltar");
+    public enum InterTarifa{
+        CADASTRAR (1, "Cadastrar tarifa"),
+        EXCLUIR (2, "Excluir tarifa"),
+        EDITAR(3, "Editar tarifa"),
+        CONSULTAR(4, "Imprimir as tarifas cadastradas"),
+        SAIR(5, "Voltar");
         
-        /* Como esse enum trabalha com a impressão de menus, os atributos são private -> final <-  pois
+       /* Como esse enum trabalha com a impressão de menus, os atributos são private -> final <-  pois
         não serão alterados, caso fossem isso traria confusão ao usuário e perderia a característica
         imutável dos enums */
         public int valorOpcao;
         public String desc;
 
-        private InterVeiculo(int valorOpcao, String desc) {
+        private InterTarifa(int valorOpcao, String desc) {
             this.valorOpcao = valorOpcao;
             this.desc = desc;
         }

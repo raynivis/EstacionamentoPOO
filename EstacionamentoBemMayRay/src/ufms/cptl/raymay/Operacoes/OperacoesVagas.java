@@ -3,6 +3,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
 package ufms.cptl.raymay.Operacoes;
+import java.util.ArrayList;
 import java.util.List;
 import javax.swing.JOptionPane;
 
@@ -112,15 +113,14 @@ public class OperacoesVagas {
     
     
     /* O método lista TODAS as vagas cadastradas no sistema, presentes na lista de vagas */
-    public void listarVagasCadastradas(List<Vaga> vagas, int num) {
-        for(Vaga v : vagas) {
-            if(num == 0) {
-                operacaoMensagem(v.toString());
-                operacaoMensagem("///////////////////////////////////////////////////");
-            } else {
-                JOptionPane.showMessageDialog(null, v.toString(),
-                "Listar vagas cadastradas", JOptionPane.WARNING_MESSAGE); 
-            }    
+    public List<String> listarVagasCadastradas(List<Vaga> vagas) {
+        List<String> lista = new ArrayList<>();      
+        for(Vaga v : vagas) { 
+            String vaga;
+            vaga = "\n" + v.toString() + "\n";
+            vaga = vaga + "\n" + "///////////////////////////////////////////////////" + "\n";  
+            lista.add(vaga);
         }
+        return lista; 
     }    
 }

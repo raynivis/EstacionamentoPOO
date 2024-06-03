@@ -2,13 +2,13 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
-package ufms.cptl.raymay.Interface.Terminal;
+package ufms.cptl.raymay.InterfaceOp;
 
 import java.util.List;
 import java.util.Scanner;
 import ufms.cptl.raymay.Classes.Enum.DiaSemana;
 import ufms.cptl.raymay.Classes.Enum.TipoVeiculo;
-import static ufms.cptl.raymay.Interface.Terminal.MostraMensagem.interMensagem;
+import static ufms.cptl.raymay.InterfaceOp.MostraMensagem.interMensagem;
 
 /**
  *

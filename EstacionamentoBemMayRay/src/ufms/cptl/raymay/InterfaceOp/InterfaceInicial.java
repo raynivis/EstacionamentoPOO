@@ -2,7 +2,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
-package ufms.cptl.raymay.Interface.Terminal;
+package ufms.cptl.raymay.InterfaceOp;
 
 import java.text.NumberFormat;
 import java.time.LocalDateTime;
@@ -14,7 +14,7 @@ import ufms.cptl.raymay.Classes.Enum.DiaSemana;
 import ufms.cptl.raymay.Classes.Enum.TipoVeiculo;
 import ufms.cptl.raymay.Classes.Externo.Automovel.Veiculo;
 import ufms.cptl.raymay.Classes.Externo.Individuo.Cliente;
-import static ufms.cptl.raymay.Interface.Terminal.MostraMensagem.interMensagem;
+import static ufms.cptl.raymay.InterfaceOp.MostraMensagem.interMensagem;
 import ufms.cptl.raymay.Classes.Interno.Tarifas.Tarifa;
 import ufms.cptl.raymay.Classes.Interno.Tarifas.TarifaHorista;
 import ufms.cptl.raymay.Classes.Interno.Tarifas.TarifaMensalista;
@@ -23,6 +23,8 @@ import ufms.cptl.raymay.Classes.Interno.Tickets.TicketHorista;
 import ufms.cptl.raymay.Classes.Interno.Tickets.TicketMensalista;
 import ufms.cptl.raymay.Classes.Interno.Vaga;
 import ufms.cptl.raymay.Classes.Enum.Operando;
+import ufms.cptl.raymay.Interface.UserInterface.InterfaceGrafica;
+import ufms.cptl.raymay.Interface.UserInterface.InterfaceTerminal;
 import ufms.cptl.raymay.Interface.UserInterface.UserInterface;
 import ufms.cptl.raymay.Operacoes.OperacoesCliente;
 import ufms.cptl.raymay.Operacoes.OperacoesTicket;
@@ -32,23 +34,23 @@ import ufms.cptl.raymay.Operacoes.OperacoesVagas;
  *
  * @author maymi
  */
-public class TerminalInterfaceInicial implements UserInterface{
+public class InterfaceInicial{
     
     OperacoesTicket opTicket = new OperacoesTicket();
     OperacoesVagas opVaga = new OperacoesVagas();
     OperacoesCliente opCliente = new OperacoesCliente();
     
     
-    TerminalInterfaceOpcaoCliente interCliente = new TerminalInterfaceOpcaoCliente();
-    TerminalInterfaceOpcaoVaga interVaga = new TerminalInterfaceOpcaoVaga();
-    TerminalInterfaceOpcaoEstacionamento interEstaciona = new TerminalInterfaceOpcaoEstacionamento();
+    InterfaceOpcaoCliente interCliente = new InterfaceOpcaoCliente();
+    InterfaceOpcaoVaga interVaga = new InterfaceOpcaoVaga();
+    InterfaceOpcaoEstacionamento interEstaciona = new InterfaceOpcaoEstacionamento();
     ItensMenu menui = new ItensMenu(); /* menui = Menu Inicial */
     ItensMenu menucg = new ItensMenu(); /* menucg = Menu de Cadastros Gerais */
     
     AuxiliarInterfarceListaTipoSemanas listasVS = new AuxiliarInterfarceListaTipoSemanas();
     
-    byte opcao;
-    byte opcao3;
+    int opcao;
+    int opcao3;
     
     Scanner scanner = new Scanner(System.in);
     DateTimeFormatter dataBonitinha = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm");
@@ -58,17 +60,20 @@ public class TerminalInterfaceInicial implements UserInterface{
     
     /* Método geral das opções do menu que será chamado na Classe Main Estacionamento e permitirá que todo o
     menu seja exibido ao usuário */
-    @Override
-    public void primeirasOpcoes(List<Cliente> clientes, List<Vaga> vagas, List<Ticket> tickets, List<Tarifa> tarifas) {  
+    public void primeirasOpcoes(List<Cliente> clientes, List<Vaga> vagas, List<Ticket> tickets, List<Tarifa> tarifas, UserInterface inter, int face) {  
         do {
-            /* Utiliza o método criado em ItensMenu, reduzindo o tamanho
-            de linhas das Classes da interface */
-            menui.imprimeInicio(0);
+                              
             opTicket.verificarTicketsMensalista30dias(tickets);
             
-            opcao = scanner.nextByte();
-            scanner.nextLine();
-            
+            if(face == 0){
+                InterfaceTerminal interfaces = (InterfaceTerminal) inter;
+                opcao = interfaces.imprimeInicio();
+            }
+            else {
+                InterfaceGrafica interfaces = (InterfaceGrafica) inter;
+                opcao = interfaces.imprimeInicio();
+            }
+                    
             switch (opcao) {
                 case 1:
                     interCliente.opcoesCliente(clientes, vagas, tickets, tarifas);
@@ -80,33 +85,69 @@ public class TerminalInterfaceInicial implements UserInterface{
                     interEstaciona.opcoesEstacionamento(clientes, vagas, tickets, tarifas);
                 break;
                 case 4:
-                    do {
-                        /* Utiliza o método criado em ItensMenu, reduzindo o tamanho
-                        de linhas das Classes da interface */
-                        menucg.imprimeCadastroGeral(0);
+                    do {                      
                         opTicket.verificarTicketsMensalista30dias(tickets);
-                        
-                        opcao3 = scanner.nextByte();
-                        scanner.nextLine();
+                        if(face == 0){
+                            InterfaceTerminal interfaces = (InterfaceTerminal) inter;
+                            opcao3 = interfaces.imprimeCadastroGeral();
+                        }
+                        else {
+                            InterfaceGrafica interfaces = (InterfaceGrafica) inter;
+                            opcao3 = interfaces.imprimeCadastroGeral();
+                        }                      
                         switch(opcao3) {
                             case 1:
-                                interMensagem("Digite o código do ticket:");
-                                int codigo = scanner.nextInt();
-                                scanner.nextLine();
-                               
-                                Ticket testeT = opTicket.buscarTicket(tickets, codigo);
+                                
+                                int cod;
+                                if(face == 0){
+                                    InterfaceTerminal interfaces = (InterfaceTerminal) inter;
+                                    String codigo = interfaces.receberString("Digite o codigo do ticket:");
+                                    cod = Integer.parseInt(codigo);
+                                }
+                                else {
+                                    InterfaceGrafica interfaces = (InterfaceGrafica) inter;
+                                    String codigo = interfaces.receberString("Digite o codigo do ticket");
+                                    cod = Integer.parseInt(codigo);
+                                }        
+                                                                
+                                Ticket testeT = opTicket.buscarTicket(tickets, cod);
                                  if(testeT == null) {
-                                    interMensagem("\nErro: Ticket não encontrado!\n");
+                                    if(face == 0){
+                                        InterfaceTerminal interfaces = (InterfaceTerminal) inter;
+                                        interfaces.mensagem("Erro: Ticket não encontrado!");               
+                                    }
+                                    else {
+                                        InterfaceGrafica interfaces = (InterfaceGrafica) inter;
+                                       interfaces.mensagem("Erro: Ticket não encontrado!");                               
+                                    }                           
                                     break;
                                 } 
                                 if(testeT.getStatus().equals(Operando.DESATIVO)) {
-                                    interMensagem("\nErro: Não é permetido testar um ticket finalizado!\n");
+                                    if(face == 0){
+                                        InterfaceTerminal interfaces = (InterfaceTerminal) inter;
+                                        interfaces.mensagem("Erro: Não é permetido testar um ticket finalizado!");               
+                                    }
+                                    else {
+                                       InterfaceGrafica interfaces = (InterfaceGrafica) inter;
+                                       interfaces.mensagem("Erro: Não é permetido testar um ticket finalizado!");                               
+                                    }                           
+                                    break;
+                                    interMensagem("\n\n");
                                     break;
                                 }
                                 double lucro;
                                 if(testeT instanceof TicketHorista){
-                                    interMensagem("Digite a data de finalização do ticket (em dia/mês/ano horas:minutos:segundos):");
-                                    String data = scanner.nextLine();
+                                    String data;
+                                    if(face == 0){
+                                        InterfaceTerminal interfaces = (InterfaceTerminal) inter;
+                                        data = interfaces.receberString("Digite a data de finalização do ticket (em dia/mês/ano horas:minutos:segundos):");
+                
+                                    }
+                                    else {
+                                        InterfaceGrafica interfaces = (InterfaceGrafica) inter;
+                                        data = interfaces.receberString("Digite a data de finalização do ticket (em dia/mês/ano horas:minutos:segundos)");
+                                
+                                    }                                          
                                     LocalDateTime dataFinal = LocalDateTime.parse(data, dataBonitinhaComSegundos);                                                             
                                     testeT.setFim(dataFinal); 
                                     lucro = ((TicketHorista)testeT).totalFaturadoTicket();

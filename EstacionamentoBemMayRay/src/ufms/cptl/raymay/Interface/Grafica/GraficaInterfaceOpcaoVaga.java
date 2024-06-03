@@ -13,7 +13,7 @@ import ufms.cptl.raymay.Classes.Externo.Individuo.Cliente;
 import ufms.cptl.raymay.Classes.Interno.Tarifas.Tarifa;
 import ufms.cptl.raymay.Classes.Interno.Tickets.Ticket;
 import ufms.cptl.raymay.Classes.Interno.Vaga;
-import ufms.cptl.raymay.Interface.Terminal.ItensMenu;
+import ufms.cptl.raymay.InterfaceOp.ItensMenu;
 import ufms.cptl.raymay.Operacoes.OperacoesVagas;
 
 /**

@@ -6,12 +6,12 @@ import ufms.cptl.raymay.Classes.Externo.Individuo.Cliente;
 import ufms.cptl.raymay.Classes.Interno.Tarifas.Tarifa;
 import ufms.cptl.raymay.Classes.Interno.Tickets.Ticket;
 import ufms.cptl.raymay.Classes.Interno.Vaga;
-import ufms.cptl.raymay.Interface.Terminal.TerminalInterfaceInicial;
+import ufms.cptl.raymay.InterfaceOp.InterfaceInicial;
 import java.util.ArrayList;
 import java.util.List;
 import javax.swing.JOptionPane;
-import ufms.cptl.raymay.Interface.Grafica.GraficaInterfaceInicial;
-import ufms.cptl.raymay.Interface.UserInterface.UserInterface;
+import ufms.cptl.raymay.Interface.UserInterface.InterfaceGrafica;
+import ufms.cptl.raymay.Interface.UserInterface.InterfaceTerminal;
 import ufms.cptl.raymay.Teste.ListasProntas;
 
 /**
@@ -26,8 +26,7 @@ public class Estacionamento {
         List<Vaga> vagas = new ArrayList<>();
         List<Ticket> tickets = new ArrayList<>();
         List<Tarifa> tarifas = new ArrayList<>();
-        UserInterface userinterface;
-        
+        InterfaceInicial userinterface =  new InterfaceInicial();
         
         
         /*opções para as listas prontas para teste*/
@@ -54,12 +53,12 @@ public class Estacionamento {
         if (escolha != JOptionPane.CLOSED_OPTION) {
             switch(escolha) {
                 case 0:
-                    userinterface = new TerminalInterfaceInicial();
-                    userinterface.primeirasOpcoes(clientes, vagas, tickets, tarifas);
+                    InterfaceTerminal userinterfaceT = new InterfaceTerminal();
+                    userinterface.primeirasOpcoes(clientes, vagas, tickets, tarifas, userinterfaceT, escolha);
                     break;
                 case 1:
-                    userinterface = new GraficaInterfaceInicial();
-                    userinterface.primeirasOpcoes(clientes, vagas, tickets, tarifas);
+                    InterfaceGrafica userinterfaceG = new InterfaceGrafica();
+                    userinterface.primeirasOpcoes(clientes, vagas, tickets, tarifas, userinterfaceG, escolha);
                     break;     
             }
         }
