@@ -4,6 +4,7 @@ package ufms.cptl.raymay.Operacoes;
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
+import java.util.ArrayList;
 import java.util.List;
 import javax.swing.JOptionPane;
 import ufms.cptl.raymay.Classes.Enum.Operando;
@@ -106,39 +107,36 @@ public class OperacoesCliente {
     /* O método recebe a lista de clientes e um CPF (chave primaria de um cliente) e percorre a lista
     de clientes até encontrar o CPF, ao encontrar imprime todos os veículos do cliente do respectivo
     CPF inserido */
-    public void mostraVeiculos(List<Cliente> clientes, String documento, int num) {
+    public List<String> mostraVeiculos(List<Cliente> clientes, String documento) {
+        List<String> lista = new ArrayList<>();
+        String veiculo;
         for(Cliente c : clientes) {
             if(c.getCpf().equals(documento)) {
                 if(c.getVeiculos() != null) {
-                    if(num == 1) {
-                        JOptionPane.showMessageDialog(null, "Os veículos do cliente " + c.getNome() + " são:\n",
-                        "Veículos do cliente", JOptionPane.PLAIN_MESSAGE);
-                    }
                     for(Veiculo v : c.getVeiculos()) {
-                        if(num == 0) {
-                            operacaoMensagem(v.toString());
-                        }else {    
-                            JOptionPane.showMessageDialog(null, v.toString(),
-                            "Veículos do cliente", JOptionPane.PLAIN_MESSAGE);
-                        }
+                        veiculo = "Os veículos do cliente são:\n" + v.toString();
+                        lista.add(veiculo);
                     }
                 }
             }
         }
+        return lista;
     }
     
     
-    /*Método para imprimir todos os clientes cadastrados no sistema, como podem ter muitos,
-    será impresso no terminal mesmo com a interface gráfica*/
-    public void relatorioCliente(List<Cliente> clientes) {
+    /*Método para imprimir todos os clientes cadastrados no sistema */
+    public List<String> relatorioCliente(List<Cliente> clientes) {
+        List<String> lista = new ArrayList<>();
+        String cliente;
         for(Cliente c : clientes) {
             System.out.println(c.toString());
-            operacaoMensagem("Veículos:");
             for(Veiculo v : c.getVeiculos()){
-                operacaoMensagem("        Placa: " + v.getPlaca() + "       Tipo: " + v.getModel().getTipoVeiculo());
+                cliente = "Veículos:\n" + "Placa: " + v.getPlaca() + "\nTipo: " + v.getModel().getTipoVeiculo()
+                        + "\n///////////////////////////////////////////////////";
+                lista.add(cliente);
             }
-            operacaoMensagem("///////////////////////////////////////////////////");
         }
+        return lista;
     }
     
     
