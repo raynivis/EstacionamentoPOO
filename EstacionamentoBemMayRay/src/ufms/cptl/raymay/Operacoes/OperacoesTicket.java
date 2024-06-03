@@ -8,6 +8,7 @@ import java.time.DayOfWeek;
 import java.time.Duration;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
 import java.util.List;
 import ufms.cptl.raymay.Classes.Enum.DiaSemana;
 import ufms.cptl.raymay.Classes.Enum.Operando;
@@ -264,13 +265,15 @@ public class OperacoesTicket {
     
     
     /* O método lsita todos os tickets ATIVOS no momento */
-    public void ListarTicketAtivo(List<Ticket> tickets) {
+    public List<String> ListarTicketAtivo(List<Ticket> tickets) {
+        List<String> lista = new ArrayList<>();      
         for(Ticket t : tickets) {
             if(t.getStatus() == Operando.ATIVO){
-                operacaoMensagem(t.toString());
-                operacaoMensagem("///////////////////////////////////////////////////");
+                String ticke = t.toString();
+                lista.add(ticke);
             }               
         }
+        return lista;
     }
       
     
