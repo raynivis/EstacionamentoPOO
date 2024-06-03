@@ -12,14 +12,14 @@ import ufms.cptl.raymay.Classes.Externo.Individuo.Cliente;
 import ufms.cptl.raymay.Classes.Interno.Tarifas.Tarifa;
 import ufms.cptl.raymay.Classes.Interno.Tickets.Ticket;
 import ufms.cptl.raymay.Classes.Interno.Vaga;
-import ufms.cptl.raymay.Operacoes.OperacoesVagas;
 import static ufms.cptl.raymay.Interface.Terminal.MostraMensagem.interMensagem;
+import ufms.cptl.raymay.Operacoes.OperacoesVagas;
 
 /**
  *
  * @author maymi
  */
-public class TerminalInterfaceOpcaoVaga {
+public class TerminalInterfaceOpcaoVaga{
     OperacoesVagas opVaga = new OperacoesVagas(); 
     ItensMenu menuva = new ItensMenu(); /*menuva = Menu de gerencia das Vagas*/
     byte opcao2;
@@ -31,7 +31,7 @@ public class TerminalInterfaceOpcaoVaga {
         do{
             /* Utiliza o método criado em ItensMenu, reduzindo o tamanho
             de linhas das Classes da interface */
-            menuva.imprimeVaga();
+            menuva.imprimeVaga(0);
             opcao2 = scanner.nextByte();
             scanner.nextLine();  
             switch (opcao2) {

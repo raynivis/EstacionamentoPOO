@@ -4,6 +4,7 @@
  */
 package ufms.cptl.raymay.Operacoes;
 import java.util.List;
+import javax.swing.JOptionPane;
 
 import ufms.cptl.raymay.Classes.Interno.Tickets.Ticket;
 import ufms.cptl.raymay.Classes.Enum.TipoVeiculo;
@@ -111,10 +112,15 @@ public class OperacoesVagas {
     
     
     /* O método lista TODAS as vagas cadastradas no sistema, presentes na lista de vagas */
-    public void listarVagasCadastradas(List<Vaga> vagas) {
+    public void listarVagasCadastradas(List<Vaga> vagas, int num) {
         for(Vaga v : vagas) {
-            operacaoMensagem(v.toString());
-            operacaoMensagem("///////////////////////////////////////////////////");
+            if(num == 0) {
+                operacaoMensagem(v.toString());
+                operacaoMensagem("///////////////////////////////////////////////////");
+            } else {
+                JOptionPane.showMessageDialog(null, v.toString(),
+                "Listar vagas cadastradas", JOptionPane.WARNING_MESSAGE); 
+            }    
         }
     }    
 }

@@ -20,7 +20,7 @@ import ufms.cptl.raymay.Operacoes.OperacoesCliente;
  *
  * @author maymi
  */
-public class TerminalInterfaceOpcaoCliente {
+public class TerminalInterfaceOpcaoCliente{
     OperacoesCliente opCliente = new OperacoesCliente();
     
     ItensMenu menuc = new ItensMenu(); /* menuc = Menu de gerencia de Clientes */
@@ -32,14 +32,13 @@ public class TerminalInterfaceOpcaoCliente {
     byte opcao3;
     Scanner scanner = new Scanner(System.in);
     
-    
     /* Método geral das opções do cliente que será chamado na Classe InterfaceInicial e permite a realização das operações
     relacionadas ao cliente */
-    public void opcoesCliente(List<Cliente> clientes, List<Vaga> vagas, List<Ticket> tickets, List<Tarifa> tarifas) {       
+    public void opcoesCliente(List<Cliente> clientes, List<Vaga> vagas, List<Ticket> tickets, List<Tarifa> tarifas) { 
         do{
             /* Utiliza o método criado em ItensMenu, reduzindo o tamanho
             de linhas das Classes da interface */
-            menuc.imprimeCliente();
+            menuc.imprimeCliente(0);
             opcao2 = scanner.nextByte();
             scanner.nextLine();  
                 switch (opcao2) {
@@ -125,11 +124,11 @@ public class TerminalInterfaceOpcaoCliente {
                         
                         interMensagem("Os veículos do cliente " + operador.getNome() + " são:\n");
 
-                        opCliente.mostraVeiculos(clientes, cpf);
+                        opCliente.mostraVeiculos(clientes, cpf, 0);
                         do{
                             /* Utiliza o método criado em ItensMenu, reduzindo o tamanho
                             de linhas das Classes da interface */
-                            menuve.imprimeVeiculo();
+                            menuve.imprimeVeiculo(0);
                             opcao3 = scanner.nextByte();
                             scanner.nextLine();
                             switch(opcao3){

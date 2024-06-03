@@ -10,6 +10,8 @@ import ufms.cptl.raymay.Interface.Terminal.TerminalInterfaceInicial;
 import java.util.ArrayList;
 import java.util.List;
 import javax.swing.JOptionPane;
+import ufms.cptl.raymay.Interface.Grafica.GraficaInterfaceInicial;
+import ufms.cptl.raymay.Interface.UserInterface.UserInterface;
 import ufms.cptl.raymay.Teste.ListasProntas;
 
 /**
@@ -20,11 +22,13 @@ public class Estacionamento {
     public static void main(String[] args){
         /*Listas do sistema*/
         ListasProntas listaPrnts = new ListasProntas();
-        TerminalInterfaceInicial inter = new TerminalInterfaceInicial();
         List<Cliente> clientes = new ArrayList<>();
         List<Vaga> vagas = new ArrayList<>();
         List<Ticket> tickets = new ArrayList<>();
         List<Tarifa> tarifas = new ArrayList<>();
+        UserInterface userinterface;
+        
+        
         
         /*opções para as listas prontas para teste*/
         int opcao = JOptionPane.showConfirmDialog(null, "Deseja inserir clientes e vagas prontos nas listas para testes?", "Selecione", JOptionPane.YES_NO_OPTION);
@@ -34,8 +38,30 @@ public class Estacionamento {
             listaPrnts.GerarListas(clientes, vagas);
         }
 
-        /*primeira interace do programa Estaciona Bem!!*/
-        inter.primeirasOpcoes(clientes, vagas, tickets, tarifas);   
-        
+        /*primeira interface do programa Estaciona Bem!!*/
+        String[] opInterface = {"Terminal", "Grafica"};
+        int escolha = JOptionPane.showOptionDialog(
+            null,
+            "Escolha um tipo:",
+            "Interface",
+            JOptionPane.DEFAULT_OPTION,
+            JOptionPane.PLAIN_MESSAGE,
+            null,
+            opInterface,
+            opInterface[0]);
+
+        // Verificando a escolha do usuário
+        if (escolha != JOptionPane.CLOSED_OPTION) {
+            switch(escolha) {
+                case 0:
+                    userinterface = new TerminalInterfaceInicial();
+                    userinterface.primeirasOpcoes(clientes, vagas, tickets, tarifas);
+                    break;
+                case 1:
+                    userinterface = new GraficaInterfaceInicial();
+                    userinterface.primeirasOpcoes(clientes, vagas, tickets, tarifas);
+                    break;     
+            }
+        }
    }
 }

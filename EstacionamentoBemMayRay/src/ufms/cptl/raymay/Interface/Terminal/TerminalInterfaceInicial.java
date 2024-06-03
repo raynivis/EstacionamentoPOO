@@ -23,6 +23,7 @@ import ufms.cptl.raymay.Classes.Interno.Tickets.TicketHorista;
 import ufms.cptl.raymay.Classes.Interno.Tickets.TicketMensalista;
 import ufms.cptl.raymay.Classes.Interno.Vaga;
 import ufms.cptl.raymay.Classes.Enum.Operando;
+import ufms.cptl.raymay.Interface.UserInterface.UserInterface;
 import ufms.cptl.raymay.Operacoes.OperacoesCliente;
 import ufms.cptl.raymay.Operacoes.OperacoesTicket;
 import ufms.cptl.raymay.Operacoes.OperacoesVagas;
@@ -31,12 +32,12 @@ import ufms.cptl.raymay.Operacoes.OperacoesVagas;
  *
  * @author maymi
  */
-public class TerminalInterfaceInicial{
+public class TerminalInterfaceInicial implements UserInterface{
     
     OperacoesTicket opTicket = new OperacoesTicket();
     OperacoesVagas opVaga = new OperacoesVagas();
     OperacoesCliente opCliente = new OperacoesCliente();
-
+    
     
     TerminalInterfaceOpcaoCliente interCliente = new TerminalInterfaceOpcaoCliente();
     TerminalInterfaceOpcaoVaga interVaga = new TerminalInterfaceOpcaoVaga();
@@ -57,11 +58,12 @@ public class TerminalInterfaceInicial{
     
     /* Método geral das opções do menu que será chamado na Classe Main Estacionamento e permitirá que todo o
     menu seja exibido ao usuário */
+    @Override
     public void primeirasOpcoes(List<Cliente> clientes, List<Vaga> vagas, List<Ticket> tickets, List<Tarifa> tarifas) {  
         do {
             /* Utiliza o método criado em ItensMenu, reduzindo o tamanho
             de linhas das Classes da interface */
-            menui.imprimeInicio();
+            menui.imprimeInicio(0);
             opTicket.verificarTicketsMensalista30dias(tickets);
             
             opcao = scanner.nextByte();
@@ -81,7 +83,7 @@ public class TerminalInterfaceInicial{
                     do {
                         /* Utiliza o método criado em ItensMenu, reduzindo o tamanho
                         de linhas das Classes da interface */
-                        menucg.imprimeCadastroGeral();
+                        menucg.imprimeCadastroGeral(0);
                         opTicket.verificarTicketsMensalista30dias(tickets);
                         
                         opcao3 = scanner.nextByte();
@@ -196,7 +198,7 @@ public class TerminalInterfaceInicial{
                                 opTicket.ListarTicketAtivo(tickets);
                             break; 
                             case 6: /* Listar vagas cadastradas */
-                                opVaga.listarVagasCadastradas(vagas);
+                                opVaga.listarVagasCadastradas(vagas, 0);
 
                             break; 
                             case 7:

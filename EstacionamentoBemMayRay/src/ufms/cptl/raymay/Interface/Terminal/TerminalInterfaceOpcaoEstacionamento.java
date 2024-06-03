@@ -30,7 +30,7 @@ import ufms.cptl.raymay.Operacoes.OperacoesVagas;
  *
  * @author maymi
  */
-public class TerminalInterfaceOpcaoEstacionamento {
+public class TerminalInterfaceOpcaoEstacionamento{
     OperacoesVagas opVaga = new OperacoesVagas(); 
     OperacoesCliente opCliente = new OperacoesCliente();
     OperacoesTicket opTicket = new OperacoesTicket();
@@ -52,7 +52,7 @@ public class TerminalInterfaceOpcaoEstacionamento {
         do{
             /* Utiliza o método criado em OpcaoEstacionamento no package InterfaceEnumOpcao, reduzindo o tamanho
             de linhas das classes da interface */
-            menue.imprimeEstacionamento();
+            menue.imprimeEstacionamento(0);
             opTicket.verificarTicketsMensalista30dias(tickets);
             
             opcao2 = scanner.nextByte();
@@ -163,7 +163,7 @@ public class TerminalInterfaceOpcaoEstacionamento {
                     do{ 
                         /* Utiliza o método criado em ItensMenu, reduzindo o tamanho
                         de linhas das Classes da interface */
-                        menut.imprimeTarifa();
+                        menut.imprimeTarifa(0);
                         opTicket.verificarTicketsMensalista30dias(tickets);
                         
                         opcao3 = scanner.nextByte();

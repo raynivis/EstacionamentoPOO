@@ -5,6 +5,7 @@ package ufms.cptl.raymay.Operacoes;
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
 import java.util.List;
+import javax.swing.JOptionPane;
 import ufms.cptl.raymay.Classes.Enum.Operando;
 import ufms.cptl.raymay.Classes.Externo.Automovel.Veiculo;
 import ufms.cptl.raymay.Classes.Externo.Individuo.Cliente;
@@ -105,12 +106,21 @@ public class OperacoesCliente {
     /* O método recebe a lista de clientes e um CPF (chave primaria de um cliente) e percorre a lista
     de clientes até encontrar o CPF, ao encontrar imprime todos os veículos do cliente do respectivo
     CPF inserido */
-    public void mostraVeiculos(List<Cliente> clientes, String documento) {
+    public void mostraVeiculos(List<Cliente> clientes, String documento, int num) {
         for(Cliente c : clientes) {
             if(c.getCpf().equals(documento)) {
                 if(c.getVeiculos() != null) {
+                    if(num == 1) {
+                        JOptionPane.showMessageDialog(null, "Os veículos do cliente " + c.getNome() + " são:\n",
+                        "Veículos do cliente", JOptionPane.PLAIN_MESSAGE);
+                    }
                     for(Veiculo v : c.getVeiculos()) {
-                        operacaoMensagem(v.toString());
+                        if(num == 0) {
+                            operacaoMensagem(v.toString());
+                        }else {    
+                            JOptionPane.showMessageDialog(null, v.toString(),
+                            "Veículos do cliente", JOptionPane.PLAIN_MESSAGE);
+                        }
                     }
                 }
             }
@@ -118,7 +128,8 @@ public class OperacoesCliente {
     }
     
     
-    /*Método para imprimir todos os clientes cadastrados no sistema*/
+    /*Método para imprimir todos os clientes cadastrados no sistema, como podem ter muitos,
+    será impresso no terminal mesmo com a interface gráfica*/
     public void relatorioCliente(List<Cliente> clientes) {
         for(Cliente c : clientes) {
             System.out.println(c.toString());
