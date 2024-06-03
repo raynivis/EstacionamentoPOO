@@ -2,7 +2,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
-package ufms.cptl.raymay.InterfaceOp;
+package ufms.cptl.raymay.InterfaceOpcoes;
 
 
 import java.util.ArrayList;
@@ -14,10 +14,10 @@ import ufms.cptl.raymay.Classes.Externo.Individuo.Cliente;
 import ufms.cptl.raymay.Classes.Interno.Tarifas.Tarifa;
 import ufms.cptl.raymay.Classes.Interno.Tickets.Ticket;
 import ufms.cptl.raymay.Classes.Interno.Vaga;
-import ufms.cptl.raymay.Interface.UserInterface.InterfaceGrafica;
-import ufms.cptl.raymay.Interface.UserInterface.InterfaceTerminal;
-import ufms.cptl.raymay.Interface.UserInterface.UserInterface;
-import static ufms.cptl.raymay.InterfaceOp.MostraMensagem.interMensagem;
+import ufms.cptl.raymay.Interface.InterfaceDoUsuario.InterfaceGrafica;
+import ufms.cptl.raymay.Interface.InterfaceDoUsuario.InterfaceTerminal;
+import ufms.cptl.raymay.Interface.InterfaceDoUsuario.UserInterface;
+import static ufms.cptl.raymay.InterfaceOpcoes.MostraMensagem.interMensagem;
 import ufms.cptl.raymay.Operacoes.OperacoesCliente;
 /**
  *
@@ -123,13 +123,17 @@ public class InterfaceOpcaoCliente{
                             cpf = interfaces.receberString("Digite o CPF");
                             if(opCliente.relatorioCliente(clientes, cpf) == null){
                                 interfaces.mensagem("\nCliente não encontrado!\n");
-                            }  
+                            } else {
+                                interfaces.mensagem(opCliente.relatorioCliente(clientes, cpf));
+                            } 
                         }else {
                             InterfaceGrafica interfaces = (InterfaceGrafica) inter;
                             cpf = interfaces.receberString("Digite o CPF");
                             if(opCliente.relatorioCliente(clientes, cpf) == null){
                                 interfaces.mensagem("\nCliente não encontrado!\n");
-                            }  
+                            } else {
+                                interfaces.mensagem(opCliente.relatorioCliente(clientes, cpf));
+                            } 
                         }    
                     break;   
                     case 3:
@@ -220,6 +224,15 @@ public class InterfaceOpcaoCliente{
                         
                             interfaces.mensagem("Os veículos do cliente " + operador.getNome() + " são:\n");
                         }
+                         if(face == 0){
+                            InterfaceTerminal interfaces = (InterfaceTerminal) inter;
+                            interfaces.mensagem(opCliente.mostraVeiculos(clientes, cpf));               
+                        }
+                        else {
+                            InterfaceGrafica interfaces = (InterfaceGrafica) inter;
+                            interfaces.mensagem(opCliente.mostraVeiculos(clientes, cpf));                               
+                        } 
+                        
                         opCliente.mostraVeiculos(clientes, cpf); /* ARRUMAR */
                         do{
                             /* Utiliza o método criado em ItensMenu, reduzindo o tamanho
@@ -236,8 +249,7 @@ public class InterfaceOpcaoCliente{
                                 case 1: /*Adicionar um veículo*/
                                     Veiculo veiculoAdicional = InVeiculo.receberVeiculo(clientes, operador, inter, face);
                                     if(face == 0) {
-                                        InterfaceTerminal interfaces = (InterfaceTerminal) inter;
-                                         
+                                        InterfaceTerminal interfaces = (InterfaceTerminal) inter;                                       
                                         if(veiculoAdicional != null) {
                                             operador.addVeiculo(veiculoAdicional);
                                             interfaces.mensagem("Veículo cadastrado com sucesso!!");
@@ -318,7 +330,7 @@ public class InterfaceOpcaoCliente{
                                         InterfaceGrafica interfaces = (InterfaceGrafica) inter;
                                         interfaces.mensagem("Insira uma opção válida!");                               
                                     } 
-                                                break;
+                                break;
                             }
                         }while(opcao3 != 4);
                     break;    

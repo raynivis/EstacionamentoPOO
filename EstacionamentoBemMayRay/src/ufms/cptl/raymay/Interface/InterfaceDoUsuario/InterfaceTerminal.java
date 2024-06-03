@@ -2,19 +2,20 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
-package ufms.cptl.raymay.Interface.UserInterface;
+package ufms.cptl.raymay.Interface.InterfaceDoUsuario;
 
 import java.io.PrintStream;
 import java.io.UnsupportedEncodingException;
 import java.nio.charset.StandardCharsets;
 import java.util.Scanner;
-import javax.swing.JOptionPane;
 import ufms.cptl.raymay.Interface.EnumOpcao.OpcaoCadastroGeral;
 import ufms.cptl.raymay.Interface.EnumOpcao.OpcaoCliente;
+import ufms.cptl.raymay.Interface.EnumOpcao.OpcaoEstacionamento;
 import ufms.cptl.raymay.Interface.EnumOpcao.OpcaoInicial;
+import ufms.cptl.raymay.Interface.EnumOpcao.OpcaoTarifa;
 import ufms.cptl.raymay.Interface.EnumOpcao.OpcaoVaga;
 import ufms.cptl.raymay.Interface.EnumOpcao.OpcaoVeiculo;
-import static ufms.cptl.raymay.InterfaceOp.MostraMensagem.interMensagem;
+import static ufms.cptl.raymay.InterfaceOpcoes.MostraMensagem.interMensagem;
 
 /**
  *
@@ -110,6 +111,34 @@ public class InterfaceTerminal implements UserInterface{
         scanner.nextLine();
         return opcao3;
     }
-}   
+    
+     public int imprimeEstacionamento(){
+         try {
+                PrintStream out = new PrintStream(System.out, true, StandardCharsets.UTF_8.toString());
+                for (OpcaoEstacionamento.InterEstacionamento op : OpcaoEstacionamento.InterEstacionamento.values()) {
+                    out.println(op.getValorOpcao() + " - " + op.getDesc());
+                }
+        } catch (UnsupportedEncodingException e) {
+        }  
+        int opcao2 = scanner.nextInt();
+        scanner.nextLine();
+        return opcao2;
+    }
+    
+    
+    public int imprimeTarifa(){
+        try {
+            PrintStream out = new PrintStream(System.out, true, StandardCharsets.UTF_8.toString());
+            for (OpcaoTarifa.InterTarifa op : OpcaoTarifa.InterTarifa.values()) {
+                out.println(op.getValorOpcao() + " - " + op.getDesc());
+            }
+        } catch (UnsupportedEncodingException e) {
+        }
+        int opcao3 = scanner.nextByte();
+        scanner.nextLine();
+        return opcao3;
+    }
+}
+ 
   
     

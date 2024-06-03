@@ -6,7 +6,6 @@ package ufms.cptl.raymay.Operacoes;
  */
 import java.util.ArrayList;
 import java.util.List;
-import javax.swing.JOptionPane;
 import ufms.cptl.raymay.Classes.Enum.Operando;
 import ufms.cptl.raymay.Classes.Externo.Automovel.Veiculo;
 import ufms.cptl.raymay.Classes.Externo.Individuo.Cliente;
@@ -107,20 +106,19 @@ public class OperacoesCliente {
     /* O método recebe a lista de clientes e um CPF (chave primaria de um cliente) e percorre a lista
     de clientes até encontrar o CPF, ao encontrar imprime todos os veículos do cliente do respectivo
     CPF inserido */
-    public List<String> mostraVeiculos(List<Cliente> clientes, String documento) {
-        List<String> lista = new ArrayList<>();
-        String veiculo;
+    public String mostraVeiculos(List<Cliente> clientes, String documento) {
+        String veiculo = "Os veículos do cliente são:\n";
         for(Cliente c : clientes) {
             if(c.getCpf().equals(documento)) {
                 if(c.getVeiculos() != null) {
                     for(Veiculo v : c.getVeiculos()) {
-                        veiculo = "Os veículos do cliente são:\n" + v.toString();
-                        lista.add(veiculo);
+                        veiculo =  veiculo + "\n" + v.toString() + "\n";
                     }
+                    return veiculo;
                 }
             }
         }
-        return lista;
+        return "";
     }
     
     
@@ -129,29 +127,26 @@ public class OperacoesCliente {
         List<String> lista = new ArrayList<>();
         String cliente;
         for(Cliente c : clientes) {
-            System.out.println(c.toString());
+            cliente = c.toString() + "\n";
             for(Veiculo v : c.getVeiculos()){
-                cliente = "Veículos:\n" + "Placa: " + v.getPlaca() + "\nTipo: " + v.getModel().getTipoVeiculo()
-                        + "\n///////////////////////////////////////////////////";
-                lista.add(cliente);
+                cliente = cliente + "\n   Veículo " + v.toString();               
             }
+            lista.add(cliente);
         }
         return lista;
     }
     
     
     /*Método com overload ou polimorfismo para printar apenas o cliente com o documento passado por referencia, (overload do metodo acima).*/
-    public Cliente relatorioCliente(List<Cliente> clientes, String documento) {
+    public String relatorioCliente(List<Cliente> clientes, String documento) {
         for(Cliente c : clientes) {
             if(c.getCpf().equals(documento)) {
-                operacaoMensagem("///////////////////////////////////////////////////");
-                operacaoMensagem(c.toString());
-                operacaoMensagem("Veículos:");
+                String cliente;
+                cliente = c.toString() + "\n";
                 for(Veiculo v : c.getVeiculos()){
-                    operacaoMensagem("        Placa: " + v.getPlaca() + "       Tipo:" + v.getModel().getTipoVeiculo() );
+                    cliente = cliente + "\n   Veículo " + v.toString();               
                 }
-                operacaoMensagem("///////////////////////////////////////////////////");
-                return c;
+                return cliente;
             }
         }
         return null;

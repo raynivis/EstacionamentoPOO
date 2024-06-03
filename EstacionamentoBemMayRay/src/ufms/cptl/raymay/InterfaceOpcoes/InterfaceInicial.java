@@ -2,7 +2,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
-package ufms.cptl.raymay.InterfaceOp;
+package ufms.cptl.raymay.InterfaceOpcoes;
 
 import java.text.NumberFormat;
 import java.time.LocalDateTime;
@@ -22,9 +22,9 @@ import ufms.cptl.raymay.Classes.Interno.Tickets.TicketHorista;
 import ufms.cptl.raymay.Classes.Interno.Tickets.TicketMensalista;
 import ufms.cptl.raymay.Classes.Interno.Vaga;
 import ufms.cptl.raymay.Classes.Enum.Operando;
-import ufms.cptl.raymay.Interface.UserInterface.InterfaceGrafica;
-import ufms.cptl.raymay.Interface.UserInterface.InterfaceTerminal;
-import ufms.cptl.raymay.Interface.UserInterface.UserInterface;
+import ufms.cptl.raymay.Interface.InterfaceDoUsuario.InterfaceGrafica;
+import ufms.cptl.raymay.Interface.InterfaceDoUsuario.InterfaceTerminal;
+import ufms.cptl.raymay.Interface.InterfaceDoUsuario.UserInterface;
 import ufms.cptl.raymay.Operacoes.OperacoesCliente;
 import ufms.cptl.raymay.Operacoes.OperacoesTicket;
 import ufms.cptl.raymay.Operacoes.OperacoesVagas;

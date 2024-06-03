@@ -6,12 +6,12 @@ import ufms.cptl.raymay.Classes.Externo.Individuo.Cliente;
 import ufms.cptl.raymay.Classes.Interno.Tarifas.Tarifa;
 import ufms.cptl.raymay.Classes.Interno.Tickets.Ticket;
 import ufms.cptl.raymay.Classes.Interno.Vaga;
-import ufms.cptl.raymay.InterfaceOp.InterfaceInicial;
+import ufms.cptl.raymay.InterfaceOpcoes.InterfaceInicial;
 import java.util.ArrayList;
 import java.util.List;
 import javax.swing.JOptionPane;
-import ufms.cptl.raymay.Interface.UserInterface.InterfaceGrafica;
-import ufms.cptl.raymay.Interface.UserInterface.InterfaceTerminal;
+import ufms.cptl.raymay.Interface.InterfaceDoUsuario.InterfaceGrafica;
+import ufms.cptl.raymay.Interface.InterfaceDoUsuario.InterfaceTerminal;
 import ufms.cptl.raymay.Teste.ListasProntas;
 
 /**
