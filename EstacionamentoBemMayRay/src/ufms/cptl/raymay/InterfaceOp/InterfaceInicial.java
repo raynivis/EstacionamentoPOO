@@ -14,7 +14,6 @@ import ufms.cptl.raymay.Classes.Enum.DiaSemana;
 import ufms.cptl.raymay.Classes.Enum.TipoVeiculo;
 import ufms.cptl.raymay.Classes.Externo.Automovel.Veiculo;
 import ufms.cptl.raymay.Classes.Externo.Individuo.Cliente;
-import static ufms.cptl.raymay.InterfaceOp.MostraMensagem.interMensagem;
 import ufms.cptl.raymay.Classes.Interno.Tarifas.Tarifa;
 import ufms.cptl.raymay.Classes.Interno.Tarifas.TarifaHorista;
 import ufms.cptl.raymay.Classes.Interno.Tarifas.TarifaMensalista;
@@ -188,11 +187,11 @@ public class InterfaceInicial{
                                     break;
                                 }
                                 
-                                if(face == 0){
-                                        interMensagem("\n///////////////////////////////////////////////////");
+                                if(face == 0){                                    
                                         InterfaceTerminal interfaces = (InterfaceTerminal) inter;
+                                        interfaces.mensagem("\n///////////////////////////////////////////////////");
                                         interfaces.mensagem(veicule.toString()); 
-                                        interMensagem("///////////////////////////////////////////////////\n");
+                                        interfaces.mensagem("///////////////////////////////////////////////////\n");
                                 }
                                 else {
                                     InterfaceGrafica interfaces = (InterfaceGrafica) inter;
