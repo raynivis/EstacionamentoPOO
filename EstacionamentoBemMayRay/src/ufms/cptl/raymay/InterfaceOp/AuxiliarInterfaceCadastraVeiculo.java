@@ -11,7 +11,9 @@ import ufms.cptl.raymay.Classes.Externo.Automovel.Cor;
 import ufms.cptl.raymay.Classes.Externo.Automovel.Modelo;
 import ufms.cptl.raymay.Classes.Externo.Automovel.Veiculo;
 import ufms.cptl.raymay.Classes.Externo.Individuo.Cliente;
-import static ufms.cptl.raymay.InterfaceOp.MostraMensagem.interMensagem;
+import ufms.cptl.raymay.Interface.UserInterface.InterfaceGrafica;
+import ufms.cptl.raymay.Interface.UserInterface.InterfaceTerminal;
+import ufms.cptl.raymay.Interface.UserInterface.UserInterface;
 
 /**
  *
@@ -21,10 +23,16 @@ public class AuxiliarInterfaceCadastraVeiculo {
     Scanner scanner = new Scanner(System.in);
     
     /*método para facilitar o cadastro de um veiculo na interface, para assim não ficar repetindo codigo atoa.*/
-    public Veiculo receberVeiculo(List<Cliente> clientes, Cliente cliente) {
+    public Veiculo receberVeiculo(List<Cliente> clientes, Cliente cliente, UserInterface inter, int face) {
         /*mensagem de interface para digitar um novo veiculo*/
-        interMensagem("Digite a placa: ");
-        String placa = scanner.nextLine(); 
+        String placa;
+        if(face == 0) {
+            InterfaceTerminal interfaces = (InterfaceTerminal) inter;
+            placa = interfaces.receberString("Digite a placa");
+        }else {
+            InterfaceGrafica interfaces = (InterfaceGrafica) inter;
+            placa = interfaces.receberString("Digite a placa");
+        }
         
         for(Cliente c : clientes) {
             for(Veiculo v : c.getVeiculos() ) {
@@ -34,21 +42,35 @@ public class AuxiliarInterfaceCadastraVeiculo {
                 }
             }
         }
+        String tipoV, cor, descricao, marca, modelo;
+        TipoVeiculo type;
+        if(face == 0) {
+            InterfaceTerminal interfaces = (InterfaceTerminal) inter;
+            tipoV = interfaces.receberString("Digite o tipo do veículo(MOTO, CARRO ou ONIBUS)");
+            type = TipoVeiculo.valueOf(tipoV.toUpperCase());
+            
+            cor = interfaces.receberString("Digite a cor");
+            
+            descricao = interfaces.receberString("Digite a descrição");
+            
+            marca = interfaces.receberString("Digite a marca");
+            
+            modelo = interfaces.receberString("Digite o modelo");
+        }else {
+            InterfaceGrafica interfaces = (InterfaceGrafica) inter;
+            tipoV = interfaces.receberString("Digite o tipo do veículo(MOTO, CARRO ou ONIBUS)");
+            type = TipoVeiculo.valueOf(tipoV.toUpperCase());
+            
+            cor = interfaces.receberString("Digite a cor");
+            
+            descricao = interfaces.receberString("Digite a descrição");
+            
+            marca = interfaces.receberString("Digite a marca");
+            
+            modelo = interfaces.receberString("Digite o modelo");
+        }
         
-        interMensagem("Digite o tipo do veículo(MOTO, CARRO ou ONIBUS):");
-        String tipoV = scanner.nextLine();
-        TipoVeiculo type = TipoVeiculo.valueOf(tipoV.toUpperCase());
-       
-        interMensagem("Digite a cor: ");       
-        String cor = scanner.nextLine();
-        interMensagem("Digite a descrição: "); 
-        String descricao = scanner.nextLine();
-        Cor color = new Cor(cor, descricao);
-        
-        interMensagem("Digite a marca: "); 
-        String marca = scanner.nextLine();
-        interMensagem("Digite o modelo: "); 
-        String modelo = scanner.nextLine();        
+        Cor color = new Cor(cor, descricao);        
 
         Modelo model = new Modelo(marca, modelo, type);
 

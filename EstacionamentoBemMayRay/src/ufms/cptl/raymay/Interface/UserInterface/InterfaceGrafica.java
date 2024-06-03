@@ -9,7 +9,10 @@ import java.io.UnsupportedEncodingException;
 import java.nio.charset.StandardCharsets;
 import javax.swing.JOptionPane;
 import ufms.cptl.raymay.Interface.EnumOpcao.OpcaoCadastroGeral;
+import ufms.cptl.raymay.Interface.EnumOpcao.OpcaoCliente;
 import ufms.cptl.raymay.Interface.EnumOpcao.OpcaoInicial;
+import ufms.cptl.raymay.Interface.EnumOpcao.OpcaoVaga;
+import ufms.cptl.raymay.Interface.EnumOpcao.OpcaoVeiculo;
 
 /**
  *
@@ -81,5 +84,93 @@ public class InterfaceGrafica implements UserInterface{
         return valor;  
     } 
      
+    
+    
+    
+    
+    
+    public int imprimeVaga() {
+        OpcaoVaga.InterVaga[] op = OpcaoVaga.InterVaga.values();
+            String[] opDesc = new String[op.length];
+            for (int i = 0; i < op.length; i++) {
+                opDesc[i] = op[i].getValorOpcao() + ". " + op[i].getDesc();
+            }
+
+            String escolha = (String) JOptionPane.showInputDialog(
+                    null,
+                    "Escolha uma opção:",
+                    "Menu Vaga",
+                    JOptionPane.INFORMATION_MESSAGE,
+                    null,
+                    opDesc,
+                    opDesc[0]);
+
+            // Converte a escolha para o enum correspondente e obtém o valor da opção
+            if (escolha != null) {
+                for (OpcaoVaga.InterVaga opcao : op) {
+                    if (escolha.equals(opcao.getValorOpcao() + ". " + opcao.getDesc())) {
+                        return opcao.getValorOpcao();
+                    }
+                }    
+            }
+            /* Opcao inválida, tera um break na interface */
+            return -1;
+    }
+    
+    public int imprimeCliente() {
+        OpcaoCliente.InterCliente[] op = OpcaoCliente.InterCliente.values();
+            String[] opDesc = new String[op.length];
+            for (int i = 0; i < op.length; i++) {
+                opDesc[i] = op[i].getValorOpcao() + ". " + op[i].getDesc();
+            }
+
+            String escolha = (String) JOptionPane.showInputDialog(
+                    null,
+                    "Escolha uma opção:",
+                    "Menu Cliente",
+                    JOptionPane.INFORMATION_MESSAGE,
+                    null,
+                    opDesc,
+                    opDesc[0]);
+
+            // Converte a escolha para o enum correspondente e obtém o valor da opção
+            if (escolha != null) {
+                for (OpcaoCliente.InterCliente opcao : op) {
+                    if (escolha.equals(opcao.getValorOpcao() + ". " + opcao.getDesc())) {
+                        return opcao.getValorOpcao();
+                    }
+                }    
+            }
+            /* Opcao inválida, tera um break na interface */
+            return -1;
+    }
+    
+    public int imprimeVeiculo(){
+        OpcaoVeiculo.InterVeiculo[] op = OpcaoVeiculo.InterVeiculo.values();
+            String[] opDesc = new String[op.length];
+            for (int i = 0; i < op.length; i++) {
+                opDesc[i] = op[i].getValorOpcao() + ". " + op[i].getDesc();
+            }
+
+            String escolha = (String) JOptionPane.showInputDialog(
+                    null,
+                    "Escolha uma opção:",
+                    "Menu Veiculo",
+                    JOptionPane.INFORMATION_MESSAGE,
+                    null,
+                    opDesc,
+                    opDesc[0]);
+
+            // Converte a escolha para o enum correspondente e obtém o valor da opção
+            if (escolha != null) {
+                for (OpcaoVeiculo.InterVeiculo opcao : op) {
+                    if (escolha.equals(opcao.getValorOpcao() + ". " + opcao.getDesc())) {
+                        return opcao.getValorOpcao();
+                    }
+                }    
+            }
+            /* Opcao inválida, tera um break na interface */
+            return -1;
+    }
 }  
 

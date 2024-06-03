@@ -11,7 +11,6 @@ import ufms.cptl.raymay.Classes.Enum.TipoVeiculo;
 import ufms.cptl.raymay.Interface.UserInterface.InterfaceGrafica;
 import ufms.cptl.raymay.Interface.UserInterface.InterfaceTerminal;
 import ufms.cptl.raymay.Interface.UserInterface.UserInterface;
-import static ufms.cptl.raymay.InterfaceOp.MostraMensagem.interMensagem;
 
 /**
  *

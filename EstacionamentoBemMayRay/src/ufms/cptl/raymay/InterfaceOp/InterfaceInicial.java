@@ -75,10 +75,10 @@ public class InterfaceInicial{
                     
             switch (opcao) {
                 case 1:
-                    interCliente.opcoesCliente(clientes, vagas, tickets, tarifas);
+                    interCliente.opcoesCliente(clientes, vagas, tickets, tarifas, inter, face);
                 break;    
                 case 2:
-                    interVaga.opcoesVaga(clientes, vagas, tickets, tarifas);
+                    interVaga.opcoesVaga(clientes, vagas, tickets, tarifas, inter, face);
                 break;
                 case 3:
                     interEstaciona.opcoesEstacionamento(clientes, vagas, tickets, tarifas);
