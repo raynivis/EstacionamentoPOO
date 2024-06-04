@@ -21,6 +21,7 @@ import ufms.cptl.raymay.Classes.Interno.Tickets.TicketHorista;
 import ufms.cptl.raymay.Classes.Interno.Tickets.TicketMensalista;
 import ufms.cptl.raymay.Classes.Interno.Vaga;
 import ufms.cptl.raymay.Classes.Enum.Operando;
+import ufms.cptl.raymay.Interface.InterfaceDoUsuario.InterfaceGrafica;
 import ufms.cptl.raymay.Interface.InterfaceDoUsuario.InterfaceTerminal;
 import ufms.cptl.raymay.Interface.InterfaceDoUsuario.UserInterface;
 import ufms.cptl.raymay.Operacoes.OperacoesCliente;
@@ -64,7 +65,7 @@ public class InterfaceInicial{
                 opcao = inter.imprimeInicio();
             }
             else {
-//              inter = (InterfaceGrafica) inter;
+                inter = (InterfaceGrafica) inter;
                 opcao = inter.imprimeInicio();
             }
                     
