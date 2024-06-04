@@ -104,8 +104,8 @@ public class OperacoesCliente {
     
     
     /* O método recebe a lista de clientes e um CPF (chave primaria de um cliente) e percorre a lista
-    de clientes até encontrar o CPF, ao encontrar imprime todos os veículos do cliente do respectivo
-    CPF inserido */
+    de clientes até encontrar o CPF, ao encontrar imprime retorna uma String com todos os veiculos vinculados ao
+    documento inserido, esse tipo de retorno auxilia para a troca de interfaces (terminal e gráfica) */
     public String mostraVeiculos(List<Cliente> clientes, String documento) {
         String veiculo = "Os veículos do cliente são:\n";
         for(Cliente c : clientes) {
@@ -122,7 +122,8 @@ public class OperacoesCliente {
     }
     
     
-    /*Método para imprimir todos os clientes cadastrados no sistema */
+    /*Método para imprimir todos os clientes cadastrados no sistema, retorna a lista de clientes auxiliando a troca 
+    de interfaces (terminal e gráfica) */
     public List<String> relatorioCliente(List<Cliente> clientes) {
         List<String> lista = new ArrayList<>();
         String cliente;
@@ -137,7 +138,8 @@ public class OperacoesCliente {
     }
     
     
-    /*Método com overload ou polimorfismo para printar apenas o cliente com o documento passado por referencia, (overload do metodo acima).*/
+    /*Método com overload ou polimorfismo para retornar uma String com apenas o cliente que possui o documento
+    passado por referencia, (overload do metodo acima).*/
     public String relatorioCliente(List<Cliente> clientes, String documento) {
         for(Cliente c : clientes) {
             if(c.getCpf().equals(documento)) {

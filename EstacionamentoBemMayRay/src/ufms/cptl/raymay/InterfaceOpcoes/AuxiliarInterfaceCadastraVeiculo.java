@@ -39,6 +39,7 @@ public class AuxiliarInterfaceCadastraVeiculo {
                 }
             }
         }
+        /* atribuindo as características do veículo */
         String tipoV, cor, descricao, marca, modelo;
         TipoVeiculo type;
         tipoV = inter.receberString("Digite o tipo do veículo(MOTO, CARRO ou ONIBUS)");

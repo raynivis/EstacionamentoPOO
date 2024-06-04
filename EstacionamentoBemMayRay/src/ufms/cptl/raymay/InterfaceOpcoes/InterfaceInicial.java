@@ -21,7 +21,6 @@ import ufms.cptl.raymay.Classes.Interno.Tickets.TicketHorista;
 import ufms.cptl.raymay.Classes.Interno.Tickets.TicketMensalista;
 import ufms.cptl.raymay.Classes.Interno.Vaga;
 import ufms.cptl.raymay.Classes.Enum.Operando;
-import ufms.cptl.raymay.Interface.InterfaceDoUsuario.InterfaceGrafica;
 import ufms.cptl.raymay.Interface.InterfaceDoUsuario.InterfaceTerminal;
 import ufms.cptl.raymay.Interface.InterfaceDoUsuario.UserInterface;
 import ufms.cptl.raymay.Operacoes.OperacoesCliente;
@@ -70,20 +69,20 @@ public class InterfaceInicial{
             }
                     
             switch (opcao) {
-                case 1:
+                case 1: /*Gerenciar clientes*/
                     interCliente.opcoesCliente(clientes, vagas, tickets, tarifas, inter);
                 break;    
-                case 2:
+                case 2: /*Gerenciar vagas*/
                     interVaga.opcoesVaga(clientes, vagas, tickets, tarifas, inter);
                 break;
-                case 3:
+                case 3: /*Gerenciar estacionamento*/
                     interEstaciona.opcoesEstacionamento(clientes, vagas, tickets, tarifas, inter);
                 break;
-                case 4:
+                case 4: /*Cadastros gerais*/
                     do {                      
                         opTicket.verificarTicketsMensalista30dias(tickets);
                         opcao3 = inter.imprimeCadastroGeral();          
-                        switch(opcao3) {
+                        switch(opcao3) { /*ticket tarifa*/
                             case 1:                               
                                 int cod;
                                 String codigo = inter.receberString("Digite o codigo do ticket:");

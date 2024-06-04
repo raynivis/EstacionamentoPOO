@@ -41,7 +41,7 @@ public class OperacoesTicket {
     esteja ATIVO (pois pode conter mais de um ticket com a mesma placa, porém so haverá um ATIVO),
     caso encontre o ativo, faz a retirada do veículo do estacionamento, torna a vaga disponível
     e deixa o ticket DESATIVO */
-    /*No caso do ticket mensalista ele verifica se o ticket mensalista está ativo e o veiculo passado por referencia 
+    /*No caso do ticket mensalista ele verifica se o ticket mensalista está ativo e se o veiculo passado por referencia 
     pertence a ele, se ele satisfazer as duas condições, retorna true*/
     public boolean retirar(List<Ticket> tickets, Veiculo veiculoEstacio){             
         for(Ticket t : tickets) {
@@ -96,11 +96,10 @@ public class OperacoesTicket {
     }
     
     
-    /* Método que verifica se o veículo inserido possui algum ticket ATIVO atrelado a ele. 
-    Primeiro faz a verificação se a placa já foi cadastrada no sistema, com o método verificarVeiculo,
-    que retorna o veículo com a placa respectiva. Após isso, passa pela lista de tickets, se estiver ativo
-    verifica se a respectiva placa está contida nesse ticket. Se encontrar, retorna o ticket, se não,
-    retorna null */
+    /* Método que verifica se o veículo possui algum ticket SENDO UTILIZADO atrelado a ele, primeiro verifica se o ticket é
+    horista ou mensalista (necessário pois, mesmo após a retirada do veículo mensalista da vaga, o ticket pode continuar
+    ATIVO!), se for horista verifica se está ativo e retorna o ticket. Caso não seja horista, verifica se é mensalista
+    e se a vaga atrelada a esse ticket está ocupada, se estiver, significa que está sendo utilizado e retorna o ticket */
     public Ticket verificaTicketVeiculo(List<Cliente> clientes, String placa, List<Ticket> tickets) {
         if(opClie.verificarVeiculo(clientes, placa) != null) {
             Veiculo v = opClie.verificarVeiculo(clientes, placa);
@@ -227,7 +226,7 @@ public class OperacoesTicket {
     }
     
     
-    /*Método para printar as tarifas cadastrada no sistema para ter uma visualização*/
+    /*Método que retorna uma lista com as tarifas cadastradas no sistema para ter uma visualização*/
     public List<String> relatorioTarifa(List<Tarifa> tarifas) {
         List<String> lista = new ArrayList<>(); 
         String tarife;
@@ -255,7 +254,7 @@ public class OperacoesTicket {
     }
     
     
-    /* O método recebe a tarifa a ser procurada e a lsita de tickets, faz a procura dessa tarifa nos tickets
+    /* O método recebe a tarifa a ser procurada e a lista de tickets, faz a procura dessa tarifa nos tickets
     da lista e retorna true se encontrar, se não, retorna false */
     public boolean procuraTarifaEmTicket(Tarifa tarifa, List<Ticket> tickets) {
         for(Ticket t : tickets) {
@@ -267,7 +266,7 @@ public class OperacoesTicket {
     }
     
     
-    /* O método lsita todos os tickets ATIVOS no momento */
+    /* O método retona uma lista com todos os tickets ATIVOS no momento */
     public List<String> ListarTicketAtivo(List<Ticket> tickets) {
         List<String> lista = new ArrayList<>();      
         for(Ticket t : tickets) {

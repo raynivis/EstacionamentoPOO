@@ -123,8 +123,8 @@ public class InterfaceOpcaoCliente{
                         inter.mensagem(opCliente.mostraVeiculos(clientes, cpf));  
                                                
                         do{
-                            /* Utiliza o método criado em ItensMenu, reduzindo o tamanho
-                            de linhas das Classes da interface */
+                            /* Utiliza o método criado na classe InterfaceTerminal ou na Classe InterfaceGrafica, dependendo
+                            da escolha do usuário */
                             opcao3 = inter.imprimeVeiculo(); 
                             switch(opcao3){
                                 case 1: /*Adicionar um veículo*/

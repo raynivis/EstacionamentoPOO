@@ -24,6 +24,9 @@ import static ufms.cptl.raymay.InterfaceOpcoes.MostraMensagem.interMensagem;
 public class InterfaceTerminal implements UserInterface{
     private final Scanner scanner = new Scanner(System.in);
     
+    /* Métodos de impressão de menus que irão retornar um valor que será atribuido a uma variável do mesmo tipo (int)
+    que permitirá a escolha da opcao */
+    /* Os métodos dessa Classe também são criados em UserInterface para auxiliar a troca de interface na main */
      @Override
     public void mensagem(String mensagem){
         interMensagem(mensagem);

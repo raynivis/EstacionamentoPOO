@@ -5,10 +5,7 @@
 package ufms.cptl.raymay.Operacoes;
 import java.util.ArrayList;
 import java.util.List;
-import javax.swing.JOptionPane;
-
 import ufms.cptl.raymay.Classes.Interno.Tickets.Ticket;
-import ufms.cptl.raymay.Classes.Enum.TipoVeiculo;
 import ufms.cptl.raymay.Classes.Enum.VagaStatus;
 import static ufms.cptl.raymay.Operacoes.OperacaoMostraMensagem.operacaoMensagem;
 import ufms.cptl.raymay.Classes.Interno.Vaga;
@@ -72,7 +69,6 @@ public class OperacoesVagas {
         if(consultarVaga(vagas, novoNumero,novaRua) != null) {
             return false;
         }
-
         for(Vaga v : vagas) {
             if(v.getRua().equals(rua) && v.getNumero() == numero) {
                 v.setRua(novaRua);
@@ -94,7 +90,7 @@ public class OperacoesVagas {
                     v.setStatus(novoStatus);
                     return true;
                 }
-                operacaoMensagem("A disponibilidade da vaga não pode ser alterada pois o Ticket não foi devolvido (OCUPADA)!");
+                operacaoMensagem("A disponibilidade da vaga não pode ser alterada pois está OCUPADA!");
                 return false;
             }          
         }
