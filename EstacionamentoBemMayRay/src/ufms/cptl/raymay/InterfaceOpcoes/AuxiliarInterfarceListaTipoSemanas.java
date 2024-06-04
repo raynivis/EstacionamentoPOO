@@ -5,7 +5,7 @@
 package ufms.cptl.raymay.InterfaceOpcoes;
 
 import java.util.List;
-import java.util.Scanner;
+
 import ufms.cptl.raymay.Classes.Enum.DiaSemana;
 import ufms.cptl.raymay.Classes.Enum.TipoVeiculo;
 import ufms.cptl.raymay.Interface.InterfaceDoUsuario.InterfaceGrafica;
@@ -17,20 +17,19 @@ import ufms.cptl.raymay.Interface.InterfaceDoUsuario.UserInterface;
  * @author ra
  */
 public class AuxiliarInterfarceListaTipoSemanas {
-    Scanner scanner = new Scanner(System.in);
     
     /*Método para identificação e cadastro de listas de Dias da Semana e Listas de Veiculos, para não ficar repetindo codigo.*/
-    public void OperacaoListaTVDS(List<DiaSemana> diaSmns, List<TipoVeiculo> listaTps, UserInterface inter, int face){
+    public void OperacaoListaTVDS(List<DiaSemana> diaSmns, List<TipoVeiculo> listaTps, UserInterface inter){
         String dias;
-        if(face == 0){
-            InterfaceTerminal interfaces = (InterfaceTerminal) inter;
-            interfaces.mensagem("Digite o/s dia/s da semana dessa tarifa (Domingo, Segunda, Terça, Quarta, Quinta, Sexta, Sábado)");
-            dias = interfaces.receberString("Caso seja para todos os dias da semana, digite: Todos");
+        if(inter instanceof InterfaceTerminal){
+            inter = (InterfaceTerminal) inter;
+            inter.mensagem("Digite o/s dia/s da semana dessa tarifa (Domingo, Segunda, Terça, Quarta, Quinta, Sexta, Sábado)");
+            dias = inter.receberString("Caso seja para todos os dias da semana, digite: Todos");
          }
          else {
-            InterfaceGrafica interfaces = (InterfaceGrafica) inter;
-            interfaces.mensagem("Digite o/s dia/s da semana dessa tarifa (Domingo, Segunda, Terça, Quarta, Quinta, Sexta, Sábado)");
-            dias = interfaces.receberString("Caso seja para todos os dias da semana, digite: Todos");
+            inter = (InterfaceGrafica) inter;
+            inter.mensagem("Digite o/s dia/s da semana dessa tarifa (Domingo, Segunda, Terça, Quarta, Quinta, Sexta, Sábado)");
+            dias = inter.receberString("Caso seja para todos os dias da semana, digite: Todos");
         }       
         dias = dias.toUpperCase();
         
@@ -49,17 +48,8 @@ public class AuxiliarInterfarceListaTipoSemanas {
         if(dias.contains("SABADO") || dias.contains("TODOS"))
             diaSmns.add(DiaSemana.SABADO);      
         
-        String tipos;
-        if(face == 0){
-            InterfaceTerminal interfaces = (InterfaceTerminal) inter;
-            interfaces.mensagem("Digite o/s tipo/s de veículo/s dessa tarifa (MOTO, CARRO, ONIBUS):");
-            tipos = interfaces.receberString("Caso seja para todos os tipos de veículo, digite: Todos");
-         }
-         else {
-            InterfaceGrafica interfaces = (InterfaceGrafica) inter;
-            interfaces.mensagem("Digite o/s dia/s da semana dessa tarifa (Domingo, Segunda, Terça, Quarta, Quinta, Sexta, Sábado)");
-            tipos = interfaces.receberString("Caso seja para todos os dias da semana, digite: Todos");
-        }       
+        inter.mensagem("Digite o/s tipo/s de veículo/s dessa tarifa (MOTO, CARRO, ONIBUS):");
+        String tipos = inter.receberString("Caso seja para todos os tipos de veículo, digite: Todos"); 
         tipos = tipos.toUpperCase();
                     
         if(tipos.contains("MOTO") || tipos.contains("TODOS"))

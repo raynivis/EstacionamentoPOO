@@ -22,15 +22,19 @@ import static ufms.cptl.raymay.InterfaceOpcoes.MostraMensagem.interMensagem;
  * @author nivis
  */
 public class InterfaceTerminal implements UserInterface{
-    private Scanner scanner;
+    private final Scanner scanner = new Scanner(System.in);
     
-    public InterfaceTerminal() {
-        scanner = new Scanner(System.in);
+     @Override
+    public void mensagem(String mensagem){
+        interMensagem(mensagem);
     }
     
     
-    public void mensagem(String mensagem){
+     @Override
+     public String receberString(String mensagem){
         interMensagem(mensagem);
+        String valor = scanner.nextLine();
+        return valor;
     }
   
     @Override
@@ -44,9 +48,10 @@ public class InterfaceTerminal implements UserInterface{
             }           
             int opcao = scanner.nextInt();
             scanner.nextLine();
-            return opcao;
-        
+            return opcao;       
     }
+    
+    
     @Override
     public int imprimeCadastroGeral(){     
         try {
@@ -61,31 +66,7 @@ public class InterfaceTerminal implements UserInterface{
         return opcao3;           
     }  
     
-    public String receberString(String mensagem){
-        interMensagem(mensagem);
-        String valor = scanner.nextLine();
-        scanner.nextLine();
-        return valor;
-    }
-    
-    
-    
-    
-    
-    public int imprimeVaga() {
-        try {
-            PrintStream out = new PrintStream(System.out, true, StandardCharsets.UTF_8.toString());
-            for (OpcaoVaga.InterVaga op : OpcaoVaga.InterVaga.values()) {
-                out.println(op.getValorOpcao() + " - " + op.getDesc());
-            }
-        } catch (UnsupportedEncodingException e) {
-        }
-        int opcao2 = scanner.nextByte();
-        scanner.nextLine();
-        return opcao2;
-    }
-    
-    
+    @Override 
     public int imprimeCliente() {
         try {
             PrintStream out = new PrintStream(System.out, true, StandardCharsets.UTF_8.toString());
@@ -99,6 +80,7 @@ public class InterfaceTerminal implements UserInterface{
         return opcao2;
     }
     
+    @Override
     public int imprimeVeiculo() {
         try {
             PrintStream out = new PrintStream(System.out, true, StandardCharsets.UTF_8.toString());
@@ -111,7 +93,22 @@ public class InterfaceTerminal implements UserInterface{
         scanner.nextLine();
         return opcao3;
     }
+  
+    @Override 
+    public int imprimeVaga() {
+        try {
+            PrintStream out = new PrintStream(System.out, true, StandardCharsets.UTF_8.toString());
+            for (OpcaoVaga.InterVaga op : OpcaoVaga.InterVaga.values()) {
+                out.println(op.getValorOpcao() + " - " + op.getDesc());
+            }
+        } catch (UnsupportedEncodingException e) {
+        }
+        int opcao2 = scanner.nextByte();
+        scanner.nextLine();
+        return opcao2;
+    }
     
+     @Override  
      public int imprimeEstacionamento(){
          try {
                 PrintStream out = new PrintStream(System.out, true, StandardCharsets.UTF_8.toString());
@@ -125,7 +122,7 @@ public class InterfaceTerminal implements UserInterface{
         return opcao2;
     }
     
-    
+    @Override
     public int imprimeTarifa(){
         try {
             PrintStream out = new PrintStream(System.out, true, StandardCharsets.UTF_8.toString());

@@ -47,23 +47,21 @@ public class OperacoesVagas {
      /* O método realiza a procura pela vaga, se for encontrada percorre a lista de tickets para verificar
     se existe algum ticket cadastrado (ATIVO OU DESATIVO), caso possua, a vaga não é excluída,
     se não, ela é excluída*/
-    public boolean excluirVaga(List<Vaga> vagas, List<Ticket> tickets, String rua, int numero) {
+    public String excluirVaga(List<Vaga> vagas, List<Ticket> tickets, String rua, int numero) {
         for(Vaga v : vagas) {
             if(v.getRua().equals(rua) && v.getNumero() == numero) {
                 for(Ticket t: tickets) {
                     if(t.getVagaTicket().equals(v)) {
-                        /* 1 condição que justifica não ser possível a exclusão da vaga -> possui ticket */
-                        operacaoMensagem("\nA vaga não pode ser excluída pois ela possui um ticket cadastrado!\n");
-                        return false;
+                        /* 1 condição que justifica não ser possível a exclusão da vaga -> possui ticket */                    
+                        return "\nA vaga não pode ser excluída pois ela possui um ticket cadastrado!\n";
                     }
                 }
                 vagas.remove(v);
-                return true;
+                return null;
             }  
         }
         /* 2 condição que justifica não ser possível a exclusão da vaga -> vaga inexistente */
-        operacaoMensagem("\nVaga inexistente!\n");
-        return false;
+        return "\nVaga inexistente!\n";
     }
     
     
@@ -71,6 +69,10 @@ public class OperacoesVagas {
     quando encontra a vaga na lista, substitui os atributos pelos novos inseridos e retorna true,
     caso não encontre a vaga retorna false */
     public boolean editarVaga(List<Vaga> vagas, String rua, int numero, String novaRua, int novoNumero) {
+        if(consultarVaga(vagas, novoNumero,novaRua) != null) {
+            return false;
+        }
+
         for(Vaga v : vagas) {
             if(v.getRua().equals(rua) && v.getNumero() == numero) {
                 v.setRua(novaRua);

@@ -54,11 +54,11 @@ public class Estacionamento {
             switch(escolha) {
                 case 0:
                     InterfaceTerminal userinterfaceT = new InterfaceTerminal();
-                    userinterface.primeirasOpcoes(clientes, vagas, tickets, tarifas, userinterfaceT, escolha);
+                    userinterface.primeirasOpcoes(clientes, vagas, tickets, tarifas, userinterfaceT);
                     break;
                 case 1:
                     InterfaceGrafica userinterfaceG = new InterfaceGrafica();
-                    userinterface.primeirasOpcoes(clientes, vagas, tickets, tarifas, userinterfaceG, escolha);
+                    userinterface.primeirasOpcoes(clientes, vagas, tickets, tarifas, userinterfaceG);
                     break;     
             }
         }

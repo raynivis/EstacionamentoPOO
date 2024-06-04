@@ -16,7 +16,6 @@ import ufms.cptl.raymay.Classes.Enum.TipoVeiculo;
 import ufms.cptl.raymay.Classes.Enum.VagaStatus;
 import ufms.cptl.raymay.Classes.Externo.Automovel.Veiculo;
 import ufms.cptl.raymay.Classes.Externo.Individuo.Cliente;
-import static ufms.cptl.raymay.Operacoes.OperacaoMostraMensagem.operacaoMensagem;
 import ufms.cptl.raymay.Classes.Interno.Tarifas.Tarifa;
 import ufms.cptl.raymay.Classes.Interno.Tarifas.TarifaHorista;
 import ufms.cptl.raymay.Classes.Interno.Tarifas.TarifaMensalista;
@@ -230,17 +229,27 @@ public class OperacoesTicket {
     
     /*Método para printar as tarifas cadastrada no sistema para ter uma visualização*/
     public List<String> relatorioTarifa(List<Tarifa> tarifas) {
-        List<String> lista = new ArrayList<>();  
+        List<String> lista = new ArrayList<>(); 
+        String tarife;
         for(Tarifa t : tarifas) {
+            tarife = "";
             if(t instanceof TarifaHorista) {
                 TarifaHorista tH = (TarifaHorista) t;
-                lista.add(tH.toString());
+                tarife = tarife + tH.toString();
             }
             else {
                 TarifaMensalista tM = (TarifaMensalista) t;
-                lista.add(tM.toString());              
+                tarife = tarife + tM.toString();              
             }
-             
+            tarife = tarife + "\nDia/s da Semana:";
+            for(DiaSemana ds : t.getDiasSemana()){
+                 tarife = tarife + ds.toString() + " ";
+            }
+             tarife = tarife + "\nTipo/s de Veiculo:";
+            for(TipoVeiculo tv : t.getTarifaVeiculos()){
+                tarife = tarife + tv.toString() + " ";
+            }
+            lista.add(tarife); 
         }
         return lista;
     }

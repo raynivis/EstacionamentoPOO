@@ -14,20 +14,20 @@ public interface UserInterface{
     
         public void mensagem(String mensagem);
         
+        public String receberString(String mensagem);
+        
         public int imprimeInicio();
           
         public int imprimeCadastroGeral();
         
-        public String receberString(String mensagem);
-               
-        public int imprimeEstacionamento();
-        
-        public int imprimeTarifa();
-        
-        public int imprimeVaga();
-         
         public int imprimeCliente();
         
         public int imprimeVeiculo();
-         
-    }    
+        
+        public int imprimeVaga();
+                  
+        public int imprimeEstacionamento();
+        
+        public int imprimeTarifa();
+       
+}    
