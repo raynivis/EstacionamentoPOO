@@ -25,16 +25,8 @@ public class Veiculo {
         return placa;
     }
 
-    public void setPlaca(String placa) {
-        this.placa = placa;
-    }
-
     public Modelo getModel() {
         return model;
-    }
-
-    public void setModel(Modelo model) {
-        this.model = model;
     }
 
     public Cor getColor() {
@@ -44,7 +36,6 @@ public class Veiculo {
     public void setColor(Cor color) {
         this.color = color;
     }
-
     
     @Override
     public String toString() {

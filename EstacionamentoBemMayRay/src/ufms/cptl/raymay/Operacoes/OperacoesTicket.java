@@ -12,7 +12,6 @@ import java.util.ArrayList;
 import java.util.List;
 import ufms.cptl.raymay.Classes.Enum.DiaSemana;
 import ufms.cptl.raymay.Classes.Enum.Operando;
-import ufms.cptl.raymay.Classes.Enum.TipoVeiculo;
 import ufms.cptl.raymay.Classes.Enum.VagaStatus;
 import ufms.cptl.raymay.Classes.Externo.Automovel.Veiculo;
 import ufms.cptl.raymay.Classes.Externo.Individuo.Cliente;
@@ -48,9 +47,7 @@ public class OperacoesTicket {
             if(t instanceof TicketHorista) {
                 TicketHorista tH = (TicketHorista) t;
                 if(tH.getVeiculoTicket().equals(veiculoEstacio) && tH.getStatus() == Operando.ATIVO) {
-                    tH.setStatus(Operando.DESATIVO);
-                    tH.setFim(LocalDateTime.now());
-                    tH.getVagaTicket().setStatus(VagaStatus.DISPONIVEL);
+                    tH.encerrar();
                     return true;
                 }
             }
@@ -71,8 +68,7 @@ public class OperacoesTicket {
             if(t instanceof TicketMensalista && t.getStatus().equals(Operando.ATIVO)){
                TicketMensalista tM = (TicketMensalista) t; 
                if(tM.getFim().isBefore(LocalDateTime.now()) || tM.getFim().isEqual(LocalDateTime.now())){
-                   tM.setStatus(Operando.DESATIVO);
-                   tM.getVagaTicket().setStatus(VagaStatus.DISPONIVEL);
+                   tM.encerrar();
                }
             }
         }
@@ -155,26 +151,25 @@ public class OperacoesTicket {
      
     /*Métodos para facilitar a busca de tarifa na interface, a tarifa é identificada pela data de inicio, os dias da semana dela e o tipo/s
     de veiculo/s que a tarifa atende, o método retorna a tarifa se encontra-la, se não, retorna um ponteiro nulo*/
-    public TarifaHorista buscarTarifaHorista(List<Tarifa> tarifas, String inicio, List<DiaSemana> dias, List<TipoVeiculo> veiculos) {
+    public TarifaHorista buscarTarifaHorista(List<Tarifa> tarifas, String inicio, List<DiaSemana> dias) {
         for(Tarifa t : tarifas) {
             if(t instanceof TarifaHorista) {
-                if(t.getInicio().format(dataBonitinha).equals(inicio) 
-                && t.getDiasSemana().equals(dias) && t.getTarifaVeiculos().equals(veiculos)) {
-                    return (TarifaHorista) t;
+                TarifaHorista tH = (TarifaHorista) t;
+                if(tH.getInicio().format(dataBonitinha).equals(inicio) 
+                && tH.getDiasSemana().equals(dias)) {
+                    return tH;
                 } 
             }
         }
         return null;
     }
-    public TarifaMensalista buscarTarifaMensalista(List<Tarifa> tarifas, String inicio, List<DiaSemana> dias, List<TipoVeiculo> veiculos) {
+    public TarifaMensalista buscarTarifaMensalista(List<Tarifa> tarifas, String inicio) {
         for(Tarifa t : tarifas) {
             if(t instanceof TarifaMensalista) {
-                if(t.getInicio().format(dataBonitinha).equals(inicio) 
-                && t.getDiasSemana().equals(dias) && t.getTarifaVeiculos().equals(veiculos)) {
+                if(t.getInicio().format(dataBonitinha).equals(inicio)) {
                     return (TarifaMensalista) t;
                 }
             }
-
         }
         return null;
     }
@@ -203,22 +198,21 @@ public class OperacoesTicket {
         Tarifa tarifaPerto = null;
         if(tipoTi.equalsIgnoreCase("HORISTA")){
             for(Tarifa t : tarifas) {
-            if(t instanceof TarifaHorista && t.getInicio().isBefore(inicio) && t.getDiasSemana().contains(semanaToEnum(LocalDateTime.now())) )
-                if(t.getTarifaVeiculos().contains(veiculo.getModel().getTipoVeiculo())) {               	
-                    if(tarifaPerto == null || Duration.between(t.getInicio(), inicio).getSeconds() <= Duration.between(tarifaPerto.getInicio(), inicio).getSeconds() ) {
-                         tarifaPerto = t;  
-                    }                               
+                TarifaHorista tH = (TarifaHorista) t;
+                if(t instanceof TarifaHorista && tH.getInicio().isBefore(inicio) && tH.getDiasSemana().contains(semanaToEnum(LocalDateTime.now())) ) {                      	
+                    if(tarifaPerto == null || Duration.between(tH.getInicio(), inicio).getSeconds() <= Duration.between(tarifaPerto.getInicio(), inicio).getSeconds() ) {
+                         tarifaPerto = tH;  
+                    }
                 }
             }
         }
         else {
             for(Tarifa t : tarifas) {
-            if(t instanceof TarifaMensalista && t.getInicio().isBefore(inicio) && t.getDiasSemana().contains(semanaToEnum(LocalDateTime.now())) )
-                if(t.getTarifaVeiculos().contains(veiculo.getModel().getTipoVeiculo())) {               	
+                if(t instanceof TarifaMensalista && t.getInicio().isBefore(inicio)) {               	
                     if(tarifaPerto == null || Duration.between(t.getInicio(), inicio).getSeconds() <= Duration.between(tarifaPerto.getInicio(), inicio).getSeconds() ) {
                          tarifaPerto = t;  
-                    }                               
-                }
+                    }  
+                }    
             }
         }
         
@@ -235,18 +229,14 @@ public class OperacoesTicket {
             if(t instanceof TarifaHorista) {
                 TarifaHorista tH = (TarifaHorista) t;
                 tarife = tarife + tH.toString();
+                tarife = tarife + "\nDia/s da Semana:";
+                for(DiaSemana ds : tH.getDiasSemana()){
+                    tarife = tarife + ds.toString() + " ";
+                }
             }
             else {
                 TarifaMensalista tM = (TarifaMensalista) t;
                 tarife = tarife + tM.toString();              
-            }
-            tarife = tarife + "\nDia/s da Semana:";
-            for(DiaSemana ds : t.getDiasSemana()){
-                 tarife = tarife + ds.toString() + " ";
-            }
-             tarife = tarife + "\nTipo/s de Veiculo:";
-            for(TipoVeiculo tv : t.getTarifaVeiculos()){
-                tarife = tarife + tv.toString() + " ";
             }
             lista.add(tarife); 
         }
@@ -287,12 +277,12 @@ public class OperacoesTicket {
             if(t.getFim().isAfter(inicio)) {
                 if(t instanceof TicketHorista && t.getFim().isBefore(fim)){
                     TicketHorista tH = (TicketHorista) t;
-                    soma = soma + tH.totalFaturadoTicket();
+                    soma = soma + tH.getFaturado();
                 }
                 
                 if (t instanceof TicketMensalista){
                     TicketMensalista tM = (TicketMensalista) t;
-                    soma = soma + tM.totalFaturadoTicket();
+                    soma = soma + tM.getFaturado();
                 }                
             }
         }

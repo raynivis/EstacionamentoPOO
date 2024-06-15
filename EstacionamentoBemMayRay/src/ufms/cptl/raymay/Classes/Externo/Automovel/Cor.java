@@ -12,11 +12,6 @@ public class Cor {
     private String cor;
     private String descricao;
 
-    
-    public Cor(String cor) {
-        this.cor = cor;
-    }
-
     public Cor(String cor, String descricao) {
         this.cor = cor;
         this.descricao = descricao;
@@ -26,16 +21,8 @@ public class Cor {
         return cor;
     }
 
-    public void setCor(String cor) {
-        this.cor = cor;
-    }
-
     public String getDescricao() {
         return descricao;
-    }
-
-    public void setDescricao(String descricao) {
-        this.descricao = descricao;
     }
    
 }

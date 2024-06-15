@@ -7,22 +7,25 @@ package ufms.cptl.raymay.Classes.Interno.Tarifas;
 import java.time.LocalDateTime;
 import java.util.List;
 import ufms.cptl.raymay.Classes.Enum.DiaSemana;
-import ufms.cptl.raymay.Classes.Enum.TipoVeiculo;
-
 /**
  *
  * @author nivis
  */
 public class TarifaHorista extends Tarifa{
+    private List<DiaSemana> diasSemana;
     private double valorPrimeiraHora;
     private double valorHoraSubsequente;
 
-    public TarifaHorista(double valorPrimeiraHora, double valorHoraSubsequente, LocalDateTime inicio, List<DiaSemana> diasSemana, List<TipoVeiculo> tarifaVeiculos) {
-        super(inicio, diasSemana, tarifaVeiculos);
+    public TarifaHorista(double valorPrimeiraHora, double valorHoraSubsequente, LocalDateTime inicio, List<DiaSemana> diasSemana) {
+        super(inicio);
+        this.diasSemana = diasSemana;
         this.valorPrimeiraHora = valorPrimeiraHora;
         this.valorHoraSubsequente = valorHoraSubsequente;
     }
-
+    public List<DiaSemana> getDiasSemana() {
+        return diasSemana;
+    }
+    
     public double getValorPrimeiraHora() {
         return valorPrimeiraHora;
     }

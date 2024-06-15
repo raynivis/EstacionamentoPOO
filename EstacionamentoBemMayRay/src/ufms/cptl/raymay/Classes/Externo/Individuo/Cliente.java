@@ -34,10 +34,6 @@ public class Cliente {
     {
         this.veiculos.add(novoVeiculo);
     }
-
-    public void setVeiculos(List<Veiculo> veiculos) {
-        this.veiculos = veiculos;
-    }
     
     public List<Veiculo> getVeiculos() {
         return veiculos;
@@ -53,14 +49,6 @@ public class Cliente {
 
     public String getCpf() {
         return cpf;
-    }
-
-    public void setCpf(String cpf) {
-        this.cpf = cpf;
-    }
-
-    public String getTelefone() {
-        return telefone;
     }
 
     public void setTelefone(String telefone) {
