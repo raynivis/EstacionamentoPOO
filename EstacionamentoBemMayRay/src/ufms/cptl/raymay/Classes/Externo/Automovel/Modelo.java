@@ -32,25 +32,12 @@ public class Modelo {
     public TipoVeiculo getTipoVeiculo() {
         return tipoVeiculo;
     }
-
-    public void setTipoVeiculo(TipoVeiculo tipoVeiculo) {
-        this.tipoVeiculo = tipoVeiculo;
-    }
     
     public String getMarca() {
         return marca;
     }
-
-    public void setMarca(String marca) {
-        this.marca = marca;
-    }
     
-     public String getModelo() {
+    public String getModelo() {
         return modelo;
-    }
-
-    public void setModelo(String modelo) {
-        this.modelo = modelo;
-    }
-    
+    }    
 }

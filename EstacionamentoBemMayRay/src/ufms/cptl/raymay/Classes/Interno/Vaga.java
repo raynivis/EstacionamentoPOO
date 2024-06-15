@@ -60,10 +60,5 @@ public class Vaga {
 
     public TipoVeiculo getTipo() {
         return tipo;
-    }
-
-    public void setTipo(TipoVeiculo tipo) {
-        this.tipo = tipo;
-    }
-
+    }  
 }

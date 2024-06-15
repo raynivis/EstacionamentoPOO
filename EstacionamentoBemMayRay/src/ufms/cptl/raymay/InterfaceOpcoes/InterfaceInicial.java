@@ -10,7 +10,6 @@ import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 import ufms.cptl.raymay.Classes.Enum.DiaSemana;
-import ufms.cptl.raymay.Classes.Enum.TipoVeiculo;
 import ufms.cptl.raymay.Classes.Externo.Automovel.Veiculo;
 import ufms.cptl.raymay.Classes.Externo.Individuo.Cliente;
 import ufms.cptl.raymay.Classes.Interno.Tarifas.Tarifa;
@@ -43,7 +42,7 @@ public class InterfaceInicial{
     InterfaceOpcaoVaga interVaga = new InterfaceOpcaoVaga();
     InterfaceOpcaoEstacionamento interEstaciona = new InterfaceOpcaoEstacionamento();
     
-    AuxiliarInterfarceListaTipoSemanas listasVS = new AuxiliarInterfarceListaTipoSemanas();
+    AuxiliarInterfarceListaSemanas listasVS = new AuxiliarInterfarceListaSemanas();
     
     int opcao;
     int opcao3;
@@ -102,11 +101,12 @@ public class InterfaceInicial{
                                     String data = inter.receberString("Digite a data de finalização do ticket (em dia/mês/ano horas:minutos:segundos):");                                
                                     LocalDateTime dataFinal = LocalDateTime.parse(data, dataBonitinhaComSegundos);                                                             
                                     testeT.setFim(dataFinal); 
-                                    lucro = ((TicketHorista)testeT).totalFaturadoTicket();
+                                    testeT.faturar();
+                                    lucro = ((TicketHorista)testeT).getFaturado();
                                     testeT.setFim(null); 
                                 }
                                 else {
-                                    lucro = ((TicketMensalista)testeT).totalFaturadoTicket();
+                                    lucro = ((TicketMensalista)testeT).getFaturado();
                                 }
                                 
                                 inter.mensagem("O lucro desse ticket foi de " + dinheiro.format(lucro));                                                                  
@@ -132,13 +132,11 @@ public class InterfaceInicial{
                             case 3: /*consultar Tarifa*/
                                 String tipe = inter.receberString("Digite o tipo de tarifa (Horista ou Mensalista): ");;
                                 String data = inter.receberString("Digite a data de início da tarifa (em dia/mês/ano horas:minutos):");
-                                                                                                                                               
-                                List<DiaSemana> dias = new ArrayList<>();                        
-                                List<TipoVeiculo> tps = new ArrayList<>();
-                                listasVS.OperacaoListaTVDS(dias, tps, inter);
-                                                            
+                                                                                                                                                                                                       
                                 if(tipe.equalsIgnoreCase("HORISTA") ){
-                                    TarifaHorista tarife = opTicket.buscarTarifaHorista(tarifas, data, dias, tps);
+                                    List<DiaSemana> dias = new ArrayList<>();                        
+                                    listasVS.OperacaoListaDiasSemanas(dias, inter);
+                                    TarifaHorista tarife = opTicket.buscarTarifaHorista(tarifas, data, dias);
                                     if(tarife == null){                                       
                                         inter.mensagem("Erro: Tarifa não encontrada!"); 
                                         break;
@@ -149,56 +147,28 @@ public class InterfaceInicial{
                                         inter.mensagem("\nDia/s da Semana: ");
                                         for(DiaSemana ds : tarife.getDiasSemana()){
                                             inter.mensagem(ds.toString() + " ");
-                                        }
-                                        inter.mensagem("\nTipo/s de veículo:");
-                                        for(TipoVeiculo tv : tarife.getTarifaVeiculos()){
-                                            inter.mensagem(tv.toString() + " ");
-                                        }
-                                     
+                                        }                                  
                                         inter.mensagem("///////////////////////////////////////////////////\n");
                                     } else {                                                                                                                 
                                         String diaSemana = "\nDia/s da Semana: ";
                                         for(DiaSemana ds : tarife.getDiasSemana()){
                                             diaSemana = diaSemana + (ds.toString() + " ");
-                                        }
-                                       
-                                        String veiculoo = "\nTipo/s de veículo:";                                      
-                                        for(TipoVeiculo tv : tarife.getTarifaVeiculos()){
-                                            veiculoo = veiculoo + (tv.toString() + " ");
-                                        }
-                                        inter.mensagem(tarife.toString() + diaSemana + veiculoo);
+                                        }                                     
+                                        inter.mensagem(tarife.toString() + diaSemana);
                                     }                               
                                 } 
                                 else{
-                                    TarifaMensalista tarife = opTicket.buscarTarifaMensalista(tarifas, data, dias, tps);
+                                    TarifaMensalista tarife = opTicket.buscarTarifaMensalista(tarifas, data);
                                     if(tarife == null){
                                         inter.mensagem("Erro: Tarifa não encontrada!");
                                         break;
                                     }
-                                    if(inter instanceof InterfaceTerminal) {
-                                        
+                                    if(inter instanceof InterfaceTerminal) {                                        
                                         inter.mensagem("\n///////////////////////////////////////////////////");
-                                        inter.mensagem(tarife.toString());
-                                        inter.mensagem("\nDia/s da Semana: ");
-                                        for(DiaSemana ds : tarife.getDiasSemana()){
-                                            inter.mensagem(ds.toString() + " ");
-                                        }
-                                        inter.mensagem("\nTipo/s de veículo:");
-                                        for(TipoVeiculo tv : tarife.getTarifaVeiculos()){
-                                            inter.mensagem(tv.toString() + " ");
-                                        }
+                                        inter.mensagem(tarife.toString());                                     
                                         inter.mensagem("///////////////////////////////////////////////////\n");
-                                    } else {
-                                        String diaSemana = "\nDia/s da Semana: ";
-                                        for(DiaSemana ds : tarife.getDiasSemana()){
-                                            diaSemana = diaSemana + (ds.toString() + " ");
-                                        }
-                                       
-                                        String veiculoo = "\nTipo/s de veículo:";                                      
-                                        for(TipoVeiculo tv : tarife.getTarifaVeiculos()){
-                                            veiculoo = veiculoo + (tv.toString() + " ");
-                                        }
-                                        inter.mensagem(tarife.toString() + diaSemana + veiculoo);
+                                    } else {                                                                                                            
+                                        inter.mensagem(tarife.toString());
                                     }
                                 }  
                                           

@@ -16,10 +16,10 @@ import ufms.cptl.raymay.Interface.InterfaceDoUsuario.UserInterface;
  *
  * @author ra
  */
-public class AuxiliarInterfarceListaTipoSemanas {
+public class AuxiliarInterfarceListaSemanas {
     
     /*Método para identificação e cadastro de listas de Dias da Semana e Listas de Veiculos, para não ficar repetindo codigo.*/
-    public void OperacaoListaTVDS(List<DiaSemana> diaSmns, List<TipoVeiculo> listaTps, UserInterface inter){
+    public void OperacaoListaDiasSemanas(List<DiaSemana> diaSmns, UserInterface inter){
         String dias;
         if(inter instanceof InterfaceTerminal){
             inter = (InterfaceTerminal) inter;
@@ -48,16 +48,5 @@ public class AuxiliarInterfarceListaTipoSemanas {
         if(dias.contains("SABADO") || dias.contains("TODOS"))
             diaSmns.add(DiaSemana.SABADO);      
         
-        inter.mensagem("Digite o/s tipo/s de veículo/s dessa tarifa (MOTO, CARRO, ONIBUS):");
-        String tipos = inter.receberString("Caso seja para todos os tipos de veículo, digite: Todos"); 
-        tipos = tipos.toUpperCase();
-                    
-        if(tipos.contains("MOTO") || tipos.contains("TODOS"))
-            listaTps.add(TipoVeiculo.MOTO);
-        if(tipos.contains("CARRO") || tipos.contains("TODOS"))
-            listaTps.add(TipoVeiculo.CARRO); 
-        if(tipos.contains("ONIBUS") || tipos.contains("TODOS"))
-            listaTps.add(TipoVeiculo.ONIBUS); 
-
     }
 }

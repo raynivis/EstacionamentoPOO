@@ -3,11 +3,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
 package ufms.cptl.raymay.Classes.Interno.Tarifas;
-
 import java.time.LocalDateTime;
-import java.util.List;
-import ufms.cptl.raymay.Classes.Enum.DiaSemana;
-import ufms.cptl.raymay.Classes.Enum.TipoVeiculo;
 
 /**
  *
@@ -16,8 +12,8 @@ import ufms.cptl.raymay.Classes.Enum.TipoVeiculo;
 public class TarifaMensalista extends Tarifa{
     private double valorUnico;
 
-    public TarifaMensalista(double valorUnico, LocalDateTime inicio, List<DiaSemana> diasSemana, List<TipoVeiculo> tarifaVeiculos) {
-        super(inicio, diasSemana, tarifaVeiculos);
+    public TarifaMensalista(double valorUnico, LocalDateTime inicio) {
+        super(inicio);
         this.valorUnico = valorUnico;
     }
 
