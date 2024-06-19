@@ -18,18 +18,24 @@ import ufms.cptl.raymay.Classes.Enum.VagaStatus;
  * @author nivis
  */
 public class TicketMensalista extends Ticket {
+    private TarifaMensalista tarifaTicketM;
 
-    public TicketMensalista(Tarifa tarifaTicket, Veiculo veiculoTicket, Vaga vagaTicket) {
-        super(tarifaTicket, veiculoTicket, vagaTicket);
+    public TicketMensalista(TarifaMensalista tarifaTicketM, Veiculo veiculoTicket, Vaga vagaTicket) {
+        super(veiculoTicket, vagaTicket);
+        this.tarifaTicketM = tarifaTicketM;
         this.fim = LocalDateTime.now().plusDays(30);
         faturar();
+    }
+
+    public TarifaMensalista getTarifaTicketM() {
+        return tarifaTicketM;
     }
     
     /*Encerrar o ticket*/
     @Override
     public void encerrar() {
         this.status = Operando.DESATIVO;       
-        this.vagaTicket.setStatus(VagaStatus.DISPONIVEL);
+        this.vagaTicket.disponibilizar();
     }
     
      /*Método para calcular quanto o ticket faturou, pela tarifa escolhida pelo ticket, ele ja adiciona o preço unico, logo
@@ -38,7 +44,7 @@ public class TicketMensalista extends Ticket {
     public void faturar(){
         double total;
         
-        TarifaMensalista tarifa  = (TarifaMensalista) tarifaTicket;
+        TarifaMensalista tarifa  = tarifaTicketM;
         
         total = tarifa.getValorUnico();
              
@@ -55,7 +61,7 @@ public class TicketMensalista extends Ticket {
     @Override
     public String toString() {    
         return   "Tarifa: Mensalista" + "Codigo: " + codigo + "\nStatus: " + status + "\nInicio do ticket: " + inicio.format(dataBonitinha) +
-                "\nData da Tarifa: " + tarifaTicket.getInicio().format(dataBonitinha) + "\nPlaca do Veiculo: " 
+                "\nData da Tarifa: " + tarifaTicketM.getInicio().format(dataBonitinha) + "\nPlaca do Veiculo: " 
                 + veiculoTicket.getPlaca() + "\nVaga: " + vagaTicket.getNumero() + " " + vagaTicket.getRua();
     }
 }

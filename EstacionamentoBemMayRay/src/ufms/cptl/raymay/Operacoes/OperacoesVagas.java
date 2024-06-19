@@ -86,8 +86,12 @@ public class OperacoesVagas {
     public boolean alterarDispinibilidade(List<Vaga> vagas, String rua, int numero, VagaStatus novoStatus) {
         for(Vaga v : vagas){
             if(v.getRua().equals(rua) && v.getNumero() == numero) {
-                if(v.getStatus() != VagaStatus.OCUPADA){                   
-                    v.setStatus(novoStatus);
+                if(v.getStatus() != VagaStatus.OCUPADA){                                     
+                    if(novoStatus == VagaStatus.DISPONIVEL){
+                        v.disponibilizar();
+                    } else {
+                        v.indisponibilizar();
+                    }
                     return true;
                 }
                 operacaoMensagem("A disponibilidade da vaga não pode ser alterada pois está OCUPADA!");

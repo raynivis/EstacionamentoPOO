@@ -7,7 +7,6 @@ package ufms.cptl.raymay.InterfaceOpcoes;
 import java.util.List;
 
 import ufms.cptl.raymay.Classes.Enum.DiaSemana;
-import ufms.cptl.raymay.Classes.Enum.TipoVeiculo;
 import ufms.cptl.raymay.Interface.InterfaceDoUsuario.InterfaceGrafica;
 import ufms.cptl.raymay.Interface.InterfaceDoUsuario.InterfaceTerminal;
 import ufms.cptl.raymay.Interface.InterfaceDoUsuario.UserInterface;
@@ -33,20 +32,29 @@ public class AuxiliarInterfarceListaSemanas {
         }       
         dias = dias.toUpperCase();
         
-        if(dias.contains("DOMINGO") || dias.contains("TODOS")) 
+        if(dias.contains("TODOS")){
             diaSmns.add(DiaSemana.DOMINGO);
-        if(dias.contains("SEGUNDA") || dias.contains("TODOS"))
             diaSmns.add(DiaSemana.SEGUNDA); 
-        if(dias.contains("TERCA") || dias.contains("TODOS"))
-            diaSmns.add(DiaSemana.TERCA); 
-        if(dias.contains("QUARTA") || dias.contains("TODOS"))
-            diaSmns.add(DiaSemana.QUARTA); 
-        if(dias.contains("QUINTA") || dias.contains("TODOS"))
+            diaSmns.add(DiaSemana.TERCA);
+            diaSmns.add(DiaSemana.QUARTA);
             diaSmns.add(DiaSemana.QUINTA); 
-        if(dias.contains("SEXTA") || dias.contains("TODOS"))
-            diaSmns.add(DiaSemana.SEXTA); 
-        if(dias.contains("SABADO") || dias.contains("TODOS"))
-            diaSmns.add(DiaSemana.SABADO);      
-        
+            diaSmns.add(DiaSemana.SEXTA);
+            diaSmns.add(DiaSemana.SABADO);   
+        } else {
+            if(dias.contains("DOMINGO")) 
+                diaSmns.add(DiaSemana.DOMINGO);
+            if(dias.contains("SEGUNDA"))
+                diaSmns.add(DiaSemana.SEGUNDA); 
+            if(dias.contains("TERCA"))
+                diaSmns.add(DiaSemana.TERCA); 
+            if(dias.contains("QUARTA"))
+                diaSmns.add(DiaSemana.QUARTA); 
+            if(dias.contains("QUINTA"))
+                diaSmns.add(DiaSemana.QUINTA); 
+            if(dias.contains("SEXTA"))
+                diaSmns.add(DiaSemana.SEXTA); 
+            if(dias.contains("SABADO"))
+                diaSmns.add(DiaSemana.SABADO); 
+        }       
     }
 }
