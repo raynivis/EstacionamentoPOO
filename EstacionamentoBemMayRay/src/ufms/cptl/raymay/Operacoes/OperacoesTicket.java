@@ -53,7 +53,7 @@ public class OperacoesTicket {
             }
             else{ /*Sem esse "t instanceof TicketMensalista" o IDE estava reclamando*/
                 if(t instanceof TicketMensalista && t.getStatus() == Operando.ATIVO && t.getVeiculoTicket().equals(veiculoEstacio)){
-                    t.getVagaTicket().setStatus(VagaStatus.INDISPONIVEL);
+                    t.getVagaTicket().indisponibilizar();
                     return true;
                 }         
             }
@@ -83,7 +83,7 @@ public class OperacoesTicket {
             if(t instanceof TicketMensalista && t.getStatus().equals(Operando.ATIVO)){
                TicketMensalista tM = (TicketMensalista) t; 
                if(tM.getVeiculoTicket().equals(veiculoT) && tM.getVagaTicket().getStatus() == VagaStatus.INDISPONIVEL) {                 
-                   tM.getVagaTicket().setStatus(VagaStatus.OCUPADA);
+                   tM.getVagaTicket().ocupar();
                    return true;
                }
             }
@@ -194,7 +194,7 @@ public class OperacoesTicket {
     Se mais de uma tarifa entrar nessa condição ele vai comparar qual a tarifa mais perto da data passada (comparando os segundos)
     por referencia.
     A melhor tarifa é escolhida e retornada, se não achar nenhum tarifa nas condições retorna um ponteiro null*/
-    public Tarifa tarifaProxima(List<Tarifa> tarifas, LocalDateTime inicio, Veiculo veiculo, String tipoTi) { 
+    public Tarifa tarifaProxima(List<Tarifa> tarifas, LocalDateTime inicio, String tipoTi) { 
         Tarifa tarifaPerto = null;
         if(tipoTi.equalsIgnoreCase("HORISTA")){
             for(Tarifa t : tarifas) {
@@ -248,9 +248,17 @@ public class OperacoesTicket {
     da lista e retorna true se encontrar, se não, retorna false */
     public boolean procuraTarifaEmTicket(Tarifa tarifa, List<Ticket> tickets) {
         for(Ticket t : tickets) {
-            if(t.getTarifaTicket().equals(tarifa)) {
-                return true;
-            }
+            if(t instanceof TicketHorista) {
+                TicketHorista tH =  (TicketHorista) t;
+                if(tH.getTarifaTicketH().equals(tarifa)) {
+                    return true;
+                }
+            } else {
+                TicketMensalista tM =  (TicketMensalista) t;
+                if(tM.getTarifaTicketM().equals(tarifa)) {
+                    return true;
+                }
+            }         
         }
         return false;
     }

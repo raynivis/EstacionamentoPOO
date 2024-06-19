@@ -53,9 +53,16 @@ public class Vaga {
     public VagaStatus getStatus() {
         return status;
     }
-
-    public void setStatus(VagaStatus status) {
-        this.status = status;
+    /*Alterar o status da vaga por meio desses 3 metodos*/
+    public void disponibilizar() {
+        this.status = VagaStatus.DISPONIVEL;
+    }
+    
+    public void ocupar() {
+        this.status = VagaStatus.OCUPADA;
+    }
+    public void indisponibilizar() {
+        this.status = VagaStatus.INDISPONIVEL;
     }
 
     public TipoVeiculo getTipo() {

@@ -9,7 +9,6 @@ import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 import ufms.cptl.raymay.Classes.Enum.DiaSemana;
-import ufms.cptl.raymay.Classes.Enum.TipoVeiculo;
 import ufms.cptl.raymay.Classes.Enum.VagaStatus;
 import ufms.cptl.raymay.Classes.Externo.Automovel.Veiculo;
 import ufms.cptl.raymay.Classes.Externo.Individuo.Cliente;
@@ -114,7 +113,7 @@ public class InterfaceOpcaoEstacionamento{
                     String tipoTi; 
                     tipoTi = inter.receberString("O cliente deseja estacionar como Horista ou Mensalista?"); 
                     /*Achar a tarifa que pertence ao ticket*/                  
-                    Tarifa atual = opTicket.tarifaProxima(tarifas, LocalDateTime.now(), veiculo, tipoTi);
+                    Tarifa atual = opTicket.tarifaProxima(tarifas, LocalDateTime.now(), tipoTi);
 
                     if(atual == null){
                         inter.mensagem("Erro: Não existe uma tarifa para esse tipo de vaga nesse período!");  
@@ -122,12 +121,12 @@ public class InterfaceOpcaoEstacionamento{
                     }
                     
                     if(tipoTi.equalsIgnoreCase("HORISTA")){
-                        TicketHorista novoTicket = new TicketHorista(atual, veiculo, vaga);
+                        TicketHorista novoTicket = new TicketHorista((TarifaHorista)atual, veiculo, vaga);
                         tickets.add(novoTicket);
                         inter.mensagem("Ticket Horista de código " + novoTicket.getCodigo() + " criado com sucesso!");                           
                     }
                     else {
-                        TicketMensalista novoTicket = new TicketMensalista(atual, veiculo, vaga);
+                        TicketMensalista novoTicket = new TicketMensalista((TarifaMensalista)atual, veiculo, vaga);
                         tickets.add(novoTicket);
                         inter.mensagem("Ticket Mensalista de código " + novoTicket.getCodigo() + " criado com sucesso!");                  
                     }                                                     

@@ -4,7 +4,6 @@
  */
 package ufms.cptl.raymay.Classes.Interno.Tickets;
 
-import ufms.cptl.raymay.Classes.Interno.Tarifas.Tarifa;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import ufms.cptl.raymay.Classes.Enum.Operando;
@@ -28,20 +27,18 @@ public abstract class Ticket {
     protected Operando status; 
     protected LocalDateTime inicio;
     protected LocalDateTime fim;  
-    protected Tarifa tarifaTicket;
     protected Veiculo veiculoTicket;
     protected Vaga vagaTicket;
     protected double faturado; 
 
-    public Ticket(Tarifa tarifaTicket, Veiculo veiculoTicket, Vaga vagaTicket) {
+    public Ticket(Veiculo veiculoTicket, Vaga vagaTicket) {
         this.faturado = 0;
         this.inicio = LocalDateTime.now();
         this.status = Operando.ATIVO;
         this.codigo = proxCodigo;
-        this.tarifaTicket = tarifaTicket;
         this.veiculoTicket = veiculoTicket;
         this.vagaTicket = vagaTicket;
-        this.vagaTicket.setStatus(VagaStatus.OCUPADA);
+        this.vagaTicket.ocupar();
         proxCodigo++;
     }
 
@@ -59,10 +56,6 @@ public abstract class Ticket {
 
     public void setFim(LocalDateTime fim) {
         this.fim = fim;
-    }
-
-    public Tarifa getTarifaTicket() {
-        return tarifaTicket;
     }
 
     public Veiculo getVeiculoTicket() {
