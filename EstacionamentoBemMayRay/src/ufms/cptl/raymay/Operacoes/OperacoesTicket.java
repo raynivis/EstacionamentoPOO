@@ -63,7 +63,7 @@ public class OperacoesTicket {
 
     /*Método para verificar se a vaga esta liberada para uso nos tickets mensalistas, ele é iniciado sempre após entrar em interfaces de
     estascionamento. Lembrando que ao criar um ticket mensalista ele ja define a data final do ticket*/
-    public void verificarTicketsMensalista30dias(List<Ticket> tickets) {
+    public void verificarMensalista30dias(List<Ticket> tickets) {
         for(Ticket t : tickets){
             if(t instanceof TicketMensalista && t.getStatus().equals(Operando.ATIVO)){
                TicketMensalista tM = (TicketMensalista) t; 
@@ -78,7 +78,7 @@ public class OperacoesTicket {
     ele olha para todos os tickets que possuem a estancia de Ticket mensalista e está ativo e retorna verdade se o veiculo 
     estiver vinculado a o Ticket Mensalista*/
     /*retorna true se o veiculo estiver vinculado ao um ticket mensalista e falso se não estiver*/
-    public boolean verificarEstacionarTicketMensalistaParaVeiculo(List<Ticket> tickets, Veiculo veiculoT) {
+    public boolean verificarMensalistaParaVeiculo(List<Ticket> tickets, Veiculo veiculoT) {
         for(Ticket t : tickets){
             if(t instanceof TicketMensalista && t.getStatus().equals(Operando.ATIVO)){
                TicketMensalista tM = (TicketMensalista) t; 
@@ -96,9 +96,9 @@ public class OperacoesTicket {
     horista ou mensalista (necessário pois, mesmo após a retirada do veículo mensalista da vaga, o ticket pode continuar
     ATIVO!), se for horista verifica se está ativo e retorna o ticket. Caso não seja horista, verifica se é mensalista
     e se a vaga atrelada a esse ticket está ocupada, se estiver, significa que está sendo utilizado e retorna o ticket */
-    public Ticket verificaTicketVeiculo(List<Cliente> clientes, String placa, List<Ticket> tickets) {
-        if(opClie.verificarVeiculo(clientes, placa) != null) {
-            Veiculo v = opClie.verificarVeiculo(clientes, placa);
+    public Ticket verificarUtilizacaoParaVeiculo(List<Cliente> clientes, String placa, List<Ticket> tickets) {
+        if(opClie.buscarVeiculo(clientes, placa) != null) {
+            Veiculo v = opClie.buscarVeiculo(clientes, placa);
             for(Ticket t : tickets) {
                 if(t instanceof TicketHorista) {
                     if(t.getStatus() == Operando.ATIVO) {
@@ -119,7 +119,7 @@ public class OperacoesTicket {
     
     /*Método para faciltar a identificação de LocalDateTime.DayOfWeek para o Enum criado, pela data passada por paramêtro, ele retorna
     o dia da semana pelo o Enum criado, para assim identificar os preços das tarifas*/ 
-    public DiaSemana semanaToEnum(LocalDateTime data){
+    public DiaSemana identificarDiaSemanaToEnum(LocalDateTime data){
         DayOfWeek diaS = data.getDayOfWeek();
         DiaSemana tipo = null;
         
@@ -177,7 +177,7 @@ public class OperacoesTicket {
     
     /* O método recebe o código do ticket e a lista de tickets e percorre a lista de tickets fazendo
     a procura do código, se encontrar retorna o ticket, se não, retorna null*/
-    public Ticket buscarTicket(List<Ticket> tickets, int codigo) {
+    public Ticket buscar(List<Ticket> tickets, int codigo) {
         for(Ticket t : tickets) {
             if(t.getCodigo() == codigo) {
                 return t;
@@ -194,12 +194,12 @@ public class OperacoesTicket {
     Se mais de uma tarifa entrar nessa condição ele vai comparar qual a tarifa mais perto da data passada (comparando os segundos)
     por referencia.
     A melhor tarifa é escolhida e retornada, se não achar nenhum tarifa nas condições retorna um ponteiro null*/
-    public Tarifa tarifaProxima(List<Tarifa> tarifas, LocalDateTime inicio, String tipoTi) { 
+    public Tarifa buscarTarifaProxima(List<Tarifa> tarifas, LocalDateTime inicio, String tipoTi) { 
         Tarifa tarifaPerto = null;
         if(tipoTi.equalsIgnoreCase("HORISTA")){
             for(Tarifa t : tarifas) {
                 TarifaHorista tH = (TarifaHorista) t;
-                if(t instanceof TarifaHorista && tH.getInicio().isBefore(inicio) && tH.getDiasSemana().contains(semanaToEnum(LocalDateTime.now())) ) {                      	
+                if(t instanceof TarifaHorista && tH.getInicio().isBefore(inicio) && tH.getDiasSemana().contains(identificarDiaSemanaToEnum(LocalDateTime.now())) ) {                      	
                     if(tarifaPerto == null || Duration.between(tH.getInicio(), inicio).getSeconds() <= Duration.between(tarifaPerto.getInicio(), inicio).getSeconds() ) {
                          tarifaPerto = tH;  
                     }
@@ -221,7 +221,7 @@ public class OperacoesTicket {
     
     
     /*Método que retorna uma lista com as tarifas cadastradas no sistema para ter uma visualização*/
-    public List<String> relatorioTarifa(List<Tarifa> tarifas) {
+    public List<String> listarTarifasCadastradas(List<Tarifa> tarifas) { /* ex relatorioTarifa */
         List<String> lista = new ArrayList<>(); 
         String tarife;
         for(Tarifa t : tarifas) {
@@ -246,7 +246,7 @@ public class OperacoesTicket {
     
     /* O método recebe a tarifa a ser procurada e a lista de tickets, faz a procura dessa tarifa nos tickets
     da lista e retorna true se encontrar, se não, retorna false */
-    public boolean procuraTarifaEmTicket(Tarifa tarifa, List<Ticket> tickets) {
+    public boolean procurarTarifa(Tarifa tarifa, List<Ticket> tickets) {
         for(Ticket t : tickets) {
             if(t instanceof TicketHorista) {
                 TicketHorista tH =  (TicketHorista) t;
@@ -265,7 +265,7 @@ public class OperacoesTicket {
     
     
     /* O método retona uma lista com todos os tickets ATIVOS no momento */
-    public List<String> ListarTicketAtivo(List<Ticket> tickets) {
+    public List<String> listarAtivos(List<Ticket> tickets) {
         List<String> lista = new ArrayList<>();      
         for(Ticket t : tickets) {
             if(t.getStatus() == Operando.ATIVO){
@@ -279,7 +279,7 @@ public class OperacoesTicket {
     
     /*Método para ver quantos tickets faturou pelo periodo passado por referencia, ele usa o metodo de total faturado do ticket
     retorna o total faturado no periodo*/
-    public double FaturadoPeriodo(List<Ticket> tickets, LocalDateTime inicio, LocalDateTime fim){
+    public double calcularTotalFaturadoPeriodo(List<Ticket> tickets, LocalDateTime inicio, LocalDateTime fim){
         double soma = 0;
         for(Ticket t : tickets) {
             if(t.getFim().isAfter(inicio)) {

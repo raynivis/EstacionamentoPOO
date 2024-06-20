@@ -57,7 +57,7 @@ public class InterfaceInicial{
     public void primeirasOpcoes(List<Cliente> clientes, List<Vaga> vagas, List<Ticket> tickets, List<Tarifa> tarifas, UserInterface inter) {  
         do {
                               
-            opTicket.verificarTicketsMensalista30dias(tickets);
+            opTicket.verificarMensalista30dias(tickets);
             
             if(inter instanceof InterfaceTerminal){
                 inter = (InterfaceTerminal) inter;
@@ -80,14 +80,14 @@ public class InterfaceInicial{
                 break;
                 case 4: /*Cadastros gerais*/
                     do {                      
-                        opTicket.verificarTicketsMensalista30dias(tickets);
+                        opTicket.verificarMensalista30dias(tickets);
                         opcao3 = inter.imprimeCadastroGeral();          
                         switch(opcao3) { /*ticket tarifa*/
                             case 1:                               
                                 int cod;
                                 String codigo = inter.receberString("Digite o codigo do ticket:");
                                 cod = Integer.parseInt(codigo);                      
-                                Ticket testeT = opTicket.buscarTicket(tickets, cod);
+                                Ticket testeT = opTicket.buscar(tickets, cod);
                                 if(testeT == null) {                                   
                                     inter.mensagem("Erro: Ticket não encontrado!");                         
                                     break;
@@ -114,7 +114,7 @@ public class InterfaceInicial{
                             case 2: /*consultar veiculo*/
                                 String placa = inter.receberString("Digite a placa do veículo:");
                                                     
-                                Veiculo veicule = opCliente.verificarVeiculo(clientes, placa);
+                                Veiculo veicule = opCliente.buscarVeiculo(clientes, placa);
                                 if(veicule == null) {
                                     inter.mensagem("Veiculo não encontrado!");     
                                     break;
@@ -176,7 +176,7 @@ public class InterfaceInicial{
                             case 4: /*consultar Ticket*/                                                            
                                 codigo = inter.receberString("Digite o código do ticket:");
                                 cod = Integer.parseInt(codigo);
-                                Ticket tickete = opTicket.buscarTicket(tickets, cod);                                                              
+                                Ticket tickete = opTicket.buscar(tickets, cod);                                                              
                                 if(tickete == null) {
                                     inter.mensagem("Erro: Ticket não encontrado!");                      
                                     break;
@@ -187,13 +187,13 @@ public class InterfaceInicial{
                                 }
                             break;
                             case 5: /* Listar tickets ativos */
-                                List<String> lista = opTicket.ListarTicketAtivo(tickets);
+                                List<String> lista = opTicket.listarAtivos(tickets);
                                 for(String s : lista){
                                         inter.mensagem(s);
                                 }
                             break; 
                             case 6: /* Listar vagas cadastradas */                               
-                                List<String> listaV = opVaga.listarVagasCadastradas(vagas);
+                                List<String> listaV = opVaga.listarCadastros(vagas);
                                 for(String s : listaV){
                                         inter.mensagem(s);                                   
                                 }
@@ -214,7 +214,7 @@ public class InterfaceInicial{
                     fimS = fimS + " 23:59:59";
                     LocalDateTime inicio = LocalDateTime.parse(iniS, dataBonitinhaComSegundos);
                     LocalDateTime fim = LocalDateTime.parse(fimS, dataBonitinhaComSegundos);
-                    double resultado = opTicket.FaturadoPeriodo(tickets, inicio, fim);
+                    double resultado = opTicket.calcularTotalFaturadoPeriodo(tickets, inicio, fim);
                     inter.mensagem("\nNesse período foi/foram faturado/s: "  + dinheiro.format(resultado) + "\n");                                     
                 break;
                 case 6:

@@ -49,7 +49,7 @@ public class InterfaceOpcaoCliente{
                         String nome = inter.receberString("Digite o nome");
                         String cpf = inter.receberString("DIgite o cpf");
                         
-                        if(opCliente.verificarCliente(clientes, cpf) != null) {
+                        if(opCliente.buscar(clientes, cpf) != null) {
                             inter.mensagem("Erro ao cadastrar: CPF já existente no sistema!");
                             break;
                         }
@@ -74,22 +74,22 @@ public class InterfaceOpcaoCliente{
                     case 2:
                         /*consultar cliente por documento*/
                         cpf = inter.receberString("Digite o CPF");
-                        if(opCliente.relatorioCliente(clientes, cpf) == null){
+                        if(opCliente.buscarDocumentoParaRelatorio(clientes, cpf) == null){
                             inter.mensagem("\nCliente não encontrado!\n");
                         } else {
-                            inter.mensagem(opCliente.relatorioCliente(clientes, cpf));
+                            inter.mensagem(opCliente.buscarDocumentoParaRelatorio(clientes, cpf));
                         } 
                     break;   
                     case 3:
                         /*excluir cliente*/
                         cpf = inter.receberString("Digite o CPF");
                         
-                        Cliente clieteEx = opCliente.verificarCliente(clientes, cpf);
+                        Cliente clieteEx = opCliente.buscar(clientes, cpf);
                         if(clieteEx == null) {
                             inter.mensagem("\nErro: Cliente nao encontrado!\n");
                             break;
                         }
-                        if(opCliente.excluirCliente(clientes, clieteEx, tickets) == true) {
+                        if(opCliente.excluir(clientes, clieteEx, tickets) == true) {
                             clieteEx = null;
                             inter.mensagem("\nCliente excluído com sucesso!\n");
                         }else {
@@ -101,26 +101,26 @@ public class InterfaceOpcaoCliente{
                         /*editar cliente*/
                         String novoNome, novoTelefone;
                         cpf = inter.receberString("Digite o CPF:");
-                        if(opCliente.verificarCliente(clientes, cpf) == null) {
+                        if(opCliente.buscar(clientes, cpf) == null) {
                            inter.mensagem("\nErro: cliente não econtrado!\n");
                            break; 
                         }                                                                        
                         novoNome = inter.receberString("Digite o novo nome:");                     
                         novoTelefone = inter.receberString("Digite o novo telefone:");
-                        opCliente.editarCliente(opCliente.verificarCliente(clientes, cpf), novoNome, novoTelefone);
+                        opCliente.editar(opCliente.buscar(clientes, cpf), novoNome, novoTelefone);
                     break;    
                     case 5:
                         /*gerenciar veículos do cliente*/
                         Cliente operador;
                         cpf = inter.receberString("Digite o CPF do cliente que deseja gerenciar os veículos");
-                        operador = opCliente.verificarCliente(clientes, cpf);
+                        operador = opCliente.buscar(clientes, cpf);
                         if(operador == null) {
                            inter.mensagem("\nErro: Cliente não econtrado!\n");
                             break; 
                         }
 
                         inter.mensagem("Os veículos do cliente " + operador.getNome() + " são:\n");
-                        inter.mensagem(opCliente.mostraVeiculos(clientes, cpf));  
+                        inter.mensagem(opCliente.listarVeiculos(clientes, cpf));  
                                                
                         do{
                             /* Utiliza o método criado na classe InterfaceTerminal ou na Classe InterfaceGrafica, dependendo
@@ -140,15 +140,15 @@ public class InterfaceOpcaoCliente{
                                 case 2: /*Remover um veiculo*/
                                     String placa;
                                     placa = inter.receberString("Digite a placa:");
-                                    if(opCliente.apagaVeiculo(clientes, placa, tickets) == true) {
+                                    if(opCliente.apagarVeiculo(clientes, placa, tickets) == true) {
                                         inter.mensagem("Veículo excluído com sucesso!");
                                     } 
                                 break;
                                 case 3: /*Editar um veiculo*/
                                     String cor, descricao;
                                     placa = inter.receberString("Digite a placa:");
-                                    if(opCliente.verificarVeiculo(clientes, placa) != null) {                                   
-                                        Veiculo auxVeiculo = opCliente.verificarVeiculo(clientes, placa);
+                                    if(opCliente.buscarVeiculo(clientes, placa) != null) {                                   
+                                        Veiculo auxVeiculo = opCliente.buscarVeiculo(clientes, placa);
 
                                         cor = inter.receberString("Digite a nova cor");
                                         descricao = inter.receberString("Digite a nova descrição");
@@ -170,7 +170,7 @@ public class InterfaceOpcaoCliente{
                     break;    
                     case 6: 
                         /*listar todos os cadastros de cliente*/
-                        List<String> listaC = opCliente.relatorioCliente(clientes);
+                        List<String> listaC = opCliente.listarCadastros(clientes);
                         for(String c : listaC) {
                             inter.mensagem(c);
                         }
