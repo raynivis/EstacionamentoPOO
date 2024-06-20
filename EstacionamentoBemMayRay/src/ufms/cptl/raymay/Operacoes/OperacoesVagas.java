@@ -18,7 +18,7 @@ public class OperacoesVagas {
     /* O método verifica o número e a rua da vaga a ser cadastrada, identifica se a chave composta
     (número e rua) já existe na lista de vagas (nesse caso, retorna false), se não existe, a vaga é
     cadastrada e adicionada a lista de vagas */
-    public boolean cadastrarVaga(List<Vaga> vagas, Vaga novaVaga, String rua, int numero) {
+    public boolean cadastrar(List<Vaga> vagas, Vaga novaVaga, String rua, int numero) {
         for (Vaga v : vagas) {
             if (v.getRua().equals(rua) && v.getNumero() == numero) {
                 return false;
@@ -31,7 +31,7 @@ public class OperacoesVagas {
     
     /* O método recebe o número e a rua da vaga a ser consultada e a lista de vagas para realizar 
     a procura, caso seja encontrada, retorna a própria vaga (objeto), se não, retorna null */
-    public Vaga consultarVaga(List<Vaga> vagas, int numero, String rua) {
+    public Vaga consultar(List<Vaga> vagas, int numero, String rua) {
         for(Vaga v : vagas) {
             if(v.getNumero() == numero && v.getRua().equals(rua)) {              
                 return v;
@@ -44,7 +44,7 @@ public class OperacoesVagas {
      /* O método realiza a procura pela vaga, se for encontrada percorre a lista de tickets para verificar
     se existe algum ticket cadastrado (ATIVO OU DESATIVO), caso possua, a vaga não é excluída,
     se não, ela é excluída*/
-    public String excluirVaga(List<Vaga> vagas, List<Ticket> tickets, String rua, int numero) {
+    public String excluir(List<Vaga> vagas, List<Ticket> tickets, String rua, int numero) {
         for(Vaga v : vagas) {
             if(v.getRua().equals(rua) && v.getNumero() == numero) {
                 for(Ticket t: tickets) {
@@ -65,8 +65,8 @@ public class OperacoesVagas {
     /* O método recebe a lista de vagas, a rua e o número da vaga existente e seu novo número e rua,
     quando encontra a vaga na lista, substitui os atributos pelos novos inseridos e retorna true,
     caso não encontre a vaga retorna false */
-    public boolean editarVaga(List<Vaga> vagas, String rua, int numero, String novaRua, int novoNumero) {
-        if(consultarVaga(vagas, novoNumero,novaRua) != null) {
+    public boolean editar(List<Vaga> vagas, String rua, int numero, String novaRua, int novoNumero) {
+        if(consultar(vagas, novoNumero,novaRua) != null) {
             return false;
         }
         for(Vaga v : vagas) {
@@ -104,7 +104,7 @@ public class OperacoesVagas {
     
     
     /* O método lista todas as vagas disponíveis na lista de vagas */
-    public List<String> listarVagasDisponiveis(List<Vaga> vagas) {
+    public List<String> listarDisponiveis(List<Vaga> vagas) {
         List<String> lista = new ArrayList<>();   
         for(Vaga v : vagas) {         
             if(v.getStatus() == VagaStatus.DISPONIVEL) {
@@ -119,7 +119,7 @@ public class OperacoesVagas {
     
     
     /* O método lista TODAS as vagas cadastradas no sistema, presentes na lista de vagas */
-    public List<String> listarVagasCadastradas(List<Vaga> vagas) {
+    public List<String> listarCadastros(List<Vaga> vagas) {
         List<String> lista = new ArrayList<>();      
         for(Vaga v : vagas) { 
             String vaga;

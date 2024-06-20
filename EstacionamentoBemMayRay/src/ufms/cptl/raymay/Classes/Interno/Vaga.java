@@ -67,5 +67,5 @@ public class Vaga {
 
     public TipoVeiculo getTipo() {
         return tipo;
-    }  
+    }
 }

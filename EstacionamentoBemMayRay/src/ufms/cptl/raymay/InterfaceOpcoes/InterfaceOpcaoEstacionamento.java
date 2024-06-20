@@ -67,20 +67,20 @@ public class InterfaceOpcaoEstacionamento{
                     String placa;
                     placa = inter.receberString("Digite a placa do veículo a ser estacionado:");
                                 
-                    Veiculo veiculo = opCliente.verificarVeiculo(clientes, placa);
+                    Veiculo veiculo = opCliente.buscarVeiculo(clientes, placa);
                     
                     if(veiculo == null) {
                        inter.mensagem("Erro: Veículo não econtrado!");                         
                        break;
                     }
                     
-                    Ticket veriTicket = opTicket.verificaTicketVeiculo(clientes, placa, tickets);
+                    Ticket veriTicket = opTicket.verificarUtilizacaoParaVeiculo(clientes, placa, tickets);
                     if(veriTicket != null){
                        inter.mensagem("Erro: O veículo já está estacionado!");                      
                        break;                     
                     }                                      
                     
-                    if(opTicket.verificarEstacionarTicketMensalistaParaVeiculo(tickets, veiculo)){ /*verificando o veiculo possui um ticket mensalista*/
+                    if(opTicket.verificarMensalistaParaVeiculo(tickets, veiculo)){ /*verificando o veiculo possui um ticket mensalista*/
                         inter.mensagem("Veículo Mensalista estacionado com sucesso!");                        
                         break;
                     }
@@ -89,7 +89,7 @@ public class InterfaceOpcaoEstacionamento{
                     numeroRua = inter.receberString("Digite o número da vaga que pretende ser estacionada:");
                     int rua = Integer.parseInt(numeroRua);
                     ruaVaga = inter.receberString("Digite a rua da vaga que pretende ser estacionada:");
-                    vaga = opVaga.consultarVaga(vagas, rua, ruaVaga);
+                    vaga = opVaga.consultar(vagas, rua, ruaVaga);
 
                     
                     if(vaga == null) { 
@@ -113,7 +113,7 @@ public class InterfaceOpcaoEstacionamento{
                     String tipoTi; 
                     tipoTi = inter.receberString("O cliente deseja estacionar como Horista ou Mensalista?"); 
                     /*Achar a tarifa que pertence ao ticket*/                  
-                    Tarifa atual = opTicket.tarifaProxima(tarifas, LocalDateTime.now(), tipoTi);
+                    Tarifa atual = opTicket.buscarTarifaProxima(tarifas, LocalDateTime.now(), tipoTi);
 
                     if(atual == null){
                         inter.mensagem("Erro: Não existe uma tarifa para esse tipo de vaga nesse período!");  
@@ -136,7 +136,7 @@ public class InterfaceOpcaoEstacionamento{
                     /*retirar*/
                     placa = inter.receberString("Digite a placa do veículo que deseja retirar:");
                     
-                    Veiculo veiculoRetirar = opCliente.verificarVeiculo(clientes, placa);
+                    Veiculo veiculoRetirar = opCliente.buscarVeiculo(clientes, placa);
                     if(veiculoRetirar == null) {
                         inter.mensagem("Veiculo não encontrado nos Clientes!");  
                         break;
@@ -150,7 +150,7 @@ public class InterfaceOpcaoEstacionamento{
                 break;    
                 case 3:
                     /*listar todas as vagas disponíveis do estacionamento*/
-                    List<String> lista = opVaga.listarVagasDisponiveis(vagas);
+                    List<String> lista = opVaga.listarDisponiveis(vagas);
                     for(String s : lista){
                         inter.mensagem(s);
                     }
@@ -160,7 +160,7 @@ public class InterfaceOpcaoEstacionamento{
                     do{ 
                         /* Utiliza o método criado em ItensMenu, reduzindo o tamanho
                         de linhas das Classes da interface */                       
-                        opTicket.verificarTicketsMensalista30dias(tickets);
+                        opTicket.verificarMensalista30dias(tickets);
                         opcao3 = inter.imprimeTarifa();
                         switch(opcao3){
                             case 1: /*adicionar tarifa*/                                                      
@@ -230,7 +230,7 @@ public class InterfaceOpcaoEstacionamento{
                                         break;
                                     }
                                      
-                                    if(opTicket.procuraTarifaEmTicket(tarifaEx, tickets) == true) {                                     
+                                    if(opTicket.procurarTarifa(tarifaEx, tickets) == true) {                                     
                                         inter.mensagem("A tarifa não pode ser excluída pois ela possui um ticket cadastrado!");        
                                         break;
                                     }
@@ -243,7 +243,7 @@ public class InterfaceOpcaoEstacionamento{
                                         break;
                                      }
                                      /*Ver se ta fufando*/
-                                     if(opTicket.procuraTarifaEmTicket(tarifaEx, tickets) == true) {
+                                     if(opTicket.procurarTarifa(tarifaEx, tickets) == true) {
                                         inter.mensagem("A tarifa não pode ser excluída pois ela possui um ticket cadastrado!");      
                                         break;
                                      }
@@ -294,7 +294,7 @@ public class InterfaceOpcaoEstacionamento{
                                 inter.mensagem("Tarifa editada com Sucesso!");  
                             break;
                             case 4: /*imprimir tarifas*/                                
-                                lista = opTicket.relatorioTarifa(tarifas);
+                                lista = opTicket.listarTarifasCadastradas(tarifas);
                                 for(String s : lista){
                                     inter.mensagem(s);
                                 }

@@ -58,7 +58,7 @@ public class InterfaceOpcaoVaga{
                     Vaga novaVaga = new Vaga(numero, rua, tipoV);
                     
                     /* O método cadastrarVaga já adiciona na lista de vagas se retornar true */
-                    if (opVaga.cadastrarVaga(vagas, novaVaga, rua, numero) == true){
+                    if (opVaga.cadastrar(vagas, novaVaga, rua, numero) == true){
                         inter.mensagem("Vaga cadastrada com sucesso!");
                     }
                     else{
@@ -71,7 +71,7 @@ public class InterfaceOpcaoVaga{
                     numero = Integer.parseInt(numeroS);
                         
                     rua = inter.receberString("Digite a rua da vaga que você deseja consultar");  
-                    Vaga vaga = opVaga.consultarVaga(vagas, numero, rua); 
+                    Vaga vaga = opVaga.consultar(vagas, numero, rua); 
                     if(vaga == null){
                         inter.mensagem("Vaga inexistente!");
                         break;
@@ -87,11 +87,11 @@ public class InterfaceOpcaoVaga{
                     rua = inter.receberString("Digite a rua da vaga a ser excluída"); 
                         
                     /* O método excluirVaga realiza as verificações necessárias para a exclusão da vaga*/
-                    if(opVaga.excluirVaga(vagas, tickets, rua, numero) == null) {
+                    if(opVaga.excluir(vagas, tickets, rua, numero) == null) {
                         inter.mensagem("Vaga rua:" + rua + " número:" + numero + " excluída com sucesso!");
                     }
                     else {
-                         inter.mensagem(opVaga.excluirVaga(vagas, tickets, rua, numero));
+                         inter.mensagem(opVaga.excluir(vagas, tickets, rua, numero));
                     }
                 break;  
                 
@@ -109,7 +109,7 @@ public class InterfaceOpcaoVaga{
 
                     ruaNova = inter.receberString("Digite a nova rua da vaga");      
                     
-                    if(opVaga.editarVaga(vagas, rua, numero, ruaNova, numeroNovo) == true) {
+                    if(opVaga.editar(vagas, rua, numero, ruaNova, numeroNovo) == true) {
                         inter.mensagem("Vaga editada com sucesso!");
                     }
                     else {

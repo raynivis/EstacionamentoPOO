@@ -24,7 +24,7 @@ public class OperacoesCliente {
     /* O método procura um Cliente na lista de Clientes e mostra na tela a suas informações */
     /* Retorna o Cliente se conseguir encontrar o cliente e null se o CPF do cliente não 
     estiver cadastrado */
-    public Cliente verificarCliente(List<Cliente> clientes, String documento){
+    public Cliente buscar(List<Cliente> clientes, String documento){
         for(Cliente i : clientes) {
             if (i.getCpf().equals(documento)) {
                 return i;
@@ -38,7 +38,7 @@ public class OperacoesCliente {
     ATIVO ou DESATIVO cadastrado em relação a esse cliente (a exclusão não pode ser feita caso exista um
     ticket cadastrado), se existir retorna false, se não, realiza a exclusão do cliente, limpa lista de
     veículos e retorna true */
-    public boolean excluirCliente(List<Cliente> clientes, Cliente cliente, List<Ticket> tickets){
+    public boolean excluir(List<Cliente> clientes, Cliente cliente, List<Ticket> tickets){
         for(Veiculo v : cliente.getVeiculos()){
             for(Ticket t : tickets){
                 if(t.getVeiculoTicket().equals(v)) {
@@ -55,7 +55,7 @@ public class OperacoesCliente {
     /* Método responsável por editar dados dos clientes (não é recomendavel mudar o cpf, pelo menos
     em alguns sistemas) e não devemos gerenciar os veículos do cliente, pois tem outro método para isso */
     /* Retorna vazio pois nao é necessário nenhuma verificação */
-    public void editarCliente(Cliente editarC, String nomeNovo, String telefoneNovo) {                                                        
+    public void editar(Cliente editarC, String nomeNovo, String telefoneNovo) {                                                        
         editarC.setNome(nomeNovo);                                                         
         editarC.setTelefone(telefoneNovo);                                                                                           
     }
@@ -64,7 +64,7 @@ public class OperacoesCliente {
     /* Método que gerencia os veículos do cliente a partir do documento */
     /* Operacao de gerenciar os veiculos do Cliente, nele voce pode adicionar ou excluir veiculo */
     /* O método percorre a lista de clientes a procura da placa inserida */
-    public Veiculo verificarVeiculo(List<Cliente> clientes, String placa){
+    public Veiculo buscarVeiculo(List<Cliente> clientes, String placa){
         for(Cliente c : clientes) {
             for(Veiculo v : c.getVeiculos() ) {
                 if(v.getPlaca().equals(placa)) {                                               
@@ -83,7 +83,7 @@ public class OperacoesCliente {
     
     /* A passagem pela lista de clientes é necessária pois o veículo cadastrado pode não ter um ticket
     cadastrado ainda!!! */
-    public boolean apagaVeiculo(List<Cliente> clientes, String placa, List<Ticket> tickets){
+    public boolean apagarVeiculo(List<Cliente> clientes, String placa, List<Ticket> tickets){
         for(Cliente c : clientes) {
             for(Veiculo v : c.getVeiculos() ) {
                 if(v.getPlaca().equals(placa)) { 
@@ -106,7 +106,7 @@ public class OperacoesCliente {
     /* O método recebe a lista de clientes e um CPF (chave primaria de um cliente) e percorre a lista
     de clientes até encontrar o CPF, ao encontrar imprime retorna uma String com todos os veiculos vinculados ao
     documento inserido, esse tipo de retorno auxilia para a troca de interfaces (terminal e gráfica) */
-    public String mostraVeiculos(List<Cliente> clientes, String documento) {
+    public String listarVeiculos(List<Cliente> clientes, String documento) {
         String veiculo = "Os veículos do cliente são:\n";
         for(Cliente c : clientes) {
             if(c.getCpf().equals(documento)) {
@@ -124,7 +124,7 @@ public class OperacoesCliente {
     
     /*Método para imprimir todos os clientes cadastrados no sistema, retorna a lista de clientes auxiliando a troca 
     de interfaces (terminal e gráfica) */
-    public List<String> relatorioCliente(List<Cliente> clientes) {
+    public List<String> listarCadastros(List<Cliente> clientes) {
         List<String> lista = new ArrayList<>();
         String cliente;
         for(Cliente c : clientes) {
@@ -140,7 +140,7 @@ public class OperacoesCliente {
     
     /*Método com overload ou polimorfismo para retornar uma String com apenas o cliente que possui o documento
     passado por referencia, (overload do metodo acima).*/
-    public String relatorioCliente(List<Cliente> clientes, String documento) {
+    public String buscarDocumentoParaRelatorio(List<Cliente> clientes, String documento) {
         for(Cliente c : clientes) {
             if(c.getCpf().equals(documento)) {
                 String cliente;
