@@ -18,7 +18,7 @@ public class AuxiliarInterfarceListaSemanas {
     /*Método para identificação e cadastro de listas de Dias da Semana e Listas de Veiculos, para não ficar repetindo codigo.*/
     public void OperacaoListaDiasSemanas(List<DiaSemana> diaSmns, UserInterface inter){
         String dias;
-        inter.mensagem("Digite o/s dia/s da semana dessa tarifa (Domingo, Segunda, Terça, Quarta, Quinta, Sexta, Sábado)");
+        inter.mensagem("Digite o/s dia/s da semana dessa tarifa (Domingo, Segunda, Terca, Quarta, Quinta, Sexta, Sábado)");
         dias = inter.receberString("Caso seja para todos os dias da semana, digite: Todos");
         dias = dias.toUpperCase();
         
@@ -30,21 +30,8 @@ public class AuxiliarInterfarceListaSemanas {
             diaSmns.add(DiaSemana.QUINTA); 
             diaSmns.add(DiaSemana.SEXTA);
             diaSmns.add(DiaSemana.SABADO);   
-        } else {
-            if(dias.contains("DOMINGO")) 
-                diaSmns.add(DiaSemana.DOMINGO);
-            if(dias.contains("SEGUNDA"))
-                diaSmns.add(DiaSemana.SEGUNDA); 
-            if(dias.contains("TERCA"))
-                diaSmns.add(DiaSemana.TERCA); 
-            if(dias.contains("QUARTA"))
-                diaSmns.add(DiaSemana.QUARTA); 
-            if(dias.contains("QUINTA"))
-                diaSmns.add(DiaSemana.QUINTA); 
-            if(dias.contains("SEXTA"))
-                diaSmns.add(DiaSemana.SEXTA); 
-            if(dias.contains("SABADO"))
-                diaSmns.add(DiaSemana.SABADO); 
+        } else {           
+            diaSmns.addAll(DiaSemana.criarLista(dias));
         }       
     }
 }
