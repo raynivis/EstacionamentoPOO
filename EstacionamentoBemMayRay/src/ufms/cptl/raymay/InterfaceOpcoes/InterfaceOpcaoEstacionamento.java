@@ -19,8 +19,6 @@ import ufms.cptl.raymay.Classes.Interno.Tickets.Ticket;
 import ufms.cptl.raymay.Classes.Interno.Tickets.TicketHorista;
 import ufms.cptl.raymay.Classes.Interno.Tickets.TicketMensalista;
 import ufms.cptl.raymay.Classes.Interno.Vaga;
-import ufms.cptl.raymay.Interface.InterfaceDoUsuario.InterfaceGrafica;
-import ufms.cptl.raymay.Interface.InterfaceDoUsuario.InterfaceTerminal;
 import ufms.cptl.raymay.Interface.InterfaceDoUsuario.UserInterface;
 import ufms.cptl.raymay.Operacoes.OperacoesCliente;
 import ufms.cptl.raymay.Operacoes.OperacoesTicket;
@@ -48,14 +46,7 @@ public class InterfaceOpcaoEstacionamento{
         do{
             /* Utiliza o método criado em OpcaoEstacionamento no package InterfaceEnumOpcao, reduzindo o tamanho
             de linhas das classes da interface */
-            if(inter instanceof InterfaceTerminal){
-                inter = (InterfaceTerminal) inter;
-                opcao2 = inter.imprimeEstacionamento();
-            }
-            else {
-                inter = (InterfaceGrafica) inter;
-                opcao2 = inter.imprimeEstacionamento();
-            }
+            opcao2 = inter.imprimeEstacionamento();
             switch (opcao2) {
                 case 1:
                     /*estacionar*/
@@ -157,155 +148,7 @@ public class InterfaceOpcaoEstacionamento{
                 break;    
                 case 4:
                     /*Gerenciar tarifas*/
-                    do{ 
-                        /* Utiliza o método criado em ItensMenu, reduzindo o tamanho
-                        de linhas das Classes da interface */                       
-                        opTicket.verificarMensalista30dias(tickets);
-                        opcao3 = inter.imprimeTarifa();
-                        switch(opcao3){
-                            case 1: /*adicionar tarifa*/                                                      
-                                String tipo; 
-                                tipo = inter.receberString("Digite o Tipo de Tarifa que deseja cadastrar (Horista ou Mensalista):");
-                                
-                                String data;
-                                inter.mensagem("Digite a data que deseja iniciar tarifa (em dia/mês/ano horas:minutos) :");
-                                data = inter.receberString("Se deseja cadastrar uma tarifa instantânea, digite: Agora"); 
-                  
-                                LocalDateTime inicio;
-                                
-                                if(data.toUpperCase().equals("AGORA")) {
-                                    inicio = LocalDateTime.now();
-                                } else {
-                                    inicio = LocalDateTime.parse(data, dataFormata);
-                                    if(inicio.isBefore(LocalDateTime.now())) {                                       
-                                        inter.mensagem("Erro: Nao é possível cadastrar uma tarifa no passado!");  
-                                        break;
-                                    }
-                                }                                                                                            
-                                 
-                                if(tipo.equalsIgnoreCase("HORISTA")){    
-                                    List<DiaSemana> diaSmns = new  ArrayList<>();                                                     
-                                    listasVS.OperacaoListaDiasSemanas(diaSmns, inter);
-                                    String priHora;
-                                    priHora = inter.receberString("Digite o valor da primeira hora:");  
-                                    double precoPrimeira =  Double.parseDouble(priHora);
-                                                                     
-                                    String subHora;
-                                    subHora = inter.receberString("Digite o valor das horas subsequentes:");
-                                    double precoHora = Double.parseDouble(subHora);
-                                    
-                                    if(opTicket.buscarTarifaHorista(tarifas, inicio.format(dataFormata), diaSmns) != null){                                      
-                                        inter.mensagem("Erro: Você ja cadastrou uma Tarifa desse tipo para essa data!");   
-                                        break;
-                                    }
-                                    TarifaHorista novaTarifa = new TarifaHorista(precoPrimeira, precoHora, inicio, diaSmns);
-                                    tarifas.add(novaTarifa);
-                                    inter.mensagem("Tarifa Horista de " + inicio.format(dataFormata) + " cadastrada com sucesso!\n");     
-                                }                               
-                                else{                                                              
-                                    String Hora;
-                                    Hora = inter.receberString("Digite o valor da Tarifa:"); 
-                                    double preco = Double.parseDouble(Hora);
-                                    
-                                    if(opTicket.buscarTarifaMensalista(tarifas, inicio.format(dataFormata)) != null){
-                                        inter.mensagem("Erro: Você ja cadastrou uma Tarifa desse tipo para essa data!");    
-                                        break;
-                                    }
-                                    TarifaMensalista novaTarifa = new TarifaMensalista(preco, inicio);
-                                    tarifas.add(novaTarifa);
-                                    inter.mensagem("Tarifa Mensalista de " + inicio.format(dataFormata) + " cadastrada com sucesso!\n");     
-                                }                                                              
-                            break; 
-                            case 2: /*excluir tarifa*/                                                            
-                                tipo = inter.receberString("Digite o Tipo de Tarifa que deseja excluir (Horista ou Mensalista):");
-                                
-                                data = inter.receberString("Digite a data da tarifa que deseja excluir tarifa (em dia/mês/ano horas:minutos) :");                                      
-                                                                                       
-                                if(tipo.equalsIgnoreCase("HORISTA")){ 
-                                    List<DiaSemana> dias = new ArrayList<>();                           
-                                    listasVS.OperacaoListaDiasSemanas(dias, inter);
-                                    TarifaHorista tarifaEx = opTicket.buscarTarifaHorista(tarifas, data, dias);
-                                    if(tarifaEx == null){                                        
-                                        inter.mensagem("Erro: Tarifa não encontrada!!");        
-                                        break;
-                                    }
-                                     
-                                    if(opTicket.procurarTarifa(tarifaEx, tickets) == true) {                                     
-                                        inter.mensagem("A tarifa não pode ser excluída pois ela possui um ticket cadastrado!");        
-                                        break;
-                                    }
-                                    tarifas.remove(tarifaEx);  
-                                }                               
-                                else{                            
-                                    TarifaMensalista tarifaEx = opTicket.buscarTarifaMensalista(tarifas, data);
-                                     if(tarifaEx == null){
-                                        inter.mensagem("Erro: Tarifa não encontrada!!");                 
-                                        break;
-                                     }
-                                     /*Ver se ta fufando*/
-                                     if(opTicket.procurarTarifa(tarifaEx, tickets) == true) {
-                                        inter.mensagem("A tarifa não pode ser excluída pois ela possui um ticket cadastrado!");      
-                                        break;
-                                     }
-                                     tarifas.remove(tarifaEx);
-                                }
-                   
-                                inter.mensagem("Tarifa removida com Sucesso!");    
-                                        
-                            break;
-                            case 3: /*editar tarifa*/
-                                tipo = inter.receberString("Digite o Tipo de Tarifa que deseja editar (Horista ou Mensalista):");                   
-                                data = inter.receberString("Digite a data da tarifa que deseja editar tarifa (em dia/mês/ano horas:minutos) :");                                    
-                                                                                                                                                
-                                if(tipo.equalsIgnoreCase("HORISTA")){   
-                                    List<DiaSemana> dias = new ArrayList<>();                           
-                                    listasVS.OperacaoListaDiasSemanas(dias, inter);
-                                    TarifaHorista tarifaEx = opTicket.buscarTarifaHorista(tarifas, data, dias);
-                                    if(tarifaEx == null){
-                                        inter.mensagem("Erro: Tarifa não encontrada!!");   
-                                        break;
-                                    }
-                                    String novaData = inter.receberString("Digite a nova data (em dia/mês/ano horas:minutos):");
-                                    tarifaEx.setInicio(LocalDateTime.parse(novaData, dataFormata));
-
-                                    String ph = inter.receberString("Digite o novo valor da primeira hora:");
-                                    double novaPH = Double.parseDouble(ph);                                       
-                                    tarifaEx.setValorPrimeiraHora(novaPH);
-
-                                    String sh = inter.receberString("Digite o novo valor da horas subsequentes");
-                                    double novaHS = Double.parseDouble(sh);
-                                    tarifaEx.setValorHoraSubsequente(novaHS); 
-                                }                               
-                                else{                            
-                                    TarifaMensalista tarifaEx = opTicket.buscarTarifaMensalista(tarifas, data);
-                                    if(tarifaEx == null){
-                                        inter.mensagem("Erro: Tarifa não encontrada!!");    
-                                        break;
-                                    }
-                                    
-                                    String novaData = inter.receberString("Digite a nova data (em dia/mês/ano horas:minutos):");
-                                    tarifaEx.setInicio(LocalDateTime.parse(novaData, dataFormata));
-
-                                    String vh = inter.receberString("Digite o novo valor da tarifa");
-                                    double novaH = Double.parseDouble(vh);                                       
-                                    tarifaEx.setValorUnico(novaH);                                  
-                                        
-                                }                                                                                                                           
-                                inter.mensagem("Tarifa editada com Sucesso!");  
-                            break;
-                            case 4: /*imprimir tarifas*/                                
-                                lista = opTicket.listarTarifasCadastradas(tarifas);
-                                for(String s : lista){
-                                    inter.mensagem(s);
-                                }
-                            break;
-                            case 5:
-                            break;
-                            default:
-                                inter.mensagem("Insira uma opção válida!"); 
-                            break;
-                        }
-                    }while(opcao3 != 5);
+                    opcoesTarifa(tickets, tarifas, inter);
                 break;
                 case 5:
                 break;
@@ -313,7 +156,158 @@ public class InterfaceOpcaoEstacionamento{
                    inter.mensagem("Insira uma opção válida!");     
                 break;
             }    
-        }while(opcao2 != 5);
-       
+        }while(opcao2 != 5);     
+    }
+    
+    private void opcoesTarifa(List<Ticket> tickets, List<Tarifa> tarifas, UserInterface inter) {
+        do{ 
+            /* Utiliza o método criado em ItensMenu, reduzindo o tamanho
+            de linhas das Classes da interface */                       
+            opTicket.verificarMensalista30dias(tickets);
+            opcao3 = inter.imprimeTarifa();
+            switch(opcao3){
+                case 1: /*adicionar tarifa*/                                                      
+                    String tipo; 
+                    tipo = inter.receberString("Digite o Tipo de Tarifa que deseja cadastrar (Horista ou Mensalista):");
+
+                    String data;
+                    inter.mensagem("Digite a data que deseja iniciar tarifa (em dia/mês/ano horas:minutos) :");
+                    data = inter.receberString("Se deseja cadastrar uma tarifa instantânea, digite: Agora"); 
+
+                    LocalDateTime inicio;
+
+                    if(data.toUpperCase().equals("AGORA")) {
+                        inicio = LocalDateTime.now();
+                    } else {
+                        inicio = LocalDateTime.parse(data, dataFormata);
+                        if(inicio.isBefore(LocalDateTime.now())) {                                       
+                            inter.mensagem("Erro: Nao é possível cadastrar uma tarifa no passado!");  
+                            break;
+                        }
+                    }                                                                                            
+
+                    if(tipo.equalsIgnoreCase("HORISTA")){    
+                        List<DiaSemana> diaSmns = new  ArrayList<>();                                                     
+                        listasVS.OperacaoListaDiasSemanas(diaSmns, inter);
+                        String priHora;
+                        priHora = inter.receberString("Digite o valor da primeira hora:");  
+                        double precoPrimeira =  Double.parseDouble(priHora);
+
+                        String subHora;
+                        subHora = inter.receberString("Digite o valor das horas subsequentes:");
+                        double precoHora = Double.parseDouble(subHora);
+
+                        if(opTicket.buscarTarifaHorista(tarifas, inicio.format(dataFormata), diaSmns) != null){                                      
+                            inter.mensagem("Erro: Você ja cadastrou uma Tarifa desse tipo para essa data!");   
+                            break;
+                        }
+                        TarifaHorista novaTarifa = new TarifaHorista(precoPrimeira, precoHora, inicio, diaSmns);
+                        tarifas.add(novaTarifa);
+                        inter.mensagem("Tarifa Horista de " + inicio.format(dataFormata) + " cadastrada com sucesso!\n");     
+                    }                               
+                    else{                                                              
+                        String Hora;
+                        Hora = inter.receberString("Digite o valor da Tarifa:"); 
+                        double preco = Double.parseDouble(Hora);
+
+                        if(opTicket.buscarTarifaMensalista(tarifas, inicio.format(dataFormata)) != null){
+                            inter.mensagem("Erro: Você ja cadastrou uma Tarifa desse tipo para essa data!");    
+                            break;
+                        }
+                        TarifaMensalista novaTarifa = new TarifaMensalista(preco, inicio);
+                        tarifas.add(novaTarifa);
+                        inter.mensagem("Tarifa Mensalista de " + inicio.format(dataFormata) + " cadastrada com sucesso!\n");     
+                    }                                                              
+                break; 
+                case 2: /*excluir tarifa*/                                                            
+                    tipo = inter.receberString("Digite o Tipo de Tarifa que deseja excluir (Horista ou Mensalista):");
+
+                    data = inter.receberString("Digite a data da tarifa que deseja excluir tarifa (em dia/mês/ano horas:minutos) :");                                      
+
+                    if(tipo.equalsIgnoreCase("HORISTA")){ 
+                        List<DiaSemana> dias = new ArrayList<>();                           
+                        listasVS.OperacaoListaDiasSemanas(dias, inter);
+                        TarifaHorista tarifaEx = opTicket.buscarTarifaHorista(tarifas, data, dias);
+                        if(tarifaEx == null){                                        
+                            inter.mensagem("Erro: Tarifa não encontrada!!");        
+                            break;
+                        }
+
+                        if(opTicket.procurarTarifa(tarifaEx, tickets) == true) {                                     
+                            inter.mensagem("A tarifa não pode ser excluída pois ela possui um ticket cadastrado!");        
+                            break;
+                        }
+                        tarifas.remove(tarifaEx);  
+                    }                               
+                    else{                            
+                        TarifaMensalista tarifaEx = opTicket.buscarTarifaMensalista(tarifas, data);
+                         if(tarifaEx == null){
+                            inter.mensagem("Erro: Tarifa não encontrada!!");                 
+                            break;
+                         }
+                         /*Ver se ta fufando*/
+                         if(opTicket.procurarTarifa(tarifaEx, tickets) == true) {
+                            inter.mensagem("A tarifa não pode ser excluída pois ela possui um ticket cadastrado!");      
+                            break;
+                         }
+                         tarifas.remove(tarifaEx);
+                    }
+
+                    inter.mensagem("Tarifa removida com Sucesso!");    
+
+                break;
+                case 3: /*editar tarifa*/
+                    tipo = inter.receberString("Digite o Tipo de Tarifa que deseja editar (Horista ou Mensalista):");                   
+                    data = inter.receberString("Digite a data da tarifa que deseja editar tarifa (em dia/mês/ano horas:minutos) :");                                    
+
+                    if(tipo.equalsIgnoreCase("HORISTA")){   
+                        List<DiaSemana> dias = new ArrayList<>();                           
+                        listasVS.OperacaoListaDiasSemanas(dias, inter);
+                        TarifaHorista tarifaEx = opTicket.buscarTarifaHorista(tarifas, data, dias);
+                        if(tarifaEx == null){
+                            inter.mensagem("Erro: Tarifa não encontrada!!");   
+                            break;
+                        }
+                        String novaData = inter.receberString("Digite a nova data (em dia/mês/ano horas:minutos):");
+                        tarifaEx.setInicio(LocalDateTime.parse(novaData, dataFormata));
+
+                        String ph = inter.receberString("Digite o novo valor da primeira hora:");
+                        double novaPH = Double.parseDouble(ph);                                       
+                        tarifaEx.setValorPrimeiraHora(novaPH);
+
+                        String sh = inter.receberString("Digite o novo valor da horas subsequentes");
+                        double novaHS = Double.parseDouble(sh);
+                        tarifaEx.setValorHoraSubsequente(novaHS); 
+                    }                               
+                    else{                            
+                        TarifaMensalista tarifaEx = opTicket.buscarTarifaMensalista(tarifas, data);
+                        if(tarifaEx == null){
+                            inter.mensagem("Erro: Tarifa não encontrada!!");    
+                            break;
+                        }
+
+                        String novaData = inter.receberString("Digite a nova data (em dia/mês/ano horas:minutos):");
+                        tarifaEx.setInicio(LocalDateTime.parse(novaData, dataFormata));
+
+                        String vh = inter.receberString("Digite o novo valor da tarifa");
+                        double novaH = Double.parseDouble(vh);                                       
+                        tarifaEx.setValorUnico(novaH);                                  
+
+                    }                                                                                                                           
+                    inter.mensagem("Tarifa editada com Sucesso!");  
+                break;
+                case 4: /*imprimir tarifas*/                                
+                    List<String> lista = opTicket.listarTarifasCadastradas(tarifas);
+                    for(String s : lista){
+                        inter.mensagem(s);
+                    }
+                break;
+                case 5:
+                break;
+                default:
+                    inter.mensagem("Insira uma opção válida!"); 
+                break;
+            }
+        }while(opcao3 != 5);
     }
 }
