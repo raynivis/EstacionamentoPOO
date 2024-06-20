@@ -10,8 +10,6 @@ import ufms.cptl.raymay.Classes.Externo.Automovel.Cor;
 import ufms.cptl.raymay.Classes.Externo.Automovel.Modelo;
 import ufms.cptl.raymay.Classes.Externo.Automovel.Veiculo;
 import ufms.cptl.raymay.Classes.Externo.Individuo.Cliente;
-import ufms.cptl.raymay.Interface.InterfaceDoUsuario.InterfaceGrafica;
-import ufms.cptl.raymay.Interface.InterfaceDoUsuario.InterfaceTerminal;
 import ufms.cptl.raymay.Interface.InterfaceDoUsuario.UserInterface;
 
 /**
@@ -23,13 +21,7 @@ public class AuxiliarInterfaceCadastraVeiculo {
     public Veiculo receberVeiculo(List<Cliente> clientes, Cliente cliente, UserInterface inter) {
         /*mensagem de interface para digitar um novo veiculo*/
         String placa;
-        if(inter instanceof InterfaceTerminal){
-            inter = (InterfaceTerminal) inter;
-            placa = inter.receberString("Digite a placa");
-        }else {
-            inter = (InterfaceGrafica) inter;
-            placa = inter.receberString("Digite a placa");
-        }
+        placa = inter.receberString("Digite a placa");
         
         for(Cliente c : clientes) {
             for(Veiculo v : c.getVeiculos() ) {

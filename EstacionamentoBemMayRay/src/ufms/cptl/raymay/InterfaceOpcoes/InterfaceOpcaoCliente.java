@@ -13,8 +13,6 @@ import ufms.cptl.raymay.Classes.Externo.Individuo.Cliente;
 import ufms.cptl.raymay.Classes.Interno.Tarifas.Tarifa;
 import ufms.cptl.raymay.Classes.Interno.Tickets.Ticket;
 import ufms.cptl.raymay.Classes.Interno.Vaga;
-import ufms.cptl.raymay.Interface.InterfaceDoUsuario.InterfaceGrafica;
-import ufms.cptl.raymay.Interface.InterfaceDoUsuario.InterfaceTerminal;
 import ufms.cptl.raymay.Interface.InterfaceDoUsuario.UserInterface;
 import ufms.cptl.raymay.Operacoes.OperacoesCliente;
 /**
@@ -35,14 +33,7 @@ public class InterfaceOpcaoCliente{
         do{
             /* Utiliza o método criado em ItensMenu, reduzindo o tamanho
             de linhas das Classes da interface */
-            if(inter instanceof InterfaceTerminal){
-                inter = (InterfaceTerminal) inter;
-                opcao2 = inter.imprimeCliente();
-            }
-            else {
-               inter = (InterfaceGrafica) inter;
-                opcao2 = inter.imprimeCliente();
-            }
+            opcao2 = inter.imprimeCliente();
                 switch (opcao2) {
                     case 1:
                        /*cadastrar cliente*/
@@ -122,51 +113,7 @@ public class InterfaceOpcaoCliente{
                         inter.mensagem("Os veículos do cliente " + operador.getNome() + " são:\n");
                         inter.mensagem(opCliente.listarVeiculos(clientes, cpf));  
                                                
-                        do{
-                            /* Utiliza o método criado na classe InterfaceTerminal ou na Classe InterfaceGrafica, dependendo
-                            da escolha do usuário */
-                            opcao3 = inter.imprimeVeiculo(); 
-                            switch(opcao3){
-                                case 1: /*Adicionar um veículo*/
-                                    Veiculo veiculoAdicional = InVeiculo.receberVeiculo(clientes, operador, inter);
-                                    if(veiculoAdicional != null) {
-                                        operador.addVeiculo(veiculoAdicional);
-                                        inter.mensagem("Veículo cadastrado com sucesso!!");
-                                    }
-                                    else {
-                                        inter.mensagem("Erro: Placa já registrada no sistema!");
-                                    }
-                                break;
-                                case 2: /*Remover um veiculo*/
-                                    String placa;
-                                    placa = inter.receberString("Digite a placa:");
-                                    if(opCliente.apagarVeiculo(clientes, placa, tickets) == true) {
-                                        inter.mensagem("Veículo excluído com sucesso!");
-                                    } 
-                                break;
-                                case 3: /*Editar um veiculo*/
-                                    String cor, descricao;
-                                    placa = inter.receberString("Digite a placa:");
-                                    if(opCliente.buscarVeiculo(clientes, placa) != null) {                                   
-                                        Veiculo auxVeiculo = opCliente.buscarVeiculo(clientes, placa);
-
-                                        cor = inter.receberString("Digite a nova cor");
-                                        descricao = inter.receberString("Digite a nova descrição");
-                                        Cor ediColor = new Cor(cor, descricao);
-                                        auxVeiculo.setColor(ediColor);
-
-                                        inter.mensagem("Veículo editado com sucesso!");
-                                    } else {
-                                        inter.mensagem("\nVeículo não encontrado!\n");
-                                    }
-                                break;
-                                case 4:
-                                break;
-                                default:
-                                    inter.mensagem("Insira uma opção válida!");     
-                                break;
-                            }
-                        }while(opcao3 != 4);
+                        opcoesVeiculo(operador, clientes, tickets, inter);
                     break;    
                     case 6: 
                         /*listar todos os cadastros de cliente*/
@@ -181,7 +128,54 @@ public class InterfaceOpcaoCliente{
                         inter.mensagem("Insira uma opção válida!");   
                     break;
                 }             
-        }while(opcao2 != 7);
-        
+        }while(opcao2 != 7);       
+    }
+    
+    private void opcoesVeiculo(Cliente operador, List<Cliente> clientes, List<Ticket> tickets, UserInterface inter) { 
+        do{
+            /* Utiliza o método criado na classe InterfaceTerminal ou na Classe InterfaceGrafica, dependendo
+            da escolha do usuário */
+            opcao3 = inter.imprimeVeiculo(); 
+            switch(opcao3){
+                case 1: /*Adicionar um veículo*/
+                    Veiculo veiculoAdicional = InVeiculo.receberVeiculo(clientes, operador, inter);
+                    if(veiculoAdicional != null) {
+                        operador.addVeiculo(veiculoAdicional);
+                        inter.mensagem("Veículo cadastrado com sucesso!!");
+                    }
+                    else {
+                        inter.mensagem("Erro: Placa já registrada no sistema!");
+                    }
+                break;
+                case 2: /*Remover um veiculo*/
+                    String placa;
+                    placa = inter.receberString("Digite a placa:");
+                    if(opCliente.apagarVeiculo(clientes, placa, tickets) == true) {
+                        inter.mensagem("Veículo excluído com sucesso!");
+                    } 
+                break;
+                case 3: /*Editar um veiculo*/
+                    String cor, descricao;
+                    placa = inter.receberString("Digite a placa:");
+                    if(opCliente.buscarVeiculo(clientes, placa) != null) {                                   
+                        Veiculo auxVeiculo = opCliente.buscarVeiculo(clientes, placa);
+
+                        cor = inter.receberString("Digite a nova cor");
+                        descricao = inter.receberString("Digite a nova descrição");
+                        Cor ediColor = new Cor(cor, descricao);
+                        auxVeiculo.setColor(ediColor);
+
+                        inter.mensagem("Veículo editado com sucesso!");
+                    } else {
+                        inter.mensagem("\nVeículo não encontrado!\n");
+                    }
+                break;
+                case 4:
+                break;
+                default:
+                    inter.mensagem("Insira uma opção válida!");     
+                break;
+            }
+        }while(opcao3 != 4);  
     }
 }

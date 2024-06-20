@@ -11,9 +11,7 @@ import ufms.cptl.raymay.Classes.Externo.Individuo.Cliente;
 import ufms.cptl.raymay.Classes.Interno.Tarifas.Tarifa;
 import ufms.cptl.raymay.Classes.Interno.Tickets.Ticket;
 import ufms.cptl.raymay.Classes.Interno.Vaga;
-import ufms.cptl.raymay.Interface.InterfaceDoUsuario.InterfaceGrafica;
 import ufms.cptl.raymay.Operacoes.OperacoesVagas;
-import ufms.cptl.raymay.Interface.InterfaceDoUsuario.InterfaceTerminal;
 import ufms.cptl.raymay.Interface.InterfaceDoUsuario.UserInterface;
 
 /**
@@ -30,14 +28,7 @@ public class InterfaceOpcaoVaga{
         do{
             /* Utiliza o método criado em ItensMenu, reduzindo o tamanho
             de linhas das Classes da interface */
-            if(inter instanceof InterfaceTerminal){
-                inter = (InterfaceTerminal) inter;
-                opcao2 = inter.imprimeVaga();
-            }
-            else {
-                inter = (InterfaceGrafica) inter;
-                opcao2 = inter.imprimeVaga();
-            }
+            opcao2 = inter.imprimeVaga();
             switch (opcao2) {
                 case 1:
                     /*cadastrar vaga*/
