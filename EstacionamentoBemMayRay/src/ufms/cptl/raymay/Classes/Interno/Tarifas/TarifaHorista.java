@@ -22,6 +22,7 @@ public class TarifaHorista extends Tarifa{
         this.valorPrimeiraHora = valorPrimeiraHora;
         this.valorHoraSubsequente = valorHoraSubsequente;
     }
+    
     public List<DiaSemana> getDiasSemana() {
         return diasSemana;
     }

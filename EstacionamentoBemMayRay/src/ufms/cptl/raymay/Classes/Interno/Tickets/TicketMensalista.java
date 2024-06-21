@@ -7,11 +7,9 @@ package ufms.cptl.raymay.Classes.Interno.Tickets;
 import java.time.LocalDateTime;
 import ufms.cptl.raymay.Classes.Enum.Operando;
 import ufms.cptl.raymay.Classes.Externo.Automovel.Veiculo;
-import ufms.cptl.raymay.Classes.Interno.Tarifas.Tarifa;
 import ufms.cptl.raymay.Classes.Interno.Tarifas.TarifaMensalista;
 import ufms.cptl.raymay.Classes.Interno.Vaga;
 import ufms.cptl.raymay.Classes.Enum.TipoVeiculo;
-import ufms.cptl.raymay.Classes.Enum.VagaStatus;
 
 /**
  *

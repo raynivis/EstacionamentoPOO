@@ -22,7 +22,7 @@ public class InterfaceGrafica implements UserInterface{
     que permitirá a escolha da opcao */
     /* Os métodos dessa Classe também são criados em UserInterface para auxiliar a troca de interface na main */
     @Override
-    public void mensagem(String mensagem){
+    public void imprimirMensagem(String mensagem){
         JOptionPane.showMessageDialog(null, mensagem);
     }
     @Override
@@ -32,7 +32,7 @@ public class InterfaceGrafica implements UserInterface{
     }
 
     @Override
-    public int imprimeInicio(){       
+    public int imprimirInicio(){       
             OpcaoInicial.InterInicial[] op = OpcaoInicial.InterInicial.values();
             String[] opDesc = new String[op.length];
             for (int i = 0; i < op.length; i++) {
@@ -58,7 +58,7 @@ public class InterfaceGrafica implements UserInterface{
         return -1;   
     }
     @Override
-    public int imprimeCadastroGeral(){       
+    public int imprimirCadastroGeral(){       
        OpcaoCadastroGeral.InterCadastroGeral[] op = OpcaoCadastroGeral.InterCadastroGeral.values();
        String[] opDesc = new String[op.length];
        for (int i = 0; i < op.length; i++) {
@@ -87,7 +87,7 @@ public class InterfaceGrafica implements UserInterface{
     }  
     
     @Override 
-    public int imprimeCliente() {
+    public int imprimirCliente() {
        OpcaoCliente.InterCliente[] op = OpcaoCliente.InterCliente.values();
            String[] opDesc = new String[op.length];
            for (int i = 0; i < op.length; i++) {
@@ -116,7 +116,7 @@ public class InterfaceGrafica implements UserInterface{
     }
     
     @Override
-    public int imprimeVeiculo(){
+    public int imprimirVeiculo(){
         OpcaoVeiculo.InterVeiculo[] op = OpcaoVeiculo.InterVeiculo.values();
             String[] opDesc = new String[op.length];
             for (int i = 0; i < op.length; i++) {
@@ -145,7 +145,7 @@ public class InterfaceGrafica implements UserInterface{
     }
    
     @Override
-    public int imprimeVaga() {
+    public int imprimirVaga() {
         OpcaoVaga.InterVaga[] op = OpcaoVaga.InterVaga.values();
             String[] opDesc = new String[op.length];
             for (int i = 0; i < op.length; i++) {
@@ -174,7 +174,7 @@ public class InterfaceGrafica implements UserInterface{
     }
     
     @Override   
-    public int imprimeEstacionamento(){
+    public int imprimirEstacionamento(){
         OpcaoEstacionamento.InterEstacionamento[] op = OpcaoEstacionamento.InterEstacionamento.values();
             String[] opDesc = new String[op.length];
             for (int i = 0; i < op.length; i++) {
@@ -203,7 +203,7 @@ public class InterfaceGrafica implements UserInterface{
     }
     
     @Override
-    public int imprimeTarifa(){
+    public int imprimirTarifa(){
          OpcaoTarifa.InterTarifa[] op = OpcaoTarifa.InterTarifa.values();
            String[] opDesc = new String[op.length];
            for (int i = 0; i < op.length; i++) {

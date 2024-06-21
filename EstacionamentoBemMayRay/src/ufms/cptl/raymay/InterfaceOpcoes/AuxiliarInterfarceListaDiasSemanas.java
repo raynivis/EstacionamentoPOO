@@ -15,11 +15,12 @@ import ufms.cptl.raymay.Interface.InterfaceDoUsuario.UserInterface;
  *
  * @author ra
  */
-public class AuxiliarInterfarceListaSemanas {
+public class AuxiliarInterfarceListaDiasSemanas {
     
     /*Método para identificação e cadastro de listas de Dias da Semana e Listas de Veiculos, para não ficar repetindo codigo.*/
-    public void OperacaoListaDiasSemanas(List<DiaSemana> diaSmns, UserInterface inter){
+    public void gerenciarDias(List<DiaSemana> diaSmns, UserInterface inter){
         String dias;
+<<<<<<< Updated upstream:EstacionamentoBemMayRay/src/ufms/cptl/raymay/InterfaceOpcoes/AuxiliarInterfarceListaSemanas.java
         if(inter instanceof InterfaceTerminal){
             inter = (InterfaceTerminal) inter;
             inter.mensagem("Digite o/s dia/s da semana dessa tarifa (Domingo, Segunda, Terça, Quarta, Quinta, Sexta, Sábado)");
@@ -30,6 +31,10 @@ public class AuxiliarInterfarceListaSemanas {
             inter.mensagem("Digite o/s dia/s da semana dessa tarifa (Domingo, Segunda, Terça, Quarta, Quinta, Sexta, Sábado)");
             dias = inter.receberString("Caso seja para todos os dias da semana, digite: Todos");
         }       
+=======
+        inter.imprimirMensagem("Digite o/s dia/s da semana dessa tarifa (Domingo, Segunda, Terca, Quarta, Quinta, Sexta, Sábado)");
+        dias = inter.receberString("Caso seja para todos os dias da semana, digite: Todos");
+>>>>>>> Stashed changes:EstacionamentoBemMayRay/src/ufms/cptl/raymay/InterfaceOpcoes/AuxiliarInterfarceListaDiasSemanas.java
         dias = dias.toUpperCase();
         
         if(dias.contains("TODOS")){

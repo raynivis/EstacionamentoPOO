@@ -15,7 +15,6 @@ public abstract class Tarifa {
    /* Atributos característicos da tarifa */ 
     protected final DateTimeFormatter dataBonitinha = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm"); 
     protected LocalDateTime inicio;
-  
 
     public Tarifa(LocalDateTime inicio) {
         this.inicio = inicio;

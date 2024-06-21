@@ -34,7 +34,7 @@ public class Estacionamento {
 
 
         if(opcao == JOptionPane.YES_OPTION){
-            listaPrnts.GerarListas(clientes, vagas);
+            listaPrnts.gerarListas(clientes, vagas);
         }
 
         /*primeira interface do programa Estaciona Bem!!*/
@@ -54,11 +54,11 @@ public class Estacionamento {
             switch(escolha) {
                 case 0:
                     InterfaceTerminal userinterfaceT = new InterfaceTerminal();
-                    userinterface.primeirasOpcoes(clientes, vagas, tickets, tarifas, userinterfaceT);
+                    userinterface.realizarPrimeirasOpcoes(clientes, vagas, tickets, tarifas, userinterfaceT);
                     break;
                 case 1:
                     InterfaceGrafica userinterfaceG = new InterfaceGrafica();
-                    userinterface.primeirasOpcoes(clientes, vagas, tickets, tarifas, userinterfaceG);
+                    userinterface.realizarPrimeirasOpcoes(clientes, vagas, tickets, tarifas, userinterfaceG);
                     break;     
             }
         }

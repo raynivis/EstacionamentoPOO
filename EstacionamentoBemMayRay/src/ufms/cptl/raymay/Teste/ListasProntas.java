@@ -12,7 +12,6 @@ import ufms.cptl.raymay.Classes.Externo.Automovel.Veiculo;
 import ufms.cptl.raymay.Classes.Externo.Individuo.Cliente;
 import ufms.cptl.raymay.Classes.Interno.Vaga;
 import ufms.cptl.raymay.Classes.Enum.TipoVeiculo;
-import ufms.cptl.raymay.Classes.Enum.VagaStatus;
 
 /**
  *
@@ -22,7 +21,7 @@ public class ListasProntas {
     
     /* Instancia Clientes e Vagas para auxiliar os testes das operações/métodos a serem realizados */
     /* Adiciona os objetos instanciados na lista de Clientes e Vagas */
-    public void GerarListas(List<Cliente> clientes, List<Vaga> vagas) {
+    public void gerarListas(List<Cliente> clientes, List<Vaga> vagas) {
        List<Veiculo> veiculos1 = new ArrayList<>();
        Cor color = new Cor("Roxo", "Velho");
        Modelo model = new Modelo("Celta", "A12", TipoVeiculo.MOTO);
