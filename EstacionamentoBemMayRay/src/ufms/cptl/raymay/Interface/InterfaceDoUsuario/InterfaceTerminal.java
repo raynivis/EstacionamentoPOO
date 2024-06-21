@@ -15,7 +15,7 @@ import ufms.cptl.raymay.Interface.EnumOpcao.OpcaoInicial;
 import ufms.cptl.raymay.Interface.EnumOpcao.OpcaoTarifa;
 import ufms.cptl.raymay.Interface.EnumOpcao.OpcaoVaga;
 import ufms.cptl.raymay.Interface.EnumOpcao.OpcaoVeiculo;
-import static ufms.cptl.raymay.InterfaceOpcoes.MostraMensagem.interMensagem;
+import static ufms.cptl.raymay.InterfaceOpcoes.MostraMensagem.mostrarInterMensagem;
 
 /**
  *
@@ -28,20 +28,20 @@ public class InterfaceTerminal implements UserInterface{
     que permitirá a escolha da opcao */
     /* Os métodos dessa Classe também são criados em UserInterface para auxiliar a troca de interface na main */
      @Override
-    public void mensagem(String mensagem){
-        interMensagem(mensagem);
+    public void imprimirMensagem(String mensagem){
+        mostrarInterMensagem(mensagem);
     }
     
     
      @Override
      public String receberString(String mensagem){
-        interMensagem(mensagem);
+        mostrarInterMensagem(mensagem);
         String valor = scanner.nextLine();
         return valor;
     }
   
     @Override
-    public int imprimeInicio(){        
+    public int imprimirInicio(){        
         try {
             PrintStream out = new PrintStream(System.out, true, StandardCharsets.UTF_8.toString());
             for (OpcaoInicial.InterInicial op : OpcaoInicial.InterInicial.values()) {
@@ -56,7 +56,7 @@ public class InterfaceTerminal implements UserInterface{
     
     
     @Override
-    public int imprimeCadastroGeral(){     
+    public int imprimirCadastroGeral(){     
         try {
             PrintStream out = new PrintStream(System.out, true, StandardCharsets.UTF_8.toString());
             for (OpcaoCadastroGeral.InterCadastroGeral op : OpcaoCadastroGeral.InterCadastroGeral.values()) {
@@ -70,7 +70,7 @@ public class InterfaceTerminal implements UserInterface{
     }  
     
     @Override 
-    public int imprimeCliente() {
+    public int imprimirCliente() {
         try {
             PrintStream out = new PrintStream(System.out, true, StandardCharsets.UTF_8.toString());
             for (OpcaoCliente.InterCliente op : OpcaoCliente.InterCliente.values()) {
@@ -84,7 +84,7 @@ public class InterfaceTerminal implements UserInterface{
     }
     
     @Override
-    public int imprimeVeiculo() {
+    public int imprimirVeiculo() {
         try {
             PrintStream out = new PrintStream(System.out, true, StandardCharsets.UTF_8.toString());
             for (OpcaoVeiculo.InterVeiculo op : OpcaoVeiculo.InterVeiculo.values()) {
@@ -98,7 +98,7 @@ public class InterfaceTerminal implements UserInterface{
     }
   
     @Override 
-    public int imprimeVaga() {
+    public int imprimirVaga() {
         try {
             PrintStream out = new PrintStream(System.out, true, StandardCharsets.UTF_8.toString());
             for (OpcaoVaga.InterVaga op : OpcaoVaga.InterVaga.values()) {
@@ -112,7 +112,7 @@ public class InterfaceTerminal implements UserInterface{
     }
     
      @Override  
-     public int imprimeEstacionamento(){
+     public int imprimirEstacionamento(){
          try {
                 PrintStream out = new PrintStream(System.out, true, StandardCharsets.UTF_8.toString());
                 for (OpcaoEstacionamento.InterEstacionamento op : OpcaoEstacionamento.InterEstacionamento.values()) {
@@ -126,7 +126,7 @@ public class InterfaceTerminal implements UserInterface{
     }
     
     @Override
-    public int imprimeTarifa(){
+    public int imprimirTarifa(){
         try {
             PrintStream out = new PrintStream(System.out, true, StandardCharsets.UTF_8.toString());
             for (OpcaoTarifa.InterTarifa op : OpcaoTarifa.InterTarifa.values()) {

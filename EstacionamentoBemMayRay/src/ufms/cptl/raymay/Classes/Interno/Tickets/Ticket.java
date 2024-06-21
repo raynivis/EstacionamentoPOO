@@ -7,7 +7,6 @@ package ufms.cptl.raymay.Classes.Interno.Tickets;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import ufms.cptl.raymay.Classes.Enum.Operando;
-import ufms.cptl.raymay.Classes.Enum.VagaStatus;
 import ufms.cptl.raymay.Classes.Externo.Automovel.Veiculo;
 import ufms.cptl.raymay.Classes.Interno.Vaga;
 

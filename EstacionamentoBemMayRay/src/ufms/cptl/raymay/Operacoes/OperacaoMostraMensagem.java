@@ -14,7 +14,7 @@ import java.io.UnsupportedEncodingException;
 public class OperacaoMostraMensagem {
     /* Método estático que mostra uma mensagem de texto na interface, será utilizada para casos 
     específicos dentro das operações, no package de operações, e da interface */
-    public static void operacaoMensagem(String mensagem){
+    public static void mostrarMensagem(String mensagem){
         try {
             /* Impressão com caracteres especiais no formato UTF-8 */
             PrintStream out = new PrintStream(System.out, true, "UTF-8");

@@ -7,8 +7,8 @@ import java.util.ArrayList;
 import java.util.List;
 import ufms.cptl.raymay.Classes.Interno.Tickets.Ticket;
 import ufms.cptl.raymay.Classes.Enum.VagaStatus;
-import static ufms.cptl.raymay.Operacoes.OperacaoMostraMensagem.operacaoMensagem;
 import ufms.cptl.raymay.Classes.Interno.Vaga;
+import static ufms.cptl.raymay.Operacoes.OperacaoMostraMensagem.mostrarMensagem;
 /**
  *
  * @author maymi
@@ -94,11 +94,11 @@ public class OperacoesVagas {
                     }
                     return true;
                 }
-                operacaoMensagem("A disponibilidade da vaga não pode ser alterada pois está OCUPADA!");
+                mostrarMensagem("A disponibilidade da vaga não pode ser alterada pois está OCUPADA!");
                 return false;
             }          
         }
-        operacaoMensagem("Vaga não existente!");
+        mostrarMensagem("Vaga não existente!");
         return false;
     }
     

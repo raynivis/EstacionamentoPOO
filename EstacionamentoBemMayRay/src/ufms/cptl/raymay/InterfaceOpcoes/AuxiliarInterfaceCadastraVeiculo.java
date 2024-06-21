@@ -18,7 +18,7 @@ import ufms.cptl.raymay.Interface.InterfaceDoUsuario.UserInterface;
  */
 public class AuxiliarInterfaceCadastraVeiculo {
     /*método para facilitar o cadastro de um veiculo na interface, para assim não ficar repetindo codigo atoa.*/
-    public Veiculo receberVeiculo(List<Cliente> clientes, Cliente cliente, UserInterface inter) {
+    public Veiculo cadastrarVeiculo(List<Cliente> clientes, Cliente cliente, UserInterface inter) {
         /*mensagem de interface para digitar um novo veiculo*/
         String placa;
         placa = inter.receberString("Digite a placa");

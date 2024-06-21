@@ -16,9 +16,9 @@ import ufms.cptl.raymay.Interface.InterfaceDoUsuario.UserInterface;
 public class AuxiliarInterfarceListaSemanas {
     
     /*Método para identificação e cadastro de listas de Dias da Semana e Listas de Veiculos, para não ficar repetindo codigo.*/
-    public void OperacaoListaDiasSemanas(List<DiaSemana> diaSmns, UserInterface inter){
+    public void GerenciarListaDiasSemanas(List<DiaSemana> diaSmns, UserInterface inter){
         String dias;
-        inter.mensagem("Digite o/s dia/s da semana dessa tarifa (Domingo, Segunda, Terca, Quarta, Quinta, Sexta, Sábado)");
+        inter.imprimirMensagem("Digite o/s dia/s da semana dessa tarifa (Domingo, Segunda, Terca, Quarta, Quinta, Sexta, Sábado)");
         dias = inter.receberString("Caso seja para todos os dias da semana, digite: Todos");
         dias = dias.toUpperCase();
         
