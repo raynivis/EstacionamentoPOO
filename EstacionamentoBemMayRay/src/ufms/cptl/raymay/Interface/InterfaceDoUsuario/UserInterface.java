@@ -13,7 +13,7 @@ package ufms.cptl.raymay.Interface.InterfaceDoUsuario;
 public interface UserInterface{
     /* interface UserInterface que possui os métodos utilizados nas classes implements InterfaceTerminal e InterfaceGrafica
     Essa interface auxilia na chamada do tipo de interclasse na main */
-        public void mensagem(String mensagem);
+        public void imprimirMensagem(String mensagem);
         
         /* Método que recebe uma string e, dependendo da interface escolhida posteriormente, imprime de maneiras diferentes
         a mesma informação/mensagem */
@@ -25,17 +25,17 @@ public interface UserInterface{
         A criação das classes do Package InterfaceDoUsuario auxiliam para deixar o código mais limpo e para a
         transição de interfaces, o mesmo método que possui funções diferentes dentro dele dependendo da interface
         selecionada */
-        public int imprimeInicio();
+        public int imprimirInicio();
           
-        public int imprimeCadastroGeral();
+        public int imprimirCadastroGeral();
         
-        public int imprimeCliente();
+        public int imprimirCliente();
         
-        public int imprimeVeiculo();
+        public int imprimirVeiculo();
         
-        public int imprimeVaga();
+        public int imprimirVaga();
                   
-        public int imprimeEstacionamento();
+        public int imprimirEstacionamento();
         
-        public int imprimeTarifa();
+        public int imprimirTarifa();
 }    

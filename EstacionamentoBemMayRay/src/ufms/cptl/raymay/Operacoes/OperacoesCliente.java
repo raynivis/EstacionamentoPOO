@@ -10,7 +10,7 @@ import ufms.cptl.raymay.Classes.Enum.Operando;
 import ufms.cptl.raymay.Classes.Externo.Automovel.Veiculo;
 import ufms.cptl.raymay.Classes.Externo.Individuo.Cliente;
 import ufms.cptl.raymay.Classes.Interno.Tickets.Ticket;
-import static ufms.cptl.raymay.Operacoes.OperacaoMostraMensagem.operacaoMensagem;
+import static ufms.cptl.raymay.Operacoes.OperacaoMostraMensagem.mostrarMensagem;
 /**
  *
  * @author ra
@@ -89,7 +89,7 @@ public class OperacoesCliente {
                 if(v.getPlaca().equals(placa)) { 
                     for (Ticket t : tickets) {
                         if(t.getVeiculoTicket().equals(v) && t.getStatus().equals(Operando.ATIVO)) {
-                            operacaoMensagem("\nO veículo não pode ser excluído pois possui um ticket ATIVO (está estacionado)!\n");
+                            mostrarMensagem("\nO veículo não pode ser excluído pois possui um ticket ATIVO (está estacionado)!\n");
                             return false;     
                         } 
                     }
@@ -98,7 +98,7 @@ public class OperacoesCliente {
                 }
             }
         }
-        operacaoMensagem("\nVeículo não encontrado!\n");
+        mostrarMensagem("\nVeículo não encontrado!\n");
         return false;
     }
     
