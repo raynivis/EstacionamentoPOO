@@ -4,20 +4,22 @@
  */
 package ufms.cptl.raymay.Interface.InterfaceDoUsuario;
 import javax.swing.JOptionPane;
-import ufms.cptl.raymay.Interface.EnumOpcao.OpcaoCadastroGeral;
-import ufms.cptl.raymay.Interface.EnumOpcao.OpcaoCliente;
-import ufms.cptl.raymay.Interface.EnumOpcao.OpcaoEstacionamento;
-import ufms.cptl.raymay.Interface.EnumOpcao.OpcaoInicial;
-import ufms.cptl.raymay.Interface.EnumOpcao.OpcaoTarifa;
-import ufms.cptl.raymay.Interface.EnumOpcao.OpcaoVaga;
-import ufms.cptl.raymay.Interface.EnumOpcao.OpcaoVeiculo;
+import ufms.cptl.raymay.Interface.EnumOpcao.InterMenuCadastroGeral;
+import ufms.cptl.raymay.Interface.EnumOpcao.InterMenuCliente;
+import ufms.cptl.raymay.Interface.EnumOpcao.InterMenuEstacionamento;
+import ufms.cptl.raymay.Interface.EnumOpcao.InterMenuInicial;
+import ufms.cptl.raymay.Interface.EnumOpcao.InterMenuTarifa;
+import ufms.cptl.raymay.Interface.EnumOpcao.InterMenuVaga;
+import ufms.cptl.raymay.Interface.EnumOpcao.InterMenuVeiculo;
+import ufms.cptl.raymay.Interface.Menu.MenuGrafica;
 
 /**
  *
  * @author nivis
  */
 public class InterfaceGrafica implements UserInterface{
-    
+    MenuGrafica graficaMenu = new MenuGrafica();
+    public int opcao;
     /* Métodos de impressão de menus que irão retornar um valor que será atribuido a uma variável do mesmo tipo (int)
     que permitirá a escolha da opcao */
     /* Os métodos dessa Classe também são criados em UserInterface para auxiliar a troca de interface na main */
@@ -32,203 +34,45 @@ public class InterfaceGrafica implements UserInterface{
     }
 
     @Override
-    public int imprimirInicio(){       
-            OpcaoInicial.InterInicial[] op = OpcaoInicial.InterInicial.values();
-            String[] opDesc = new String[op.length];
-            for (int i = 0; i < op.length; i++) {
-                opDesc[i] = op[i].getValorOpcao() + ". " + op[i].getDesc();
-            }
-            String escolha = (String) JOptionPane.showInputDialog(
-                    null,
-                    "Escolha uma opção:",
-                    "Menu Inicial",
-                    JOptionPane.INFORMATION_MESSAGE,
-                    null,
-                    opDesc,
-                    opDesc[0]);
-
-            // Converte a escolha para o enum correspondente e obtém o valor da opção
-            if (escolha != null) {
-                for (OpcaoInicial.InterInicial opcao : op) {
-                    if (escolha.equals(opcao.getValorOpcao() + ". " + opcao.getDesc())) {
-                        return opcao.getValorOpcao();
-                    }
-                }    
-            }
-        return -1;   
+    public int imprimirInicio(){     
+        opcao = graficaMenu.adaptarInterfaceMenu(InterMenuInicial.class, "Menu Inicial");
+        return opcao;
     }
+    
     @Override
     public int imprimirCadastroGeral(){       
-       OpcaoCadastroGeral.InterCadastroGeral[] op = OpcaoCadastroGeral.InterCadastroGeral.values();
-       String[] opDesc = new String[op.length];
-       for (int i = 0; i < op.length; i++) {
-           opDesc[i] = op[i].getValorOpcao() + ". " + op[i].getDesc();
-       }
-
-       String escolha = (String) JOptionPane.showInputDialog(
-           null,
-           "Escolha uma opção:",
-           "Menu Cadastro Geral",
-           JOptionPane.INFORMATION_MESSAGE,
-                   null,
-                   opDesc,
-                   opDesc[0]);
-
-       // Converte a escolha para o enum correspondente e obtém o valor da opção
-       if (escolha != null) {
-           for (OpcaoCadastroGeral.InterCadastroGeral opcao : op) {
-                   if (escolha.equals(opcao.getValorOpcao() + ". " + opcao.getDesc())) {
-                       return opcao.getValorOpcao();
-                   }
-               }    
-           }
-       /* Opcao inválida, tera um break na interface */
-       return -1;
+      opcao = graficaMenu.adaptarInterfaceMenu(InterMenuCadastroGeral.class, "Menu Cadastro Geral");
+        return opcao;
     }  
     
     @Override 
     public int imprimirCliente() {
-       OpcaoCliente.InterCliente[] op = OpcaoCliente.InterCliente.values();
-           String[] opDesc = new String[op.length];
-           for (int i = 0; i < op.length; i++) {
-               opDesc[i] = op[i].getValorOpcao() + ". " + op[i].getDesc();
-           }
-
-           String escolha = (String) JOptionPane.showInputDialog(
-                   null,
-                   "Escolha uma opção:",
-                   "Menu Cliente",
-                   JOptionPane.INFORMATION_MESSAGE,
-                   null,
-                   opDesc,
-                   opDesc[0]);
-
-           // Converte a escolha para o enum correspondente e obtém o valor da opção
-           if (escolha != null) {
-               for (OpcaoCliente.InterCliente opcao : op) {
-                   if (escolha.equals(opcao.getValorOpcao() + ". " + opcao.getDesc())) {
-                       return opcao.getValorOpcao();
-                   }
-               }    
-           }
-           /* Opcao inválida, tera um break na interface */
-           return -1;
+       opcao = graficaMenu.adaptarInterfaceMenu(InterMenuCliente.class, "Menu Cliente");
+        return opcao;
     }
     
     @Override
     public int imprimirVeiculo(){
-        OpcaoVeiculo.InterVeiculo[] op = OpcaoVeiculo.InterVeiculo.values();
-            String[] opDesc = new String[op.length];
-            for (int i = 0; i < op.length; i++) {
-                opDesc[i] = op[i].getValorOpcao() + ". " + op[i].getDesc();
-            }
-
-            String escolha = (String) JOptionPane.showInputDialog(
-                    null,
-                    "Escolha uma opção:",
-                    "Menu Veiculo",
-                    JOptionPane.INFORMATION_MESSAGE,
-                    null,
-                    opDesc,
-                    opDesc[0]);
-
-            // Converte a escolha para o enum correspondente e obtém o valor da opção
-            if (escolha != null) {
-                for (OpcaoVeiculo.InterVeiculo opcao : op) {
-                    if (escolha.equals(opcao.getValorOpcao() + ". " + opcao.getDesc())) {
-                        return opcao.getValorOpcao();
-                    }
-                }    
-            }
-            /* Opcao inválida, tera um break na interface */
-            return -1;
+        opcao = graficaMenu.adaptarInterfaceMenu(InterMenuVeiculo.class, "Menu gerenciamento de Veículo");
+        return opcao;
     }
    
     @Override
     public int imprimirVaga() {
-        OpcaoVaga.InterVaga[] op = OpcaoVaga.InterVaga.values();
-            String[] opDesc = new String[op.length];
-            for (int i = 0; i < op.length; i++) {
-                opDesc[i] = op[i].getValorOpcao() + ". " + op[i].getDesc();
-            }
-
-            String escolha = (String) JOptionPane.showInputDialog(
-                    null,
-                    "Escolha uma opção:",
-                    "Menu Vaga",
-                    JOptionPane.INFORMATION_MESSAGE,
-                    null,
-                    opDesc,
-                    opDesc[0]);
-
-            // Converte a escolha para o enum correspondente e obtém o valor da opção
-            if (escolha != null) {
-                for (OpcaoVaga.InterVaga opcao : op) {
-                    if (escolha.equals(opcao.getValorOpcao() + ". " + opcao.getDesc())) {
-                        return opcao.getValorOpcao();
-                    }
-                }    
-            }
-            /* Opcao inválida, tera um break na interface */
-            return -1;
+        opcao = graficaMenu.adaptarInterfaceMenu(InterMenuVaga.class, "Menu Vaga");
+        return opcao;
     }
     
     @Override   
     public int imprimirEstacionamento(){
-        OpcaoEstacionamento.InterEstacionamento[] op = OpcaoEstacionamento.InterEstacionamento.values();
-            String[] opDesc = new String[op.length];
-            for (int i = 0; i < op.length; i++) {
-                opDesc[i] = op[i].getValorOpcao() + ". " + op[i].getDesc();
-            }
-
-            String escolha = (String) JOptionPane.showInputDialog(
-                    null,
-                    "Escolha uma opção:",
-                    "Menu Estacionamento",
-                    JOptionPane.INFORMATION_MESSAGE,
-                    null,
-                    opDesc,
-                    opDesc[0]);
-
-            // Converte a escolha para o enum correspondente e obtém o valor da opção
-            if (escolha != null) {
-                for (OpcaoEstacionamento.InterEstacionamento opcao : op) {
-                    if (escolha.equals(opcao.getValorOpcao() + ". " + opcao.getDesc())) {
-                        return opcao.getValorOpcao();
-                    }
-                }    
-            }
-            /* Opcao inválida*/
-            return -1;
+       opcao = graficaMenu.adaptarInterfaceMenu(InterMenuEstacionamento.class, "Menu Estacionamento");
+        return opcao;
     }
     
     @Override
     public int imprimirTarifa(){
-         OpcaoTarifa.InterTarifa[] op = OpcaoTarifa.InterTarifa.values();
-           String[] opDesc = new String[op.length];
-           for (int i = 0; i < op.length; i++) {
-               opDesc[i] = op[i].getValorOpcao() + ". " + op[i].getDesc();
-           }
-
-           String escolha = (String) JOptionPane.showInputDialog(
-                   null,
-                   "Escolha uma opção:",
-                   "Menu Tarifa",
-                   JOptionPane.INFORMATION_MESSAGE,
-                   null,
-                   opDesc,
-                   opDesc[0]);
-
-           // Converte a escolha para o enum correspondente e obtém o valor da opção
-           if (escolha != null) {
-               for (OpcaoTarifa.InterTarifa opcao : op) {
-                   if (escolha.equals(opcao.getValorOpcao() + ". " + opcao.getDesc())) {
-                       return opcao.getValorOpcao();
-                   }
-               }    
-           }
-           /* Opcao inválida, tera um break na interface */
-           return -1;
-    }
+        opcao = graficaMenu.adaptarInterfaceMenu(InterMenuTarifa.class, "Menu Tarifa");
+        return opcao;
+    }    
 }  
 

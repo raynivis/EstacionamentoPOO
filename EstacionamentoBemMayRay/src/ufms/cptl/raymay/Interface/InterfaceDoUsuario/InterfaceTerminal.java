@@ -4,17 +4,15 @@
  */
 package ufms.cptl.raymay.Interface.InterfaceDoUsuario;
 
-import java.io.PrintStream;
-import java.io.UnsupportedEncodingException;
-import java.nio.charset.StandardCharsets;
 import java.util.Scanner;
-import ufms.cptl.raymay.Interface.EnumOpcao.OpcaoCadastroGeral;
-import ufms.cptl.raymay.Interface.EnumOpcao.OpcaoCliente;
-import ufms.cptl.raymay.Interface.EnumOpcao.OpcaoEstacionamento;
-import ufms.cptl.raymay.Interface.EnumOpcao.OpcaoInicial;
-import ufms.cptl.raymay.Interface.EnumOpcao.OpcaoTarifa;
-import ufms.cptl.raymay.Interface.EnumOpcao.OpcaoVaga;
-import ufms.cptl.raymay.Interface.EnumOpcao.OpcaoVeiculo;
+import ufms.cptl.raymay.Interface.EnumOpcao.InterMenuCadastroGeral;
+import ufms.cptl.raymay.Interface.EnumOpcao.InterMenuCliente;
+import ufms.cptl.raymay.Interface.EnumOpcao.InterMenuEstacionamento;
+import ufms.cptl.raymay.Interface.EnumOpcao.InterMenuInicial;
+import ufms.cptl.raymay.Interface.EnumOpcao.InterMenuTarifa;
+import ufms.cptl.raymay.Interface.EnumOpcao.InterMenuVaga;
+import ufms.cptl.raymay.Interface.EnumOpcao.InterMenuVeiculo;
+import ufms.cptl.raymay.Interface.Menu.MenuTerminal;
 import static ufms.cptl.raymay.InterfaceOpcoes.MostraMensagem.mostrarInterMensagem;
 
 /**
@@ -22,6 +20,7 @@ import static ufms.cptl.raymay.InterfaceOpcoes.MostraMensagem.mostrarInterMensag
  * @author nivis
  */
 public class InterfaceTerminal implements UserInterface{
+    MenuTerminal terminalMenu = new MenuTerminal();
     private final Scanner scanner = new Scanner(System.in);
     
     /* Métodos de impressão de menus que irão retornar um valor que será atribuido a uma variável do mesmo tipo (int)
@@ -32,7 +31,6 @@ public class InterfaceTerminal implements UserInterface{
         mostrarInterMensagem(mensagem);
     }
     
-    
      @Override
      public String receberString(String mensagem){
         mostrarInterMensagem(mensagem);
@@ -41,101 +39,48 @@ public class InterfaceTerminal implements UserInterface{
     }
   
     @Override
-    public int imprimirInicio(){        
-        try {
-            PrintStream out = new PrintStream(System.out, true, StandardCharsets.UTF_8.toString());
-            for (OpcaoInicial.InterInicial op : OpcaoInicial.InterInicial.values()) {
-                    out.println(op.getValorOpcao() + " - " + op.getDesc());
-            }
-        } catch (UnsupportedEncodingException e) {
-            }           
+    public int imprimirInicio(){     
+        if(terminalMenu.adaptarInterfaceMenu(InterMenuInicial.class, receberString("Menu Inicial")) == 0) {
             int opcao = scanner.nextInt();
             scanner.nextLine();
-            return opcao;       
-    }
-    
+            return opcao;  
+        } else
+            return -1;   
+    } 
     
     @Override
-    public int imprimirCadastroGeral(){     
-        try {
-            PrintStream out = new PrintStream(System.out, true, StandardCharsets.UTF_8.toString());
-            for (OpcaoCadastroGeral.InterCadastroGeral op : OpcaoCadastroGeral.InterCadastroGeral.values()) {
-                out.println(op.getValorOpcao() + " - " + op.getDesc());
-            }
-        } catch (UnsupportedEncodingException e) {
-        }
-        int opcao3 = scanner.nextInt();
-        scanner.nextLine();
+    public int imprimirCadastroGeral(){    
+        int opcao3 = terminalMenu.adaptarInterfaceMenu(InterMenuCadastroGeral.class, receberString("Menu Cadastro Geral"));
         return opcao3;           
     }  
     
     @Override 
     public int imprimirCliente() {
-        try {
-            PrintStream out = new PrintStream(System.out, true, StandardCharsets.UTF_8.toString());
-            for (OpcaoCliente.InterCliente op : OpcaoCliente.InterCliente.values()) {
-                out.println(op.getValorOpcao() + " - " + op.getDesc());
-            }
-        } catch (UnsupportedEncodingException e) {
-        } 
-        int opcao2 = scanner.nextByte();
-        scanner.nextLine();
+        int opcao2 = terminalMenu.adaptarInterfaceMenu(InterMenuCliente.class, receberString("Menu Cliente"));
         return opcao2;
     }
     
     @Override
     public int imprimirVeiculo() {
-        try {
-            PrintStream out = new PrintStream(System.out, true, StandardCharsets.UTF_8.toString());
-            for (OpcaoVeiculo.InterVeiculo op : OpcaoVeiculo.InterVeiculo.values()) {
-                out.println(op.getValorOpcao() + " - " + op.getDesc());
-            }
-        } catch (UnsupportedEncodingException e) {
-        }
-        int opcao3 = scanner.nextByte();
-        scanner.nextLine();
+        int opcao3 = terminalMenu.adaptarInterfaceMenu(InterMenuVeiculo.class, receberString("Menu gerenciamento de Veículo"));
         return opcao3;
     }
   
     @Override 
     public int imprimirVaga() {
-        try {
-            PrintStream out = new PrintStream(System.out, true, StandardCharsets.UTF_8.toString());
-            for (OpcaoVaga.InterVaga op : OpcaoVaga.InterVaga.values()) {
-                out.println(op.getValorOpcao() + " - " + op.getDesc());
-            }
-        } catch (UnsupportedEncodingException e) {
-        }
-        int opcao2 = scanner.nextByte();
-        scanner.nextLine();
+        int opcao2 = terminalMenu.adaptarInterfaceMenu(InterMenuVaga.class, receberString("Menu Vaga"));
         return opcao2;
     }
     
      @Override  
      public int imprimirEstacionamento(){
-         try {
-                PrintStream out = new PrintStream(System.out, true, StandardCharsets.UTF_8.toString());
-                for (OpcaoEstacionamento.InterEstacionamento op : OpcaoEstacionamento.InterEstacionamento.values()) {
-                    out.println(op.getValorOpcao() + " - " + op.getDesc());
-                }
-        } catch (UnsupportedEncodingException e) {
-        }  
-        int opcao2 = scanner.nextInt();
-        scanner.nextLine();
+        int opcao2 = terminalMenu.adaptarInterfaceMenu(InterMenuEstacionamento.class, receberString("Menu Estacionamento"));
         return opcao2;
     }
     
     @Override
     public int imprimirTarifa(){
-        try {
-            PrintStream out = new PrintStream(System.out, true, StandardCharsets.UTF_8.toString());
-            for (OpcaoTarifa.InterTarifa op : OpcaoTarifa.InterTarifa.values()) {
-                out.println(op.getValorOpcao() + " - " + op.getDesc());
-            }
-        } catch (UnsupportedEncodingException e) {
-        }
-        int opcao3 = scanner.nextByte();
-        scanner.nextLine();
+        int opcao3 = terminalMenu.adaptarInterfaceMenu(InterMenuTarifa.class, receberString("Menu Tarifa"));
         return opcao3;
     }
 }
