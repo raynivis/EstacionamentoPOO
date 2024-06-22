@@ -3,13 +3,15 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
 package ufms.cptl.raymay.Classes.Interno.Tarifas;
+import java.io.Serializable;
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 
 /**
  *
  * @author nivis
  */
-public class TarifaMensalista extends Tarifa{
+public class TarifaMensalista extends Tarifa implements Serializable{
     private double valorUnico;
 
     public TarifaMensalista(double valorUnico, LocalDateTime inicio) {
@@ -27,6 +29,7 @@ public class TarifaMensalista extends Tarifa{
        
     @Override
     public String toString() {
+        DateTimeFormatter dataBonitinha = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm"); 
         return  "Tarifa: Mensalista \nInicio: " + inicio.format(dataBonitinha) + "\nValor: " + valorUnico;
     }
    

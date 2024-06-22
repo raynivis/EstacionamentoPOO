@@ -3,13 +3,14 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
 package ufms.cptl.raymay.Classes.Externo.Individuo;
+import java.io.Serializable;
 import ufms.cptl.raymay.Classes.Externo.Automovel.Veiculo;
 import java.util.List;
 /**
  *
  * @author ra
  */
-public class Cliente {
+public class Cliente implements Serializable{
     
     /* Atributos característicos do cliente, possui também a lista de veículos pertencente ao cliente */
     private String nome;

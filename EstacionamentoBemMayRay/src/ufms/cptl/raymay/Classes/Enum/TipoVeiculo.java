@@ -4,10 +4,12 @@
  */
 package ufms.cptl.raymay.Classes.Enum;
 
+import java.io.Serializable;
+
 /**
  *
  * @author ra
  */
-public enum TipoVeiculo {
+public enum TipoVeiculo implements Serializable{
      MOTO, CARRO, ONIBUS    
 }

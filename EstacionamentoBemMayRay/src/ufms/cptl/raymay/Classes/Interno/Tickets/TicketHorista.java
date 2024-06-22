@@ -4,8 +4,10 @@
  */
 package ufms.cptl.raymay.Classes.Interno.Tickets;
 
+import java.io.Serializable;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
+import java.time.format.DateTimeFormatter;
 import ufms.cptl.raymay.Classes.Enum.Operando;
 import ufms.cptl.raymay.Classes.Externo.Automovel.Veiculo;
 import ufms.cptl.raymay.Classes.Interno.Tarifas.TarifaHorista;
@@ -16,7 +18,7 @@ import ufms.cptl.raymay.Classes.Enum.TipoVeiculo;
  *
  * @author nivis
  */
-public class TicketHorista extends Ticket{
+public class TicketHorista extends Ticket implements Serializable{
     private TarifaHorista tarifaTicketH;
     
     public TicketHorista(TarifaHorista tarifaTicketH, Veiculo veiculoTicket, Vaga vagaTicket) {
@@ -38,7 +40,8 @@ public class TicketHorista extends Ticket{
         this.status = Operando.DESATIVO;
         this.fim = LocalDateTime.now();
         this.vagaTicket.disponibilizar();
-        faturar();
+        faturar();       
+        this.veiculoTicket.adicionarContribuicao(faturado);
     }
 
     /*Método para calcular quanto o ticket faturou, pela tarifa escolhida pelo ticket, ele ja adiciona o preço da primeira hora, logo
@@ -93,8 +96,9 @@ public class TicketHorista extends Ticket{
     }
      
     @Override
-    public String toString() {    
-        return   "Tarifa: Horista" + "Codigo: " + codigo + "\nStatus: " + status + "\nInicio do ticket: " + inicio.format(dataBonitinha) +
+    public String toString() {  
+        DateTimeFormatter dataBonitinha = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm"); 
+        return   "Tarifa: Horista \nCodigo: " + codigo + "\nStatus: " + status + "\nInicio do ticket: " + inicio.format(dataBonitinha) +
                 "\nData da Tarifa: " + tarifaTicketH.getInicio().format(dataBonitinha) + "\nPlaca do Veiculo: " 
                 + veiculoTicket.getPlaca() + "\nVaga: " + vagaTicket.getNumero() + " " + vagaTicket.getRua();
     }

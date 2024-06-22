@@ -13,6 +13,8 @@ import ufms.cptl.raymay.Classes.Externo.Individuo.Cliente;
 import ufms.cptl.raymay.Classes.Interno.Tarifas.Tarifa;
 import ufms.cptl.raymay.Classes.Interno.Tickets.Ticket;
 import ufms.cptl.raymay.Classes.Interno.Vaga;
+import ufms.cptl.raymay.Interface.EnumOpcao.InterMenuCliente;
+import ufms.cptl.raymay.Interface.EnumOpcao.InterMenuVeiculo;
 import ufms.cptl.raymay.Interface.InterfaceDoUsuario.UserInterface;
 import ufms.cptl.raymay.Operacoes.OperacoesCliente;
 /**
@@ -33,12 +35,12 @@ public class InterfaceOpcaoCliente{
         do{
             /* Utiliza o método criado em ItensMenu, reduzindo o tamanho
             de linhas das Classes da interface */
-            opcao2 = inter.imprimirCliente();
+            opcao2 = inter.imprimirMenu(InterMenuCliente.class, "Menu Cliente");
                 switch (opcao2) {
                     case 1:
                        /*cadastrar cliente*/
                         String nome = inter.receberString("Digite o nome");
-                        String cpf = inter.receberString("DIgite o cpf");
+                        String cpf = inter.receberString("Digite o cpf");
                         
                         if(opCliente.buscar(clientes, cpf) != null) {
                             inter.imprimirMensagem("Erro ao cadastrar: CPF já existente no sistema!");
@@ -54,6 +56,7 @@ public class InterfaceOpcaoCliente{
                         Veiculo Novoveiculo = InVeiculo.cadastrarVeiculo(clientes, novoCliente, inter);                      
                         
                          if(Novoveiculo != null) {
+                            novoCliente.addVeiculo(Novoveiculo);
                             inter.imprimirMensagem("Cadastro:\n" + novoCliente.toString() + "\nFinalizado com sucesso!");
                             clientes.add(novoCliente);
                          }
@@ -135,7 +138,7 @@ public class InterfaceOpcaoCliente{
         do{
             /* Utiliza o método criado na classe InterfaceTerminal ou na Classe InterfaceGrafica, dependendo
             da escolha do usuário */
-            opcao3 = inter.imprimirVeiculo(); 
+            opcao3 = inter.imprimirMenu(InterMenuVeiculo.class, "Menu gerenciamento de Veículo");
             switch(opcao3){
                 case 1: /*Adicionar um veículo*/
                     Veiculo veiculoAdicional = InVeiculo.cadastrarVeiculo(clientes, operador, inter);

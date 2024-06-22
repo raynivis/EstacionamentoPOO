@@ -89,36 +89,38 @@ public class OperacoesTarifa {
         }  
         return tipo;
     } 
-    
+    /*Método que busca a tarifa Mensalista mais proxima a partir dos atributos da tarifa mensalista mais proxima da
+    data do ticket*/ 
+    public TarifaMensalista buscarMensalistaMaisProxima(List<Tarifa> tarifas, LocalDateTime inicio) { 
+        TarifaMensalista tarifaPerto = null;       
+        for(Tarifa t : tarifas) {
+            if(t instanceof TarifaMensalista && t.getInicio().isBefore(inicio)) {               	
+                if(tarifaPerto == null || Duration.between(t.getInicio(), inicio).getSeconds() <= Duration.between(tarifaPerto.getInicio(), inicio).getSeconds() ) {
+                     tarifaPerto = (TarifaMensalista)t;  
+                }  
+            }    
+        }    
+        return tarifaPerto;
+    }
     /*Método para achar a tarifa que o ticket vai usar, na lista de tarifas ele busca pelas tarifas que começaram antes da data passada por 
     referencia, além de ver se ela contem o "dia da Semana" da data, se ela atender os requisitos, ela verifica se o Tipo de Veiculo é compativel
     com essa tarifa.
-    Após isso, se for a primeira vez que ele entrar na condição da "linha 139" ele já vai receber a tarifa
+    Após isso, se for a primeira vez que ele entrar na condição da "linha 117" ele já vai receber a tarifa
     Se mais de uma tarifa entrar nessa condição ele vai comparar qual a tarifa mais perto da data passada (comparando os segundos)
     por referencia.
     A melhor tarifa é escolhida e retornada, se não achar nenhum tarifa nas condições retorna um ponteiro null*/
-    public Tarifa buscarMaisProxima(List<Tarifa> tarifas, LocalDateTime inicio, String tipoTi) { 
-        Tarifa tarifaPerto = null;
-        if(tipoTi.equalsIgnoreCase("HORISTA")){
-            for(Tarifa t : tarifas) {
+    public TarifaHorista buscarHoristaMaisProxima(List<Tarifa> tarifas, LocalDateTime inicio) { 
+        TarifaHorista tarifaPerto = null; 
+        for(Tarifa t : tarifas) {
+            if(t instanceof TarifaHorista) {
                 TarifaHorista tH = (TarifaHorista) t;
-                if(t instanceof TarifaHorista && tH.getInicio().isBefore(inicio) && tH.getDiasSemana().contains(identificarDiaSemanaToEnum(LocalDateTime.now())) ) {                      	
+                if(tH.getInicio().isBefore(inicio) && tH.getDiasSemana().contains(identificarDiaSemanaToEnum(LocalDateTime.now())) ) {                      	
                     if(tarifaPerto == null || Duration.between(tH.getInicio(), inicio).getSeconds() <= Duration.between(tarifaPerto.getInicio(), inicio).getSeconds() ) {
                          tarifaPerto = tH;  
                     }
                 }
             }
         }
-        else {
-            for(Tarifa t : tarifas) {
-                if(t instanceof TarifaMensalista && t.getInicio().isBefore(inicio)) {               	
-                    if(tarifaPerto == null || Duration.between(t.getInicio(), inicio).getSeconds() <= Duration.between(tarifaPerto.getInicio(), inicio).getSeconds() ) {
-                         tarifaPerto = t;  
-                    }  
-                }    
-            }
-        }
-        
         return tarifaPerto;
     }
     

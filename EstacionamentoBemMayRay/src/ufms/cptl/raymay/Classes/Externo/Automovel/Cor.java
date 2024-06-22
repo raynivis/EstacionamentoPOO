@@ -4,11 +4,13 @@
  */
 package ufms.cptl.raymay.Classes.Externo.Automovel;
 
+import java.io.Serializable;
+
 /**
  *
  * @author ra
  */
-public class Cor {
+public class Cor implements Serializable {
     private String cor;
     private String descricao;
 

@@ -4,7 +4,9 @@
  */
 package ufms.cptl.raymay.Classes.Interno.Tickets;
 
+import java.io.Serializable;
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import ufms.cptl.raymay.Classes.Enum.Operando;
 import ufms.cptl.raymay.Classes.Externo.Automovel.Veiculo;
 import ufms.cptl.raymay.Classes.Interno.Tarifas.TarifaMensalista;
@@ -15,7 +17,7 @@ import ufms.cptl.raymay.Classes.Enum.TipoVeiculo;
  *
  * @author nivis
  */
-public class TicketMensalista extends Ticket {
+public class TicketMensalista extends Ticket implements Serializable{
     private TarifaMensalista tarifaTicketM;
 
     public TicketMensalista(TarifaMensalista tarifaTicketM, Veiculo veiculoTicket, Vaga vagaTicket) {
@@ -23,6 +25,7 @@ public class TicketMensalista extends Ticket {
         this.tarifaTicketM = tarifaTicketM;
         this.fim = LocalDateTime.now().plusDays(30);
         faturar();
+        this.veiculoTicket.adicionarContribuicao(faturado);
     }
 
     public TarifaMensalista getTarifaTicketM() {
@@ -57,8 +60,9 @@ public class TicketMensalista extends Ticket {
     }
      
     @Override
-    public String toString() {    
-        return   "Tarifa: Mensalista" + "Codigo: " + codigo + "\nStatus: " + status + "\nInicio do ticket: " + inicio.format(dataBonitinha) +
+    public String toString() { 
+        DateTimeFormatter dataBonitinha = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm"); 
+        return   "Tarifa: Mensalista \nCodigo: " + codigo + "\nStatus: " + status + "\nInicio do ticket: " + inicio.format(dataBonitinha) +
                 "\nData da Tarifa: " + tarifaTicketM.getInicio().format(dataBonitinha) + "\nPlaca do Veiculo: " 
                 + veiculoTicket.getPlaca() + "\nVaga: " + vagaTicket.getNumero() + " " + vagaTicket.getRua();
     }

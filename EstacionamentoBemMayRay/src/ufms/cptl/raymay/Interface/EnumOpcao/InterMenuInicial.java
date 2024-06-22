@@ -13,7 +13,8 @@ public enum InterMenuInicial implements InterMenuGeral{
         GERENCIAR_ESTACIONAMENTO(3, "Gerenciar estacionamento"),
         CADASTROS_GERAIS(4, "Cadastros gerais"),
         TOTAL_FATURADO(5, "Consultar total faturado em um período"),
-        SAIR(6, "Sair do programa");
+        TOTAL_VEICULO(6, "Consultar total faturado por veículo"),
+        SAIR(7, "Sair do programa");
         
         /* Como esse enum trabalha com a impressão de menus, os atributos são private -> final <-  pois
         não serão alterados, caso fossem isso traria confusão ao usuário e perderia a característica
