@@ -5,7 +5,6 @@
 package ufms.cptl.raymay.Interface.Menu;
 
 import java.io.PrintStream;
-import java.io.UnsupportedEncodingException;
 import java.nio.charset.StandardCharsets;
 import java.util.Scanner;
 import ufms.cptl.raymay.Interface.EnumOpcao.InterMenuGeral;
@@ -19,14 +18,20 @@ public class MenuTerminal implements Menu{
     
     @Override
     public <T extends Enum<T> & InterMenuGeral> int adaptarInterfaceMenu(Class<T> escolhaMenu, String menuSelecao) {
-      try {
-            PrintStream out = new PrintStream(System.out, true, StandardCharsets.UTF_8.toString());
-            out.println(menuSelecao + "\n");
-            for (T op : escolhaMenu.getEnumConstants()) {
-                    System.out.println(op.getValorOpcao() + " - " + op.getDesc());
+        try {
+            PrintStream out = new PrintStream(System.out, true, StandardCharsets.UTF_8.name());
+            out.println(menuSelecao);
+
+            T[] menu = escolhaMenu.getEnumConstants();
+            for (T constant : menu) {
+                out.println(constant.getValorOpcao() + " - " + constant.getDesc());
             }
-            return 0;
-        } catch (UnsupportedEncodingException e) { /*REVISAR ESSE TRYCATCHHHHHH*/
+
+            int opcao = scanner.nextInt();
+            scanner.nextLine();
+            return opcao;
+            
+        } catch (Exception e) {
             return -1;
         }
     }    
