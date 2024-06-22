@@ -7,35 +7,31 @@ package ufms.cptl.raymay.Interface.EnumOpcao;
  *
  * @author maymi
  */
-public class OpcaoCliente {
-
-    public enum InterCliente{
-        CADASTRAR_CLIENTE(1, "Cadastrar"),
-        CONSULTA_DOC(2, "Consultar por documento"),
-        EXCLUIR(3, "Excluir"),
-        EDITAR(4, "Editar"),
-        GERENCIAR_VEICULOS(5, "Gerenciar veículos"),
-        LISTAR_CADASTROS(6, "Listar todos os cadastros"),
-        VOLTAR(7, "Voltar");
+public enum InterMenuVeiculo implements InterMenuGeral{
+        CADASTRAR (1, "Cadastrar novo veículo"),
+        EXCLUIR (2, "Excluir veículo"),
+        EDITAR(3, "Editar veículo"),
+        SAIR(4, "Voltar");
         
-       /* Como esse enum trabalha com a impressão de menus, os atributos são private -> final <-  pois
+        /* Como esse enum trabalha com a impressão de menus, os atributos são private -> final <-  pois
         não serão alterados, caso fossem isso traria confusão ao usuário e perderia a característica
         imutável dos enums */
-        private final int valorOpcao;
-        private final String desc;
+        public int valorOpcao;
+        public String desc;
 
-        private InterCliente(int valorOpcao, String desc) {
+        private InterMenuVeiculo(int valorOpcao, String desc) {
             this.valorOpcao = valorOpcao;
             this.desc = desc;
         }
         /* Como se trata de um enum e menu, não será necessário métodos setters na Classe, pois os atributos
         não serão alterados ou definidos posteriormente e já foram inicializados no construtor */
+        @Override
         public int getValorOpcao() {
             return valorOpcao;
         }
 
+        @Override
         public String getDesc() {
             return desc;
-        }   
-    }    
-}
+        }
+    }  
