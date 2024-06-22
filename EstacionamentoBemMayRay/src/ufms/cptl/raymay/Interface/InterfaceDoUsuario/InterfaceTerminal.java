@@ -40,47 +40,43 @@ public class InterfaceTerminal implements UserInterface{
   
     @Override
     public int imprimirInicio(){     
-        if(terminalMenu.adaptarInterfaceMenu(InterMenuInicial.class, receberString("Menu Inicial")) == 0) {
-            int opcao = scanner.nextInt();
-            scanner.nextLine();
-            return opcao;  
-        } else
-            return -1;   
+        int opcao = terminalMenu.adaptarInterfaceMenu(InterMenuInicial.class, "Menu Inicial");
+        return opcao;
     } 
     
     @Override
-    public int imprimirCadastroGeral(){    
-        int opcao3 = terminalMenu.adaptarInterfaceMenu(InterMenuCadastroGeral.class, receberString("Menu Cadastro Geral"));
-        return opcao3;           
+    public int imprimirCadastroGeral(){
+        int opcao3 = terminalMenu.adaptarInterfaceMenu(InterMenuCadastroGeral.class, "Menu Cadastro Geral");
+        return opcao3;          
     }  
     
     @Override 
     public int imprimirCliente() {
-        int opcao2 = terminalMenu.adaptarInterfaceMenu(InterMenuCliente.class, receberString("Menu Cliente"));
+        int opcao2 = terminalMenu.adaptarInterfaceMenu(InterMenuCliente.class, "Menu Cliente");
         return opcao2;
     }
     
     @Override
     public int imprimirVeiculo() {
-        int opcao3 = terminalMenu.adaptarInterfaceMenu(InterMenuVeiculo.class, receberString("Menu gerenciamento de Veículo"));
+        int opcao3 = terminalMenu.adaptarInterfaceMenu(InterMenuVeiculo.class, "Menu gerenciamento de Veículo");
         return opcao3;
     }
   
     @Override 
     public int imprimirVaga() {
-        int opcao2 = terminalMenu.adaptarInterfaceMenu(InterMenuVaga.class, receberString("Menu Vaga"));
+        int opcao2 = terminalMenu.adaptarInterfaceMenu(InterMenuVaga.class, "Menu Vaga");
         return opcao2;
     }
     
      @Override  
      public int imprimirEstacionamento(){
-        int opcao2 = terminalMenu.adaptarInterfaceMenu(InterMenuEstacionamento.class, receberString("Menu Estacionamento"));
+        int opcao2 = terminalMenu.adaptarInterfaceMenu(InterMenuEstacionamento.class, "Menu Estacionamento");
         return opcao2;
     }
     
     @Override
     public int imprimirTarifa(){
-        int opcao3 = terminalMenu.adaptarInterfaceMenu(InterMenuTarifa.class, receberString("Menu Tarifa"));
+        int opcao3 = terminalMenu.adaptarInterfaceMenu(InterMenuTarifa.class, "Menu Tarifa");
         return opcao3;
     }
 }
