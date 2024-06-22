@@ -4,11 +4,13 @@
  */
 package ufms.cptl.raymay.Classes.Enum;
 
+import java.io.Serializable;
+
 /**
  *
  * @author ra
  */
-public enum Operando {
+public enum Operando implements Serializable{
     /* Auxilia na identificação de cada ticket e nas operações de exclusão de Cliente, Vaga e Tarifa*/
     ATIVO, DESATIVO 
 }

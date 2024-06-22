@@ -4,13 +4,14 @@
  */
 package ufms.cptl.raymay.Classes.Interno;
 
+import java.io.Serializable;
 import ufms.cptl.raymay.Classes.Enum.TipoVeiculo;
 import ufms.cptl.raymay.Classes.Enum.VagaStatus;
 /**
  *
  * @author ra
  */
-public class Vaga {
+public class Vaga implements Serializable{
 
     /* A vaga contém uma chave composta => numero e rua */
     private int numero;
@@ -49,10 +50,23 @@ public class Vaga {
     public void setRua(String rua) {
         this.rua = rua;
     }
-
-    public VagaStatus getStatus() {
-        return status;
+    /*metodos para verifciar a disponibilidade da vaga*/
+    public boolean isDisponivel(){
+        if(this.status == VagaStatus.DISPONIVEL)
+            return true;
+        return false;     
     }
+    public boolean isOcupada(){
+        if(this.status == VagaStatus.OCUPADA)
+            return true;
+        return false;     
+    }
+    public boolean isIndisponivel(){
+        if(this.status == VagaStatus.INDISPONIVEL)
+            return true;
+        return false;     
+    }
+   
     /*Alterar o status da vaga por meio desses 3 metodos*/
     public void disponibilizar() {
         this.status = VagaStatus.DISPONIVEL;

@@ -4,6 +4,7 @@
  */
 package ufms.cptl.raymay.Classes.Enum;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -11,7 +12,7 @@ import java.util.List;
  *
  * @author ra
  */
-public enum DiaSemana {
+public enum DiaSemana implements Serializable{
     SEGUNDA, TERCA, QUARTA, QUINTA, SEXTA, SABADO, DOMINGO;
     
     public static List<DiaSemana> criarLista(String texto){

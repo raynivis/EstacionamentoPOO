@@ -4,10 +4,12 @@
  */
 package ufms.cptl.raymay.Classes.Enum;
 
+import java.io.Serializable;
+
 /**
  *
  * @author ra
  */
-public enum VagaStatus {
+public enum VagaStatus implements Serializable{
     DISPONIVEL, OCUPADA, INDISPONIVEL
 }

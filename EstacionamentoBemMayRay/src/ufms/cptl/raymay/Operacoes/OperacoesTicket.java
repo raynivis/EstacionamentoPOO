@@ -4,11 +4,11 @@
  */
 package ufms.cptl.raymay.Operacoes;
 
+import java.text.NumberFormat;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import ufms.cptl.raymay.Classes.Enum.Operando;
-import ufms.cptl.raymay.Classes.Enum.VagaStatus;
 import ufms.cptl.raymay.Classes.Externo.Automovel.Veiculo;
 import ufms.cptl.raymay.Classes.Externo.Individuo.Cliente;
 import ufms.cptl.raymay.Classes.Interno.Tickets.Ticket;
@@ -73,7 +73,7 @@ public class OperacoesTicket {
         for(Ticket t : tickets){
             if(t instanceof TicketMensalista && t.getStatus().equals(Operando.ATIVO)){
                TicketMensalista tM = (TicketMensalista) t; 
-               if(tM.getVeiculoTicket().equals(veiculoT) && tM.getVagaTicket().getStatus() == VagaStatus.INDISPONIVEL) {                 
+               if(tM.getVeiculoTicket().equals(veiculoT) && tM.getVagaTicket().isIndisponivel()) {                 
                    tM.getVagaTicket().ocupar();
                    return true;
                }
@@ -98,7 +98,7 @@ public class OperacoesTicket {
                     }
                 }
                 else if (t instanceof TicketMensalista) {
-                    if(t.getVeiculoTicket().equals(v) && t.getVagaTicket().getStatus() == VagaStatus.OCUPADA) {
+                    if(t.getVeiculoTicket().equals(v) && t.getVagaTicket().isOcupada()) {
                         return t;
                     }
                 }              
@@ -149,6 +149,20 @@ public class OperacoesTicket {
             }
         }
         return soma;
+    }
+    
+    public List<String> calcularTotalFaturadoVeiculo(List<Cliente> clientes){
+        List<String> textos = new ArrayList<>();
+        NumberFormat dinheiro = NumberFormat.getCurrencyInstance();
+        
+        for(Cliente c : clientes) {
+            for(Veiculo v : c.getVeiculos() ) {
+                textos.add("O veiculo com a placa " + v.getPlaca() + " contribuiu com " + dinheiro.format(v.getContribuido()) +
+               " ao Estacionamento!" );
+            }
+        }
+      
+        return textos;
     }
     
 }

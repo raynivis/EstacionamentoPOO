@@ -21,7 +21,7 @@ public class ListasProntas {
     
     /* Instancia Clientes e Vagas para auxiliar os testes das operações/métodos a serem realizados */
     /* Adiciona os objetos instanciados na lista de Clientes e Vagas */
-    public void gerarListas(List<Cliente> clientes, List<Vaga> vagas) {
+    public static void gerarListas(List<Cliente> clientes, List<Vaga> vagas) {
        List<Veiculo> veiculos1 = new ArrayList<>();
        Cor color = new Cor("Roxo", "Velho");
        Modelo model = new Modelo("Celta", "A12", TipoVeiculo.MOTO);

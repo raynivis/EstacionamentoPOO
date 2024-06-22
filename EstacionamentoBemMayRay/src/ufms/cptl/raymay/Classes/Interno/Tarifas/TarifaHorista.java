@@ -4,14 +4,16 @@
  */
 package ufms.cptl.raymay.Classes.Interno.Tarifas;
 
+import java.io.Serializable;
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 import ufms.cptl.raymay.Classes.Enum.DiaSemana;
 /**
  *
  * @author nivis
  */
-public class TarifaHorista extends Tarifa{
+public class TarifaHorista extends Tarifa implements Serializable{
     private List<DiaSemana> diasSemana;
     private double valorPrimeiraHora;
     private double valorHoraSubsequente;
@@ -44,6 +46,7 @@ public class TarifaHorista extends Tarifa{
        
     @Override
     public String toString() {
+        DateTimeFormatter dataBonitinha = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm"); 
         return  "Tarifa: Horista \nInicio: " + inicio.format(dataBonitinha) + "\nvalorPrimeiraHora: " + valorPrimeiraHora + "\nvalorHoraSubsequente: " + valorHoraSubsequente;
     }
    

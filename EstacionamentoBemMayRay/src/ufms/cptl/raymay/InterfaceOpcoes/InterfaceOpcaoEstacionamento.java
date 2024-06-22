@@ -9,7 +9,6 @@ import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 import ufms.cptl.raymay.Classes.Enum.DiaSemana;
-import ufms.cptl.raymay.Classes.Enum.VagaStatus;
 import ufms.cptl.raymay.Classes.Externo.Automovel.Veiculo;
 import ufms.cptl.raymay.Classes.Externo.Individuo.Cliente;
 import ufms.cptl.raymay.Classes.Interno.Tarifas.Tarifa;
@@ -19,6 +18,8 @@ import ufms.cptl.raymay.Classes.Interno.Tickets.Ticket;
 import ufms.cptl.raymay.Classes.Interno.Tickets.TicketHorista;
 import ufms.cptl.raymay.Classes.Interno.Tickets.TicketMensalista;
 import ufms.cptl.raymay.Classes.Interno.Vaga;
+import ufms.cptl.raymay.Interface.EnumOpcao.InterMenuEstacionamento;
+import ufms.cptl.raymay.Interface.EnumOpcao.InterMenuTarifa;
 import ufms.cptl.raymay.Interface.InterfaceDoUsuario.UserInterface;
 import ufms.cptl.raymay.Operacoes.OperacoesCliente;
 import ufms.cptl.raymay.Operacoes.OperacoesTarifa;
@@ -48,7 +49,7 @@ public class InterfaceOpcaoEstacionamento{
         do{
             /* Utiliza o método criado em OpcaoEstacionamento no package InterfaceEnumOpcao, reduzindo o tamanho
             de linhas das classes da interface */
-            opcao2 = inter.imprimirEstacionamento();
+            opcao2 = inter.imprimirMenu(InterMenuEstacionamento.class, "Menu Estacionamento");
             switch (opcao2) {
                 case 1:
                     /*estacionar*/
@@ -95,31 +96,37 @@ public class InterfaceOpcaoEstacionamento{
                        break;
                     }
                     
-                    if(vaga.getStatus() != VagaStatus.DISPONIVEL) {
-                        if(vaga.getStatus() == VagaStatus.OCUPADA) { 
+                    if(vaga.isDisponivel() == false) {
+                        if(vaga.isOcupada()) { 
                             inter.imprimirMensagem("Erro: A vaga possui um ticket de estacionamento ATIVO (OCUPADA)!");                                  
                             break;
-                        }
+                       }
                        inter.imprimirMensagem("Erro: Vaga indisponível!");                               
                        break;
                     }                
                     String tipoTi; 
                     tipoTi = inter.receberString("O cliente deseja estacionar como Horista ou Mensalista?"); 
-                    /*Achar a tarifa que pertence ao ticket*/                  
-                    Tarifa atual = opTarifa.buscarMaisProxima(tarifas, LocalDateTime.now(), tipoTi);
-
-                    if(atual == null){
-                        inter.imprimirMensagem("Erro: Não existe uma tarifa para esse tipo de vaga nesse período!");  
-                        break;
-                    }
+                    /*Achar a tarifa que pertence ao ticket*/                                     
                     
                     if(tipoTi.equalsIgnoreCase("HORISTA")){
-                        TicketHorista novoTicket = new TicketHorista((TarifaHorista)atual, veiculo, vaga);
+                        TarifaHorista atualH = opTarifa.buscarHoristaMaisProxima(tarifas, LocalDateTime.now());
+
+                        if(atualH == null){
+                            inter.imprimirMensagem("Erro: Não existe uma tarifa para esse tipo de vaga nesse período!");  
+                            break;
+                        }
+                        TicketHorista novoTicket = new TicketHorista(atualH, veiculo, vaga);
                         tickets.add(novoTicket);
                         inter.imprimirMensagem("Ticket Horista de código " + novoTicket.getCodigo() + " criado com sucesso!");                           
                     }
                     else {
-                        TicketMensalista novoTicket = new TicketMensalista((TarifaMensalista)atual, veiculo, vaga);
+                        TarifaMensalista atualM = opTarifa.buscarMensalistaMaisProxima(tarifas, LocalDateTime.now());
+
+                        if(atualM == null){
+                            inter.imprimirMensagem("Erro: Não existe uma tarifa para esse tipo de vaga nesse período!");  
+                            break;
+                        }
+                        TicketMensalista novoTicket = new TicketMensalista(atualM, veiculo, vaga);
                         tickets.add(novoTicket);
                         inter.imprimirMensagem("Ticket Mensalista de código " + novoTicket.getCodigo() + " criado com sucesso!");                  
                     }                                                     
@@ -166,7 +173,7 @@ public class InterfaceOpcaoEstacionamento{
             /* Utiliza o método criado em ItensMenu, reduzindo o tamanho
             de linhas das Classes da interface */                       
             opTicket.verificarMensalista30dias(tickets);
-            opcao3 = inter.imprimirTarifa();
+            opcao3 = inter.imprimirMenu(InterMenuTarifa.class, "Menu Tarifa");
             switch(opcao3){
                 case 1: /*adicionar tarifa*/                                                      
                     String tipo; 

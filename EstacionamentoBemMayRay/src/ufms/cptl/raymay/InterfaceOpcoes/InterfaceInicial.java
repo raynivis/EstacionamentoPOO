@@ -20,6 +20,8 @@ import ufms.cptl.raymay.Classes.Interno.Tickets.TicketHorista;
 import ufms.cptl.raymay.Classes.Interno.Tickets.TicketMensalista;
 import ufms.cptl.raymay.Classes.Interno.Vaga;
 import ufms.cptl.raymay.Classes.Enum.Operando;
+import ufms.cptl.raymay.Interface.EnumOpcao.InterMenuCadastroGeral;
+import ufms.cptl.raymay.Interface.EnumOpcao.InterMenuInicial;
 import ufms.cptl.raymay.Interface.InterfaceDoUsuario.UserInterface;
 import ufms.cptl.raymay.Operacoes.OperacoesCliente;
 import ufms.cptl.raymay.Operacoes.OperacoesTarifa;
@@ -59,7 +61,7 @@ public class InterfaceInicial{
                               
             opTicket.verificarMensalista30dias(tickets);
             
-            opcao = inter.imprimirInicio();
+            opcao = inter.imprimirMenu(InterMenuInicial.class, "Menu Inicial");
                     
             switch (opcao) {
                 case 1: /*Gerenciar clientes*/
@@ -86,19 +88,25 @@ public class InterfaceInicial{
                     inter.imprimirMensagem("\nNesse período foi/foram faturado/s: "  + dinheiro.format(resultado) + "\n");                                     
                 break;
                 case 6:
-                break;                    
+                    List<String> listaVeiculosFaturado = opTicket.calcularTotalFaturadoVeiculo(clientes);
+                        for(String c : listaVeiculosFaturado) {
+                            inter.imprimirMensagem(c);
+                        }
+                break;  
+                case 7:
+                break;
                 default:
                      inter.imprimirMensagem("Insira uma opção válida!");              
                 break;
             }
-        }while (opcao != 6);
+        }while (opcao != 7);
     }
 
     
     private void realizarOpcoesCadastroGeral(List<Cliente> clientes, List<Vaga> vagas, List<Ticket> tickets, List<Tarifa> tarifas, UserInterface inter){
         do {                      
             opTicket.verificarMensalista30dias(tickets);
-            opcao3 = inter.imprimirCadastroGeral();          
+            opcao3 = inter.imprimirMenu(InterMenuCadastroGeral.class, "Menu Cadastro Geral");      
             switch(opcao3) { /*ticket tarifa*/
                 case 1:                               
                     int cod;

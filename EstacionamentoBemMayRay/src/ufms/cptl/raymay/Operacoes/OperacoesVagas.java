@@ -86,7 +86,7 @@ public class OperacoesVagas {
     public boolean alterarDispinibilidade(List<Vaga> vagas, String rua, int numero, VagaStatus novoStatus) {
         for(Vaga v : vagas){
             if(v.getRua().equals(rua) && v.getNumero() == numero) {
-                if(v.getStatus() != VagaStatus.OCUPADA){                                     
+                if(v.isOcupada() == false){                                     
                     if(novoStatus == VagaStatus.DISPONIVEL){
                         v.disponibilizar();
                     } else {
@@ -107,7 +107,7 @@ public class OperacoesVagas {
     public List<String> listarDisponiveis(List<Vaga> vagas) {
         List<String> lista = new ArrayList<>();   
         for(Vaga v : vagas) {         
-            if(v.getStatus() == VagaStatus.DISPONIVEL) {
+            if(v.isDisponivel()){
                 String vaga;
                 vaga = "\n" + v.toString() + "\n";
                 vaga = vaga + "\n" + "///////////////////////////////////////////////////";  

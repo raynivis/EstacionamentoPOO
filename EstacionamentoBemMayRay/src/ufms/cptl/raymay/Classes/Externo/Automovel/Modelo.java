@@ -4,13 +4,14 @@
  */
 package ufms.cptl.raymay.Classes.Externo.Automovel;
 
+import java.io.Serializable;
 import ufms.cptl.raymay.Classes.Enum.TipoVeiculo;
 
 /**
  *
  * @author ra
  */
-public class Modelo {
+public class Modelo implements Serializable{
     /* Enumeração do tipo de veiculo, consideramos a melhor opção pra identificar
     do veículo */
    

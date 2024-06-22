@@ -4,15 +4,10 @@
  */
 package ufms.cptl.raymay.Interface.InterfaceDoUsuario;
 
+import java.io.PrintStream;
+import java.nio.charset.StandardCharsets;
 import java.util.Scanner;
-import ufms.cptl.raymay.Interface.EnumOpcao.InterMenuCadastroGeral;
-import ufms.cptl.raymay.Interface.EnumOpcao.InterMenuCliente;
-import ufms.cptl.raymay.Interface.EnumOpcao.InterMenuEstacionamento;
-import ufms.cptl.raymay.Interface.EnumOpcao.InterMenuInicial;
-import ufms.cptl.raymay.Interface.EnumOpcao.InterMenuTarifa;
-import ufms.cptl.raymay.Interface.EnumOpcao.InterMenuVaga;
-import ufms.cptl.raymay.Interface.EnumOpcao.InterMenuVeiculo;
-import ufms.cptl.raymay.Interface.Menu.MenuTerminal;
+import ufms.cptl.raymay.Interface.EnumOpcao.InterMenuGeral;
 import static ufms.cptl.raymay.InterfaceOpcoes.MostraMensagem.mostrarInterMensagem;
 
 /**
@@ -20,7 +15,6 @@ import static ufms.cptl.raymay.InterfaceOpcoes.MostraMensagem.mostrarInterMensag
  * @author nivis
  */
 public class InterfaceTerminal implements UserInterface{
-    MenuTerminal terminalMenu = new MenuTerminal();
     private final Scanner scanner = new Scanner(System.in);
     
     /* Métodos de impressão de menus que irão retornar um valor que será atribuido a uma variável do mesmo tipo (int)
@@ -28,7 +22,7 @@ public class InterfaceTerminal implements UserInterface{
     /* Os métodos dessa Classe também são criados em UserInterface para auxiliar a troca de interface na main */
      @Override
     public void imprimirMensagem(String mensagem){
-        mostrarInterMensagem(mensagem);
+        mostrarInterMensagem("\n" + mensagem + "\n");
     }
     
      @Override
@@ -37,49 +31,27 @@ public class InterfaceTerminal implements UserInterface{
         String valor = scanner.nextLine();
         return valor;
     }
+     
+    @Override
+    public <T extends Enum<T> & InterMenuGeral> int imprimirMenu(Class<T> escolhaMenu, String menuSelecao) {
+        try {
+            PrintStream out = new PrintStream(System.out, true, StandardCharsets.UTF_8.name());
+            out.println(menuSelecao);
+
+            T[] menu = escolhaMenu.getEnumConstants();
+            for (T constant : menu) {
+                out.println(constant.getValorOpcao() + " - " + constant.getDesc());
+            }
+
+            int opcao = scanner.nextInt();
+            scanner.nextLine();
+            return opcao;
+            
+        } catch (Exception e) {
+            return -1;
+        }
+    }    
   
-    @Override
-    public int imprimirInicio(){     
-        int opcao = terminalMenu.adaptarInterfaceMenu(InterMenuInicial.class, "Menu Inicial");
-        return opcao;
-    } 
-    
-    @Override
-    public int imprimirCadastroGeral(){
-        int opcao3 = terminalMenu.adaptarInterfaceMenu(InterMenuCadastroGeral.class, "Menu Cadastro Geral");
-        return opcao3;          
-    }  
-    
-    @Override 
-    public int imprimirCliente() {
-        int opcao2 = terminalMenu.adaptarInterfaceMenu(InterMenuCliente.class, "Menu Cliente");
-        return opcao2;
-    }
-    
-    @Override
-    public int imprimirVeiculo() {
-        int opcao3 = terminalMenu.adaptarInterfaceMenu(InterMenuVeiculo.class, "Menu gerenciamento de Veículo");
-        return opcao3;
-    }
-  
-    @Override 
-    public int imprimirVaga() {
-        int opcao2 = terminalMenu.adaptarInterfaceMenu(InterMenuVaga.class, "Menu Vaga");
-        return opcao2;
-    }
-    
-     @Override  
-     public int imprimirEstacionamento(){
-        int opcao2 = terminalMenu.adaptarInterfaceMenu(InterMenuEstacionamento.class, "Menu Estacionamento");
-        return opcao2;
-    }
-    
-    @Override
-    public int imprimirTarifa(){
-        int opcao3 = terminalMenu.adaptarInterfaceMenu(InterMenuTarifa.class, "Menu Tarifa");
-        return opcao3;
-    }
 }
- 
   
     

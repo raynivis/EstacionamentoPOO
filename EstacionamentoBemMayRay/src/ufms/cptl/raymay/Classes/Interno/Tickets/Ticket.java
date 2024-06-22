@@ -4,8 +4,8 @@
  */
 package ufms.cptl.raymay.Classes.Interno.Tickets;
 
+import java.io.Serializable;
 import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
 import ufms.cptl.raymay.Classes.Enum.Operando;
 import ufms.cptl.raymay.Classes.Externo.Automovel.Veiculo;
 import ufms.cptl.raymay.Classes.Interno.Vaga;
@@ -15,10 +15,9 @@ import ufms.cptl.raymay.Classes.Interno.Vaga;
  *
  * @author ra
  */
-public abstract class Ticket {
+public abstract class Ticket implements Serializable{
 
     /* Os códigos auxiliam na melhor organização e identificação do ticket na lista de tickets */
-    protected  final DateTimeFormatter dataBonitinha = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm"); 
     protected static int proxCodigo = 1; /* Incrementa o código para o proximo ticket a ser cadastrado */
     protected final int codigo; /* código de identificação para cada ticket, começa em 1 */
     
