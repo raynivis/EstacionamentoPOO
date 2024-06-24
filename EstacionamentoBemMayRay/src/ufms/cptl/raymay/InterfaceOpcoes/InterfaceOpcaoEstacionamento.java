@@ -17,8 +17,8 @@ import ufms.cptl.raymay.Classes.Interno.Tickets.TicketMensalista;
 import ufms.cptl.raymay.Classes.Interno.Vaga;
 import ufms.cptl.raymay.Interface.EnumOpcao.InterMenuEstacionamento;
 import ufms.cptl.raymay.Interface.InterfaceDoUsuario.UserInterface;
+import ufms.cptl.raymay.InterfaceOpcoes.InterfaceException.ClienteException;
 import ufms.cptl.raymay.InterfaceOpcoes.InterfaceException.ErroDigitacaoException;
-import ufms.cptl.raymay.InterfaceOpcoes.InterfaceException.ListaVaziaException;
 import ufms.cptl.raymay.InterfaceOpcoes.InterfaceException.TarifaException;
 import ufms.cptl.raymay.InterfaceOpcoes.InterfaceException.VagaException;
 import ufms.cptl.raymay.InterfaceOpcoes.InterfaceException.VeiculoException;
@@ -48,11 +48,11 @@ public class InterfaceOpcaoEstacionamento{
             de linhas das classes da interface */
             opcao2 = inter.imprimirMenu(InterMenuEstacionamento.class, "Menu Estacionamento");
             try {
-                if(clientes == null) {
-                    throw ex.new ListaVaziaException("Lista de clientes vazia! Cadastre alguns antes!");
+                if(clientes.isEmpty() == true) {
+                    throw ex.new ClienteException("Lista de clientes vazia! Cadastre algum antes!");
                 }
-                if(vagas == null ) {
-                    throw ex.new ListaVaziaException("Lista de vagas vazia! Veículos não podem ser estacionados se não há vagas!!");
+                if(vagas.isEmpty() == true) {
+                    throw ex.new VagaException("Lista de vagas vazia! Veículos não podem ser estacionados se não há vagas!");
                 }
                 switch (opcao2) {
                     case 1:
@@ -159,7 +159,7 @@ public class InterfaceOpcaoEstacionamento{
                        inter.imprimirException("Insira uma opção válida!");     
                     break;
                 }    
-            } catch(TarifaException | VeiculoException | VagaException | ErroDigitacaoException | ListaVaziaException e) {
+            } catch(TarifaException | VeiculoException | VagaException | ErroDigitacaoException | ClienteException e) {
                 inter.imprimirException(e.getMessage());
             }        
         }while(opcao2 != 5);     
