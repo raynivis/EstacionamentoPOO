@@ -6,6 +6,11 @@ package ufms.cptl.raymay.Interface.InterfaceDoUsuario;
 
 import java.io.PrintStream;
 import java.nio.charset.StandardCharsets;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.LocalTime;
+import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeParseException;
 import java.util.Scanner;
 import ufms.cptl.raymay.Interface.EnumOpcao.InterMenuGeral;
 import static ufms.cptl.raymay.InterfaceOpcoes.MostraMensagem.mostrarInterMensagem;
@@ -26,10 +31,83 @@ public class InterfaceTerminal implements UserInterface{
     }
     
      @Override
-     public String receberString(String mensagem){
+    public String receberString(String mensagem) {
         mostrarInterMensagem(mensagem);
         String valor = scanner.nextLine();
         return valor;
+    }
+    
+    @Override
+    public String receberStringFormat(String mensagem, String formatacao, String tipo) {
+        while(true) {
+            mostrarInterMensagem(mensagem);
+            String palavra = scanner.nextLine();
+            /* esse comando serve para verificar se a string contem somente letras, acentos ou em outro idioma como "ç" */
+            if (palavra.matches(formatacao)) {
+                return palavra;
+            } else {
+                imprimirException("Insira um/uma " + tipo + " com a formatação/caracteres válidos!");
+            }  
+        }   
+    }
+    
+    @Override
+    public void imprimirException(String mensagem) {
+        imprimirMensagem("Exception Erro: " + mensagem);
+    }
+    
+    @Override
+    public int receberInteiro(String mensagem) {
+        while (true) {
+            mostrarInterMensagem(mensagem);
+            String inteiro = scanner.nextLine();
+            try {
+                if(inteiro != null) {
+                    return Integer.parseInt(inteiro); 
+                }
+            } catch (NumberFormatException e) {
+                mostrarInterMensagem("O valor inserido não é um número inteiro! Tente novamente.");
+            }    
+        }
+    }
+    
+    public int lerOpMenu() {
+        while (true) {
+            String op = scanner.nextLine();
+            try {
+                return Integer.parseInt(op); 
+            } catch (NumberFormatException e) {
+                imprimirException("Insira um número para selecionar uma opção do menu!!");
+            }
+        }
+    }
+    
+    @Override
+    public double receberDouble(String mensagem) {
+        while (true) {
+            mostrarInterMensagem(mensagem);
+            String doublee = scanner.nextLine();
+            try {
+                return Double.parseDouble(doublee); 
+            } catch (NumberFormatException e) {
+                mostrarInterMensagem("O valor inserido não é um número válido! Tente novamente.");
+            }    
+        }
+    }
+    
+    @Override
+    public LocalDateTime receberData(String mensagem, LocalTime horario) {
+        DateTimeFormatter formatoData = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+        while (true) {
+            mostrarInterMensagem(mensagem);
+            String dataInput = scanner.nextLine();
+            try {
+                LocalDate data = LocalDate.parse(dataInput, formatoData);
+                return LocalDateTime.of(data, horario);
+            } catch (DateTimeParseException e) {
+                imprimirMensagem("A data que você digitou não condiz com o formato! Tente novamente.");
+            }
+        }
     }
      
     @Override
@@ -42,10 +120,8 @@ public class InterfaceTerminal implements UserInterface{
             for (T constant : menu) {
                 out.println(constant.getValorOpcao() + " - " + constant.getDesc());
             }
-
-            int opcao = scanner.nextInt();
-            scanner.nextLine();
-            return opcao;
+            
+            return lerOpMenu();
             
         } catch (Exception e) {
             return -1;

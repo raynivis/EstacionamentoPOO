@@ -83,13 +83,12 @@ public class OperacoesCliente {
     
     /* A passagem pela lista de clientes é necessária pois o veículo cadastrado pode não ter um ticket
     cadastrado ainda!!! */
-    public boolean apagarVeiculo(List<Cliente> clientes, String placa, List<Ticket> tickets){
+    public boolean apagarVeiculo(List<Cliente> clientes, String cpf, String placa, List<Ticket> tickets){
         for(Cliente c : clientes) {
             for(Veiculo v : c.getVeiculos() ) {
-                if(v.getPlaca().equals(placa)) { 
+                if(v.getPlaca().equals(placa) && c.getCpf().equals(cpf)) { 
                     for (Ticket t : tickets) {
                         if(t.getVeiculoTicket().equals(v) && t.getStatus().equals(Operando.ATIVO)) {
-                            mostrarMensagem("\nO veículo não pode ser excluído pois possui um ticket ATIVO (está estacionado)!\n");
                             return false;     
                         } 
                     }
@@ -98,7 +97,6 @@ public class OperacoesCliente {
                 }
             }
         }
-        mostrarMensagem("\nVeículo não encontrado!\n");
         return false;
     }
     

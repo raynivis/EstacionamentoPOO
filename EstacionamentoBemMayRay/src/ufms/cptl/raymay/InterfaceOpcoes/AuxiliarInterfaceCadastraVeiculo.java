@@ -37,7 +37,7 @@ public class AuxiliarInterfaceCadastraVeiculo {
         tipoV = inter.receberString("Digite o tipo do veículo(MOTO, CARRO ou ONIBUS)");
         type = TipoVeiculo.valueOf(tipoV.toUpperCase());
             
-        cor = inter.receberString("Digite a cor");
+        cor = inter.receberStringFormat("Digite a cor", "^[\\p{L}]+$", "cor");
 
         descricao = inter.receberString("Digite a descrição");
 

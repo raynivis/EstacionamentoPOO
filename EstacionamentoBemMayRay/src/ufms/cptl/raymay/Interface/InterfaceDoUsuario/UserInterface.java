@@ -4,6 +4,8 @@
  */
 package ufms.cptl.raymay.Interface.InterfaceDoUsuario;
 
+import java.time.LocalDateTime;
+import java.time.LocalTime;
 import ufms.cptl.raymay.Interface.EnumOpcao.InterMenuGeral;
 
 
@@ -20,6 +22,16 @@ public interface UserInterface{
         /* Método que recebe uma string e, dependendo da interface escolhida posteriormente, imprime de maneiras diferentes
         a mesma informação/mensagem */
         public String receberString(String mensagem);
+        
+        public String receberStringFormat(String mensagem, String formatacao, String tipo);
+        
+        public void imprimirException(String mensagem);
+        
+        public int receberInteiro(String mensagem);
+        
+        public double receberDouble(String mensagem);
+        
+        public LocalDateTime receberData(String mensagem, LocalTime horario);
               
         public <T extends Enum<T> & InterMenuGeral> int imprimirMenu(Class<T> escolhaMenu, String menu);
         
