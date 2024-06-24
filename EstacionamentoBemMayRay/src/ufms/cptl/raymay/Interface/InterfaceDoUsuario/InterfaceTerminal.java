@@ -98,14 +98,18 @@ public class InterfaceTerminal implements UserInterface{
     }
     
     @Override
-    public LocalDateTime receberData(String mensagem, LocalTime horario) {
-        DateTimeFormatter formatoData = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+    public LocalDateTime receberData(String mensagem, String horarioAux) {
+        DateTimeFormatter formatoData = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm:ss");
         while (true) {
             mostrarInterMensagem(mensagem);
             String dataInput = scanner.nextLine();
+            if(dataInput != null && dataInput.equalsIgnoreCase("agora"))
+                return LocalDateTime.now();
+            
+            String dataTexto = dataInput + horarioAux;
             try {
-                LocalDate data = LocalDate.parse(dataInput, formatoData);
-                return LocalDateTime.of(data, horario);
+                LocalDateTime dataHora = LocalDateTime.parse(dataTexto, formatoData);              
+                return dataHora;
             } catch (DateTimeParseException e) {
                 imprimirMensagem("A data que você digitou não condiz com o formato! Tente novamente.");
             }

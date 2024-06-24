@@ -71,6 +71,12 @@ public abstract class Ticket implements Serializable{
     public double getFaturado() {
         return faturado;
     } 
+
+    public LocalDateTime getInicio() {
+        return inicio;
+    }
+    
+    
     
     /*Metodo polimorfico para encerrar o ticket*/
     public abstract void encerrar();  

@@ -28,6 +28,19 @@ public class Estacionamento {
         ArrayList<Tarifa> tarifas = new ArrayList<>();
         
         InterfaceInicial userinterface =  new InterfaceInicial();
+             
+        /*Carregar arquivo de dados do sistema das excecusoes anteriores*/
+        try {
+            ObjectInputStream arq = new ObjectInputStream(new FileInputStream("dados.bin"));
+
+            clientes = (ArrayList<Cliente>) arq.readObject();         
+            vagas = (ArrayList<Vaga>) arq.readObject();
+            tickets = (ArrayList<Ticket>) arq.readObject();
+            tarifas = (ArrayList<Tarifa>) arq.readObject();                     
+            arq.close();           
+        } catch (IOException | ClassNotFoundException ex) {
+             JOptionPane.showMessageDialog(null, "Erro: " + "Ocorreu um erro ao carregar os Dados do Banco", "Exception", JOptionPane.ERROR_MESSAGE); 
+        }    
             
 
         /*primeira interface do programa Estaciona Bem!!*/
@@ -47,41 +60,13 @@ public class Estacionamento {
             switch(escolha) {
                 case 0:
                     InterfaceTerminal userinterfaceT = new InterfaceTerminal();
-                    
-                    /*Carregar arquivo de dados do sistema // Tive q repetir o codigo por causa da mensagem*/
-                    try {
-                        ObjectInputStream arq = new ObjectInputStream(new FileInputStream("dados.bin"));
-
-                        clientes = (ArrayList<Cliente>) arq.readObject();         
-                        vagas = (ArrayList<Vaga>) arq.readObject();
-                        tickets = (ArrayList<Ticket>) arq.readObject();
-                        tarifas = (ArrayList<Tarifa>) arq.readObject();                     
-                        userinterfaceT.imprimirMensagem("Arquivo de Banco de dados carregado!");
-                        arq.close();           
-                    } catch (IOException | ClassNotFoundException ex) {
-                        userinterfaceT.imprimirMensagem("Ocorreu um erro ao carregar os Dados do Banco");                    
-                    }        
-                    /*ListasProntas.gerarListas(clientes, vagas); /*tirar*/
+                                           
                     userinterface.realizarOpcoesIniciais(clientes, vagas, tickets, tarifas, userinterfaceT);
                     GerenciamentoArquivo.salvarDados(clientes, vagas, tickets, tarifas,userinterfaceT);
                     break;
                 case 1:
                     InterfaceGrafica userinterfaceG = new InterfaceGrafica();
-                    
-                    /*Carregar arquivo de dados do sistema // Tive q repetir o codigo por causa da mensagem*/
-                    try {
-                        ObjectInputStream arq = new ObjectInputStream(new FileInputStream("dados.bin"));
-
-                        clientes = (ArrayList<Cliente>) arq.readObject();         
-                        vagas = (ArrayList<Vaga>) arq.readObject();
-                        tickets = (ArrayList<Ticket>) arq.readObject();
-                        tarifas = (ArrayList<Tarifa>) arq.readObject();
-
-                        userinterfaceG.imprimirMensagem("Carregou");
-                        arq.close();           
-                    } catch (IOException | ClassNotFoundException ex) {
-                        userinterfaceG.imprimirMensagem("Ocorreu um erro ao carregar os Dados do Banco");                    
-                    }                
+                                                    
                     userinterface.realizarOpcoesIniciais(clientes, vagas, tickets, tarifas, userinterfaceG);
                     GerenciamentoArquivo.salvarDados(clientes, vagas, tickets, tarifas, userinterfaceG);
                     break;     

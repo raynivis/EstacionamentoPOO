@@ -19,6 +19,7 @@ import ufms.cptl.raymay.Interface.InterfaceDoUsuario.UserInterface;
  * @author nivis
  */
 public class GerenciamentoArquivo {
+    /*metodo de procedimento para facililar a operacao de salvar os dados, ele está salvando em binario!*/
     public static void salvarDados(List<Cliente> clientes, List<Vaga> vagas, List<Ticket> tickets, List<Tarifa> tarifas, UserInterface inter){
         try{
            ObjectOutputStream arq = new ObjectOutputStream(new FileOutputStream("dados.bin"));                  

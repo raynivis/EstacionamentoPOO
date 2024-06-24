@@ -35,11 +35,11 @@ public class OperacoesTarifa {
     
     /*Métodos para facilitar a busca de tarifa na interface, a tarifa é identificada pela data de inicio, os dias da semana dela e o tipo/s
     de veiculo/s que a tarifa atende, o método retorna a tarifa se encontra-la, se não, retorna um ponteiro nulo*/
-    public TarifaHorista buscarHorista(List<Tarifa> tarifas, String inicio, List<DiaSemana> dias) {
+    public TarifaHorista buscarHorista(List<Tarifa> tarifas, LocalDateTime inicio, List<DiaSemana> dias) {
         for(Tarifa t : tarifas) {
             if(t instanceof TarifaHorista) {
                 TarifaHorista tH = (TarifaHorista) t;
-                if(tH.getInicio().format(dataBonitinha).equals(inicio) 
+                if(tH.getInicio().equals(inicio) 
                 && tH.getDiasSemana().equals(dias)) {
                     return tH;
                 } 
@@ -47,10 +47,10 @@ public class OperacoesTarifa {
         }
         return null;
     }
-    public TarifaMensalista buscarMensalista(List<Tarifa> tarifas, String inicio) {
+    public TarifaMensalista buscarMensalista(List<Tarifa> tarifas, LocalDateTime inicio) {
         for(Tarifa t : tarifas) {
             if(t instanceof TarifaMensalista) {
-                if(t.getInicio().format(dataBonitinha).equals(inicio)) {
+                if(t.getInicio().equals(inicio)) {
                     return (TarifaMensalista) t;
                 }
             }
