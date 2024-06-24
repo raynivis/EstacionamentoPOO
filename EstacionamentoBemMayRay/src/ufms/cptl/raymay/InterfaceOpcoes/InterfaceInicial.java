@@ -61,7 +61,7 @@ public class InterfaceInicial{
     
     /* Método geral das opções do menu que será chamado na Classe Main Estacionamento e permitirá que todo o
     menu seja exibido ao usuário */
-    public void realizarOpcoesIniciais(List<Cliente> clientes, List<Vaga> vagas, List<Ticket> tickets, List<Tarifa> tarifas, UserInterface inter) throws TicketException {  
+    public void realizarOpcoesIniciais(List<Cliente> clientes, List<Vaga> vagas, List<Ticket> tickets, List<Tarifa> tarifas, UserInterface inter) {  
         do {
                               
             opTicket.verificarMensalista30dias(tickets);

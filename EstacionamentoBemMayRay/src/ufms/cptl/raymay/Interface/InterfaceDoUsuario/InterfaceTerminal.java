@@ -30,6 +30,7 @@ public class InterfaceTerminal implements UserInterface{
         mostrarInterMensagem("\n" + mensagem + "\n");
     }
     
+    /* Abaixo, métodos que recebem String, verificam Strings inteiros e double e data. */
      @Override
     public String receberString(String mensagem) {
         mostrarInterMensagem(mensagem);
@@ -71,6 +72,7 @@ public class InterfaceTerminal implements UserInterface{
         }
     }
     
+    /* Erro que pode ocorrer no terminal, inserir uma letra ou caractere que não seja um número, tratado! */
     public int lerOpMenu() {
         while (true) {
             String op = scanner.nextLine();
@@ -110,6 +112,8 @@ public class InterfaceTerminal implements UserInterface{
         }
     }
      
+    /* Método genérico para auxiliar no manuseamento da interface terminal e gráfica, com a utilização do
+    método genérico, consigo selecionar o menu que quero que apareça, tornando o código mais limpo! */
     @Override
     public <T extends Enum<T> & InterMenuGeral> int imprimirMenu(Class<T> escolhaMenu, String menuSelecao) {
         try {

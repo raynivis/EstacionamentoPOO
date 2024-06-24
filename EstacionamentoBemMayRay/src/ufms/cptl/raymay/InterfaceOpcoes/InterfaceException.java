@@ -8,16 +8,7 @@ package ufms.cptl.raymay.InterfaceOpcoes;
  *
  * @author maymi
  */
-public class InterfaceException {
-    
-    /* Caso de exceção para listas de objetos vazias */
-    public class ListaVaziaException extends Exception{
-        public ListaVaziaException(String mensagem) {
-            super(mensagem);
-        }  
-    }  
-    /////////////
-    
+public class InterfaceException {  
     /* Caso de exceção para erros de digitação ("agora", "mensalista", "horista" ... ) */
     public class ErroDigitacaoException extends Exception{
         public ErroDigitacaoException(String mensagem) {

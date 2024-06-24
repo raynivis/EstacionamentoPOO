@@ -15,14 +15,13 @@ import javax.swing.JOptionPane;
 import ufms.cptl.raymay.CarregamentoArquivos.GerenciamentoArquivo;
 import ufms.cptl.raymay.Interface.InterfaceDoUsuario.InterfaceGrafica;
 import ufms.cptl.raymay.Interface.InterfaceDoUsuario.InterfaceTerminal;
-import ufms.cptl.raymay.InterfaceOpcoes.InterfaceException;
 
 /**
  *
  * @author ra
  */
 public class Estacionamento {
-    public static void main(String[] args) throws InterfaceException.TicketException{
+    public static void main(String[] args) {
         ArrayList<Cliente> clientes = new ArrayList<>();
         ArrayList<Vaga> vagas = new ArrayList<>();
         ArrayList<Ticket> tickets  = new ArrayList<>();
