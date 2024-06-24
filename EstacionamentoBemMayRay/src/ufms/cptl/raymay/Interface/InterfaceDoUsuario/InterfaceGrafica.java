@@ -3,6 +3,11 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
 package ufms.cptl.raymay.Interface.InterfaceDoUsuario;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.LocalTime;
+import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeParseException;
 import javax.swing.JOptionPane;
 import ufms.cptl.raymay.Interface.EnumOpcao.InterMenuGeral;
 /**
@@ -25,33 +30,90 @@ public class InterfaceGrafica implements UserInterface{
     }
     
     @Override
-    public <T extends Enum<T> & InterMenuGeral> int imprimirMenu(Class<T> escolhaMenu, String menuSelecao) {
-        T[] menu = escolhaMenu.getEnumConstants();
-         String[] opDesc = new String[menu.length];
+    public String receberStringFormat(String mensagem, String formatacao, String tipo) {
+        while(true) {
+            String palavra = JOptionPane.showInputDialog(null, mensagem);
+            /* esse comando serve para verificar se a string contem somente letras, acentos ou em outro idioma como "ç" */
+            if (palavra.matches(formatacao)) {
+                return palavra;
+            } else {
+                imprimirException("Insira um/uma " + tipo + " com a formatação/caracteres válidos!");
+            }  
+        }   
+    }
     
-        for (int i = 0; i < menu.length; i++) {
-            T constant = menu[i];
-            opDesc[i] = constant.getValorOpcao() + ". " + constant.getDesc();
-        }
-        String escolha = (String) JOptionPane.showInputDialog(
-                   null,
-                   "Escolha uma opção:",
-                   menuSelecao,
-                   JOptionPane.INFORMATION_MESSAGE,
-                   null,
-                   opDesc,
-                   opDesc[0]);
-
-        // Converte a escolha para o enum correspondente e obtém o valor da opção
-        if (escolha != null) {
-            for (T opcao : menu) {
-                if (escolha.equals(opcao.getValorOpcao() + ". " + opcao.getDesc())) {
-                    return opcao.getValorOpcao();
-                }
+    @Override
+    public void imprimirException(String mensagem) {
+        JOptionPane.showMessageDialog(null, "Erro: " + mensagem, "Exception", JOptionPane.ERROR_MESSAGE); 
+    }
+    
+    @Override
+    public int receberInteiro(String valor) {
+        while (true) {
+            String inteiro = JOptionPane.showInputDialog(null, valor);
+            try {
+                return Integer.parseInt(inteiro); 
+            } catch (NumberFormatException e) {
+                imprimirMensagem("O valor inserido não é um número inteiro! Tente novamente.");
             }    
         }
-        /* Opcao inválida, tera um break na interface */
-        return -1;
+    }
+    
+    @Override
+    public double receberDouble(String mensagem) {
+        while (true) {
+            String doublee = JOptionPane.showInputDialog(null, mensagem);
+            try {
+                return Double.parseDouble(doublee); 
+            } catch (NumberFormatException e) {
+                imprimirMensagem("O valor inserido não é um número válido! Tente novamente.");
+            }    
+        }
+    }
+    
+    @Override
+    public LocalDateTime receberData(String mensagem, LocalTime horario) {
+        DateTimeFormatter formatoData = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+        while (true) {
+            String dataInput = JOptionPane.showInputDialog(null, mensagem);
+            try {
+                LocalDate data = LocalDate.parse(dataInput, formatoData);
+                return LocalDateTime.of(data, horario);
+            } catch (DateTimeParseException e) {
+                imprimirMensagem("A data que você digitou não condiz com o formato! Tente novamente.");
+            }
+        }
+    }
+    
+    @Override
+    public <T extends Enum<T> & InterMenuGeral> int imprimirMenu(Class<T> escolhaMenu, String menuSelecao) {
+        T[] menu = escolhaMenu.getEnumConstants();
+        String[] opDesc = new String[menu.length];
+        StringBuilder ops = new StringBuilder();
+
+        // Construir as descrições das opções
+        for (int i = 0; i < menu.length; i++) {
+            T constant = menu[i];
+            ops.append(constant.getValorOpcao()).append(". ").append(constant.getDesc()).append("\n");
+            opDesc[i] = String.valueOf(constant.getValorOpcao());
+        }
+
+        int escolha = JOptionPane.showOptionDialog(
+            null,
+            ops.toString(),
+            menuSelecao,
+            JOptionPane.DEFAULT_OPTION,
+            JOptionPane.INFORMATION_MESSAGE,
+            null,
+            opDesc,
+            opDesc[0]
+        );
+
+        if (escolha >= 0 && escolha < menu.length) {
+            return menu[escolha].getValorOpcao();
+        }
+         else
+            return menu[menu.length-1].getValorOpcao();
     }
     
 }  
