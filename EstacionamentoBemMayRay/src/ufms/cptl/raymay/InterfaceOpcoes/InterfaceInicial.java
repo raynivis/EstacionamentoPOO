@@ -83,8 +83,8 @@ public class InterfaceInicial{
                 break;        
                 case 5:                    
                     inter.imprimirMensagem("Digite as datas que você deseja visualizar o valor que foi faturado em reais (em dia/mês/ano):"); 
-                    LocalDateTime inicio = inter.receberData("Data inicial:", LocalTime.MIDNIGHT);
-                    LocalDateTime fim = inter.receberData("Data Final:", LocalTime.of(23,59,59));
+                    LocalDateTime inicio = inter.receberData("Data inicial:", " 00:00:00");
+                    LocalDateTime fim = inter.receberData("Data Final:", " 23:59:59");
                     double resultado = opTicket.calcularTotalFaturadoPeriodo(tickets, inicio, fim);
                     inter.imprimirMensagem("\nNesse período foi/foram faturado/s: "  + dinheiro.format(resultado) + "\n");                                     
                 break;
@@ -124,8 +124,7 @@ public class InterfaceInicial{
                         }
                         double lucro;
                         if(testeT instanceof TicketHorista){
-                            String data = inter.receberString("Digite a data de finalização do ticket (em dia/mês/ano horas:minutos:segundos):");                                
-                            LocalDateTime dataFinal = LocalDateTime.parse(data, dataBonitinhaComSegundos); 
+                            LocalDateTime dataFinal = inter.receberData("Digite a data de finalização do ticket (em dia/mês/ano horas:minutos:segundos):", "");                                
                             testeT.setFim(dataFinal); 
                             testeT.faturar();
                             lucro = ((TicketHorista)testeT).getFaturado();
@@ -149,7 +148,7 @@ public class InterfaceInicial{
                     break; 
                     case 3: /*consultar Tarifa*/
                         String tipe = inter.receberString("Digite o tipo de tarifa (Horista ou Mensalista): ");;
-                        String data = inter.receberString("Digite a data de início da tarifa (em dia/mês/ano horas:minutos):");
+                        LocalDateTime data = inter.receberData("Digite a data de início da tarifa (em dia/mês/ano horas:minutos):", ":00");
 
                         if(tipe.equalsIgnoreCase("HORISTA") ){
                             List<DiaSemana> dias = new ArrayList<>();                        

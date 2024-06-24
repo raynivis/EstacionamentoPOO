@@ -31,7 +31,7 @@ public interface UserInterface{
         
         public double receberDouble(String mensagem);
         
-        public LocalDateTime receberData(String mensagem, LocalTime horario);
+        public LocalDateTime receberData(String mensagem, String horarioAux);
               
         public <T extends Enum<T> & InterMenuGeral> int imprimirMenu(Class<T> escolhaMenu, String menu);
         

@@ -72,13 +72,18 @@ public class InterfaceGrafica implements UserInterface{
     }
     
     @Override
-    public LocalDateTime receberData(String mensagem, LocalTime horario) {
-        DateTimeFormatter formatoData = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+    public LocalDateTime receberData(String mensagem, String horarioAux) {
+        DateTimeFormatter formatoData = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm:ss");
         while (true) {
             String dataInput = JOptionPane.showInputDialog(null, mensagem);
+            
+            if(dataInput != null && dataInput.equalsIgnoreCase("agora"))
+                return LocalDateTime.now();
+            
+            String dataTexto = dataInput + horarioAux;            
             try {
-                LocalDate data = LocalDate.parse(dataInput, formatoData);
-                return LocalDateTime.of(data, horario);
+                LocalDateTime dataHora = LocalDateTime.parse(dataTexto, formatoData);
+                return dataHora;
             } catch (DateTimeParseException e) {
                 imprimirMensagem("A data que você digitou não condiz com o formato! Tente novamente.");
             }

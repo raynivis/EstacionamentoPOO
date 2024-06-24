@@ -48,28 +48,20 @@ public class InterfaceOpcaoTarifa {
                         String tipo; 
                         tipo = inter.receberString("Digite o Tipo de Tarifa que deseja cadastrar (Horista ou Mensalista):");
 
-                        String data;
                         inter.imprimirMensagem("Digite a data que deseja iniciar tarifa (em dia/mês/ano horas:minutos) :");
-                        data = inter.receberString("Se deseja cadastrar uma tarifa instantânea, digite: Agora"); 
-
-                        LocalDateTime inicio;
-
-                        if(data.toUpperCase().equals("AGORA")) {
-                            inicio = LocalDateTime.now();
-                        } else {
-                            inicio = LocalDateTime.parse(data, dataFormata);
-                            if(inicio.isBefore(LocalDateTime.now())) { 
+                        LocalDateTime inicio = inter.receberData("Se deseja cadastrar uma tarifa instantânea, digite: Agora", ":00"); 
+                                                                                                          
+                        if(inicio.isBefore(LocalDateTime.now())) { 
                                 throw ex.new TarifaException("Não é possível cadastrar uma tarifa no passado!");
-                            }
-                        }                                                                                            
-
+                        }
+                        
                         if(tipo.equalsIgnoreCase("HORISTA")){    
                             List<DiaSemana> diaSmns = new  ArrayList<>();                                                     
                             listasVS.GerenciarListaDiasSemanas(diaSmns, inter); 
                             double precoPrimeira = inter.receberDouble("Digite o valor da primeira hora: ");
                             double precoHora = inter.receberDouble("Digite o valor das horas subsequentes: ");
 
-                            if(opTarifa.buscarHorista(tarifas, inicio.format(dataFormata), diaSmns) != null){                                      
+                            if(opTarifa.buscarHorista(tarifas, inicio, diaSmns) != null){                                      
                                 throw ex.new TarifaException("Você ja cadastrou uma Tarifa desse tipo para essa data!");
                             }
                             TarifaHorista novaTarifa = new TarifaHorista(precoPrimeira, precoHora, inicio, diaSmns);
@@ -79,7 +71,7 @@ public class InterfaceOpcaoTarifa {
                         else if(tipo.equalsIgnoreCase("MENSALISTA")) {      
                             double preco = inter.receberDouble("Digite o valor da tarifa: ");
 
-                            if(opTarifa.buscarMensalista(tarifas, inicio.format(dataFormata)) != null){
+                            if(opTarifa.buscarMensalista(tarifas, inicio) != null){
                                 throw ex.new TarifaException("Você ja cadastrou uma Tarifa desse tipo para essa data!");
                             }
                             TarifaMensalista novaTarifa = new TarifaMensalista(preco, inicio);
@@ -92,12 +84,12 @@ public class InterfaceOpcaoTarifa {
                     case 2: /*excluir tarifa*/                                                            
                         tipo = inter.receberString("Digite o Tipo de Tarifa que deseja excluir (Horista ou Mensalista):");
 
-                        data = inter.receberString("Digite a data da tarifa que deseja excluir tarifa (em dia/mês/ano horas:minutos):");                                      
+                        LocalDateTime dataExc = inter.receberData("Digite a data da tarifa que deseja excluir tarifa (em dia/mês/ano horas:minutos):", ":00");                                      
 
                         if(tipo.equalsIgnoreCase("HORISTA")){ 
                             List<DiaSemana> dias = new ArrayList<>();                           
                             listasVS.GerenciarListaDiasSemanas(dias, inter);
-                            TarifaHorista tarifaEx = opTarifa.buscarHorista(tarifas, data, dias);
+                            TarifaHorista tarifaEx = opTarifa.buscarHorista(tarifas, dataExc, dias);
                             if(tarifaEx == null){                                        
                                 throw ex.new TarifaException("Tarifa não encontrada!");
                             }
@@ -108,7 +100,7 @@ public class InterfaceOpcaoTarifa {
                             tarifas.remove(tarifaEx);  
                         }                               
                         else if(tipo.equalsIgnoreCase("MENSALISTA")) {                            
-                            TarifaMensalista tarifaEx = opTarifa.buscarMensalista(tarifas, data);
+                            TarifaMensalista tarifaEx = opTarifa.buscarMensalista(tarifas, dataExc);
                              if(tarifaEx == null){
                                 throw ex.new TarifaException("Tarifa não encontrada!");
                              }
@@ -126,12 +118,12 @@ public class InterfaceOpcaoTarifa {
                     break;
                     case 3: /*editar tarifa*/
                         tipo = inter.receberString("Digite o Tipo de Tarifa que deseja editar (Horista ou Mensalista):");                   
-                        data = inter.receberString("Digite a data da tarifa que deseja editar tarifa (em dia/mês/ano horas:minutos):");                                    
+                        LocalDateTime dataEdit = inter.receberData("Digite a data da tarifa que deseja editar tarifa (em dia/mês/ano horas:minutos):", ":00");                                    
 
                         if(tipo.equalsIgnoreCase("HORISTA")){   
                             List<DiaSemana> dias = new ArrayList<>();                           
                             listasVS.GerenciarListaDiasSemanas(dias, inter);
-                            TarifaHorista tarifaEx = opTarifa.buscarHorista(tarifas, data, dias);
+                            TarifaHorista tarifaEx = opTarifa.buscarHorista(tarifas, dataEdit, dias);
                             if(tarifaEx == null){
                                 throw ex.new TarifaException("Tarifa não encontrada!");
                             }
@@ -145,7 +137,7 @@ public class InterfaceOpcaoTarifa {
                             tarifaEx.setValorHoraSubsequente(novaHS); 
                         }                               
                         else{                            
-                            TarifaMensalista tarifaEx = opTarifa.buscarMensalista(tarifas, data);
+                            TarifaMensalista tarifaEx = opTarifa.buscarMensalista(tarifas, dataEdit);
                             if(tarifaEx == null){
                                 throw ex.new TarifaException("Tarifa não encontrada!");
                             }

@@ -136,17 +136,17 @@ public class OperacoesTicket {
     public double calcularTotalFaturadoPeriodo(List<Ticket> tickets, LocalDateTime inicio, LocalDateTime fim){
         double soma = 0;
         for(Ticket t : tickets) {
-            if(t.getFim().isAfter(inicio)) {
-                if(t instanceof TicketHorista && t.getFim().isBefore(fim)){
+            if(t instanceof TicketHorista && t.getFim() != null && t.getFim().isAfter(inicio)) {
+                if(t.getFim().isBefore(fim)){
                     TicketHorista tH = (TicketHorista) t;
                     soma = soma + tH.getFaturado();
-                }
-                
-                if (t instanceof TicketMensalista){
-                    TicketMensalista tM = (TicketMensalista) t;
-                    soma = soma + tM.getFaturado();
-                }                
+                }                         
             }
+            
+            if(t instanceof TicketMensalista &&  t.getInicio().isAfter(inicio)){
+                TicketMensalista tM = (TicketMensalista) t;
+                soma = soma + tM.getFaturado();
+            }    
         }
         return soma;
     }

@@ -15,6 +15,7 @@ import java.util.List;
 public enum DiaSemana implements Serializable{
     SEGUNDA, TERCA, QUARTA, QUINTA, SEXTA, SABADO, DOMINGO;
     
+    /*método para facilitar o insercao de dias da semana na tarifa*/
     public static List<DiaSemana> criarLista(String texto){
         List<DiaSemana> listaSemana = new ArrayList<>();
         String[] partes = texto.split(" ");
