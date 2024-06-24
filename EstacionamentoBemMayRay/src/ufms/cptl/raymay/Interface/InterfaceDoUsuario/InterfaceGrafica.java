@@ -3,9 +3,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
 package ufms.cptl.raymay.Interface.InterfaceDoUsuario;
-import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
 import javax.swing.JOptionPane;
@@ -25,14 +23,32 @@ public class InterfaceGrafica implements UserInterface{
     }
     @Override
     public String receberString(String mensagem){
-       String valor = JOptionPane.showInputDialog(null, mensagem);                                                  
-       return valor;  
+        while(true) {
+            String valor = JOptionPane.showInputDialog(null, mensagem);   
+             if (valor == null) {
+                imprimirException("A operação não pode ser cancelada!");
+                continue;
+            }
+            if (valor.trim().isEmpty()) {
+                imprimirException("Você não pode deixar esse campo em branco!");
+                continue; 
+            }
+            return valor;
+        }
     }
     
     @Override
     public String receberStringFormat(String mensagem, String formatacao, String tipo) {
         while(true) {
-            String palavra = JOptionPane.showInputDialog(null, mensagem);
+            String palavra = JOptionPane.showInputDialog(mensagem);
+            if (palavra == null) {
+                imprimirException("A operação não pode ser cancelada!");
+                continue;
+            }
+            if (palavra.trim().isEmpty()) {
+                imprimirException("Você não pode deixar esse campo em branco!");
+                continue; 
+            }
             /* esse comando serve para verificar se a string contem somente letras, acentos ou em outro idioma como "ç" */
             if (palavra.matches(formatacao)) {
                 return palavra;
@@ -48,9 +64,17 @@ public class InterfaceGrafica implements UserInterface{
     }
     
     @Override
-    public int receberInteiro(String valor) {
+    public int receberInteiro(String mensagem) {
         while (true) {
-            String inteiro = JOptionPane.showInputDialog(null, valor);
+            String inteiro = JOptionPane.showInputDialog(null, mensagem);
+             if (inteiro == null) {
+                imprimirException("A operação não pode ser cancelada!");
+                continue;
+            }
+            if (inteiro.trim().isEmpty()) {
+                imprimirException("Você não pode deixar esse campo em branco!");
+                continue; 
+            }
             try {
                 return Integer.parseInt(inteiro); 
             } catch (NumberFormatException e) {
@@ -63,6 +87,14 @@ public class InterfaceGrafica implements UserInterface{
     public double receberDouble(String mensagem) {
         while (true) {
             String doublee = JOptionPane.showInputDialog(null, mensagem);
+             if (doublee == null) {
+                imprimirException("A operação não pode ser cancelada!");
+                continue;
+            }
+            if (doublee.trim().isEmpty()) {
+                imprimirException("Você não pode deixar esse campo em branco!");
+                continue; 
+            }
             try {
                 return Double.parseDouble(doublee); 
             } catch (NumberFormatException e) {
@@ -76,7 +108,14 @@ public class InterfaceGrafica implements UserInterface{
         DateTimeFormatter formatoData = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm:ss");
         while (true) {
             String dataInput = JOptionPane.showInputDialog(null, mensagem);
-            
+            if (dataInput == null) {
+                imprimirException("A operação não pode ser cancelada!");
+                continue;
+            }
+            if (dataInput.trim().isEmpty()) {
+                imprimirException("Você não pode deixar esse campo em branco!");
+                continue; 
+            }
             if(dataInput != null && dataInput.equalsIgnoreCase("agora"))
                 return LocalDateTime.now();
             

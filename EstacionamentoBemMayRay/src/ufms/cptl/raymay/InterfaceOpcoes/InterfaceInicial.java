@@ -6,7 +6,6 @@ package ufms.cptl.raymay.InterfaceOpcoes;
 
 import java.text.NumberFormat;
 import java.time.LocalDateTime;
-import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
@@ -150,27 +149,26 @@ public class InterfaceInicial{
                         String tipe = inter.receberString("Digite o tipo de tarifa (Horista ou Mensalista): ");;
                         LocalDateTime data = inter.receberData("Digite a data de início da tarifa (em dia/mês/ano horas:minutos):", ":00");
 
-                        if(tipe.equalsIgnoreCase("HORISTA") ){
-                            List<DiaSemana> dias = new ArrayList<>();                        
+                        if (tipe.equalsIgnoreCase("HORISTA")) {
+                            List<DiaSemana> dias = new ArrayList<>();
                             listasVS.GerenciarListaDiasSemanas(dias, inter);
                             TarifaHorista tarife = opTarifa.buscarHorista(tarifas, data, dias);
-                            if(tarife == null){                                       
+                            if (tarife == null) {
                                 throw ex.new TarifaException("Tarifa não encontrada!");
                             }
                             String diaSemana = "\nDia/s da Semana: ";
-                            for(DiaSemana ds : tarife.getDiasSemana()){
+                            for (DiaSemana ds : tarife.getDiasSemana()) {
                                 diaSemana = diaSemana + (ds.toString() + " ");
-                            }                                     
-                            inter.imprimirMensagem(tarife.toString() + diaSemana);                              
-                        } 
-                        else if(tipe.equalsIgnoreCase("MENSALISTA")){
+                            }
+                            inter.imprimirMensagem(tarife.toString() + diaSemana);
+                        } else if (tipe.equalsIgnoreCase("MENSALISTA")) {
                             TarifaMensalista tarife = opTarifa.buscarMensalista(tarifas, data);
-                            if(tarife == null){
+                            if (tarife == null) {
                                 throw ex.new TarifaException("Tarifa não encontrada!");
                             }
                             inter.imprimirMensagem(tarife.toString());
                         } else {
-                            throw ex.new ErroDigitacaoException("São valídas somente as palavras horista ou mensalista!");
+                            throw ex.new ErroDigitacaoException("São válidas somente as palavras Horista ou Mensalista!");
                         }
 
                     break; 

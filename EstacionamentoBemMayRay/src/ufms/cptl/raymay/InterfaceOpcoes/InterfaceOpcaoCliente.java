@@ -65,10 +65,6 @@ public class InterfaceOpcaoCliente{
                             novoCliente.addVeiculo(Novoveiculo);
                             inter.imprimirMensagem("Cadastro:\n" + novoCliente.toString() + "\nFinalizado com sucesso!");
                             clientes.add(novoCliente);
-                         }
-                         else {
-                            /*limpar a variavel novo cliente*/
-                            throw ex.new VeiculoException("Placa já existente no sistema!");
                          }   
                     break;    
                     case 2:
@@ -136,7 +132,7 @@ public class InterfaceOpcaoCliente{
                         inter.imprimirException("Insira uma opção válida!");   
                     break;
                 } 
-            } catch (ClienteException | VeiculoException e) {
+            } catch (ClienteException e) {
                 inter.imprimirException(e.getMessage());
             }     
         }while(opcao2 != 7);       
