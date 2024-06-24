@@ -19,31 +19,31 @@ public class AuxiliarInterfarceListaSemanas {
     /*Método para identificação e cadastro de listas de Dias da Semana e Listas de Veiculos, para não ficar repetindo codigo.*/
     public int GerenciarListaDiasSemanas(List<DiaSemana> diaSmns, UserInterface inter){
         String dias;
-        inter.imprimirMensagem("Digite o/s dia/s da semana dessa tarifa (Domingo, Segunda, Terca, Quarta, Quinta, Sexta, Sábado)");
-        dias = inter.receberString("Caso seja para todos os dias da semana, digite: Todos");
-        dias = dias.toUpperCase();
+        
         while(true) {
             try {
-                if(!dias.equalsIgnoreCase("TODOS") || !dias.equalsIgnoreCase("DOMINGO") || !dias.equalsIgnoreCase("SEGUNDA")
-                        || !dias.equalsIgnoreCase("TERCA") || !dias.equalsIgnoreCase("QUARTA") || !dias.equalsIgnoreCase("QUINTA")
-                        || !dias.equalsIgnoreCase("SEXTA") || !dias.equalsIgnoreCase("SABADO")) {
-                    throw ex.new ErroDigitacaoException("Digite todos OU os dias da semana correspondentes!");
-                } else {
-                    if(dias.contains("TODOS")){
-                        diaSmns.add(DiaSemana.DOMINGO);
-                        diaSmns.add(DiaSemana.SEGUNDA); 
-                        diaSmns.add(DiaSemana.TERCA);
-                        diaSmns.add(DiaSemana.QUARTA);
-                        diaSmns.add(DiaSemana.QUINTA); 
-                        diaSmns.add(DiaSemana.SEXTA);
-                        diaSmns.add(DiaSemana.SABADO);   
-                    } else {           
-                        diaSmns.addAll(DiaSemana.criarLista(dias));
-                    }  
-                    return 0;
-                }    
+                inter.imprimirMensagem("Digite o/s dia/s da semana dessa tarifa (Domingo, Segunda, Terca, Quarta, Quinta, Sexta, Sábado)");
+                dias = inter.receberString("Caso seja para todos os dias da semana, digite: Todos");
+                dias = dias.toUpperCase();
+                if(dias.contains("TODOS")){
+                    diaSmns.add(DiaSemana.DOMINGO);
+                    diaSmns.add(DiaSemana.SEGUNDA); 
+                    diaSmns.add(DiaSemana.TERCA);
+                    diaSmns.add(DiaSemana.QUARTA);
+                    diaSmns.add(DiaSemana.QUINTA); 
+                    diaSmns.add(DiaSemana.SEXTA);
+                    diaSmns.add(DiaSemana.SABADO);  
+                    return 1;
+                } else {     
+                    List<DiaSemana> diaSCadas = DiaSemana.criarLista(dias);
+                    if(diaSCadas == null){
+                        throw ex.new ErroDigitacaoException("Digite todos OU os dias da semana correspondentes!");                          
+                    }
+                    diaSmns.addAll(diaSCadas);
+                    return 1;
+                }                                     
             } catch (ErroDigitacaoException e) {
-                inter.imprimirException(e.getMessage());
+                inter.imprimirException(e.getMessage());               
             }
         }
     }
