@@ -88,7 +88,7 @@ public class InterfaceOpcaoTarifa {
 
                         if(tipo.equalsIgnoreCase("HORISTA")){ 
                             List<DiaSemana> dias = new ArrayList<>();                           
-                            if(listasVS.GerenciarListaDiasSemanas(dias, inter) == 0){
+                            if(listasVS.GerenciarListaDiasSemanas(dias, inter) == 1){
                                 TarifaHorista tarifaEx = opTarifa.buscarHorista(tarifas, dataExc, dias);
                                 if(tarifaEx == null){                                        
                                     throw ex.new TarifaException("Tarifa não encontrada!");
@@ -123,7 +123,7 @@ public class InterfaceOpcaoTarifa {
                         tipo = inter.receberString("Digite o Tipo de Tarifa que deseja editar (Horista ou Mensalista):"); 
                         if(tipo.equalsIgnoreCase("HORISTA")){   
                             List<DiaSemana> dias = new ArrayList<>();                           
-                            if(listasVS.GerenciarListaDiasSemanas(dias, inter) == 0){
+                            if(listasVS.GerenciarListaDiasSemanas(dias, inter) == 1){
                                 TarifaHorista tarifaEx = opTarifa.buscarHorista(tarifas, dataEdit, dias);
                                 if(tarifaEx == null){
                                     throw ex.new TarifaException("Tarifa não encontrada!");

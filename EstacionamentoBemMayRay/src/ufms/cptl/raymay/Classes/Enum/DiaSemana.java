@@ -23,6 +23,7 @@ public enum DiaSemana implements Serializable{
             try {
                 listaSemana.add(DiaSemana.valueOf(partes[i]));
             } catch (IllegalArgumentException e) {
+                return null;
             }
         }
         return listaSemana;

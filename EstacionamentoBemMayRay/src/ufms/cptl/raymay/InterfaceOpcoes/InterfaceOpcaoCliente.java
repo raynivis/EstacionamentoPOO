@@ -152,7 +152,7 @@ public class InterfaceOpcaoCliente{
                             inter.imprimirMensagem("Veículo cadastrado com sucesso!!");
                         }
                         else {
-                            throw ex.new VeiculoException("Placa já registrada no sistema!");
+                            throw ex.new VeiculoException("Ocorreu um erro ao cadastrar o Veiculo!");
                         }
                     break;
                     case 2: /*Remover um veiculo*/

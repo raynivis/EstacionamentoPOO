@@ -39,15 +39,25 @@ public class AuxiliarInterfaceCadastraVeiculo {
             TipoVeiculo type;
 
             tipoV = inter.receberString("Digite o tipo do veículo(MOTO, CARRO ou ONIBUS)");
-            if(!tipoV.equalsIgnoreCase("MOTO") || !tipoV.equalsIgnoreCase("CARRO") || !tipoV.equalsIgnoreCase("ONIBUS")) {
+            tipoV = tipoV.toUpperCase();
+            
+            if(tipoV.contains("MOTO")){
+                tipoV = "MOTO";
+                type = TipoVeiculo.valueOf(tipoV.toUpperCase());
+            }
+            else if(tipoV.contains("CARRO")){
+                tipoV = "CARRO";
+                type = TipoVeiculo.valueOf(tipoV.toUpperCase());
+            }
+            else if(tipoV.contains("ONIBUS")){
+                tipoV = "ONIBUS";
+                type = TipoVeiculo.valueOf(tipoV.toUpperCase());
+            } else {
                 throw ex.new ErroDigitacaoException("São válidas somente as palavras moto, carro ou onibus!");
-            } 
-            type = TipoVeiculo.valueOf(tipoV.toUpperCase());
-
-
-            tipoV = inter.receberString("Digite o tipo do veículo(MOTO, CARRO ou ONIBUS)");
-            type = TipoVeiculo.valueOf(tipoV.toUpperCase());
-
+            }
+            
+            inter.imprimirMensagem("Veiculo do tipo: " + tipoV + " selecionado!");
+            
             cor = inter.receberStringFormat("Digite a cor", "^[\\p{L}]+$", "cor");
 
             descricao = inter.receberString("Digite a descrição");
