@@ -44,29 +44,30 @@ public class InterfaceOpcaoTarifa {
             opcao3 = inter.imprimirMenu(InterMenuTarifa.class, "Menu Tarifa");
             try {
                 switch(opcao3){
-                    case 1: /*adicionar tarifa*/                                                      
-                        String tipo; 
-                        tipo = inter.receberString("Digite o Tipo de Tarifa que deseja cadastrar (Horista ou Mensalista):");
-
+                    case 1: /*adicionar tarifa*/  
                         inter.imprimirMensagem("Digite a data que deseja iniciar tarifa (em dia/mês/ano horas:minutos) :");
                         LocalDateTime inicio = inter.receberData("Se deseja cadastrar uma tarifa instantânea, digite: Agora", ":00"); 
                                                                                                           
                         if(inicio.isBefore(LocalDateTime.now())) { 
-                                throw ex.new TarifaException("Não é possível cadastrar uma tarifa no passado!");
+                            throw ex.new TarifaException("Não é possível cadastrar uma tarifa no passado!");
                         }
                         
+                        String tipo; 
+                        tipo = inter.receberString("Digite o Tipo de Tarifa que deseja cadastrar (Horista ou Mensalista):");
+
                         if(tipo.equalsIgnoreCase("HORISTA")){    
                             List<DiaSemana> diaSmns = new  ArrayList<>();                                                     
-                            listasVS.GerenciarListaDiasSemanas(diaSmns, inter); 
-                            double precoPrimeira = inter.receberDouble("Digite o valor da primeira hora: ");
-                            double precoHora = inter.receberDouble("Digite o valor das horas subsequentes: ");
+                            if(listasVS.GerenciarListaDiasSemanas(diaSmns, inter) == 1) {
+                                double precoPrimeira = inter.receberDouble("Digite o valor da primeira hora: ");
+                                double precoHora = inter.receberDouble("Digite o valor das horas subsequentes: ");
 
-                            if(opTarifa.buscarHorista(tarifas, inicio, diaSmns) != null){                                      
-                                throw ex.new TarifaException("Você ja cadastrou uma Tarifa desse tipo para essa data!");
-                            }
-                            TarifaHorista novaTarifa = new TarifaHorista(precoPrimeira, precoHora, inicio, diaSmns);
-                            tarifas.add(novaTarifa);
-                            inter.imprimirMensagem("Tarifa Horista de " + inicio.format(dataFormata) + " cadastrada com sucesso!\n");     
+                                if(opTarifa.buscarHorista(tarifas, inicio, diaSmns) != null){                                      
+                                    throw ex.new TarifaException("Você ja cadastrou uma Tarifa desse tipo para essa data!");
+                                }
+                                TarifaHorista novaTarifa = new TarifaHorista(precoPrimeira, precoHora, inicio, diaSmns);
+                                tarifas.add(novaTarifa);
+                                inter.imprimirMensagem("Tarifa Horista de " + inicio.format(dataFormata) + " cadastrada com sucesso!\n");   
+                            }   
                         }                               
                         else if(tipo.equalsIgnoreCase("MENSALISTA")) {      
                             double preco = inter.receberDouble("Digite o valor da tarifa: ");
@@ -81,23 +82,23 @@ public class InterfaceOpcaoTarifa {
                             throw ex.new ErroDigitacaoException("São valídas somente as palavras horista ou mensalista!");
                         }                                                           
                     break; 
-                    case 2: /*excluir tarifa*/                                                            
-                        tipo = inter.receberString("Digite o Tipo de Tarifa que deseja excluir (Horista ou Mensalista):");
-
+                    case 2: /*excluir tarifa*/       
                         LocalDateTime dataExc = inter.receberData("Digite a data da tarifa que deseja excluir tarifa (em dia/mês/ano horas:minutos):", ":00");                                      
+                        tipo = inter.receberString("Digite o Tipo de Tarifa que deseja excluir (Horista ou Mensalista):");
 
                         if(tipo.equalsIgnoreCase("HORISTA")){ 
                             List<DiaSemana> dias = new ArrayList<>();                           
-                            listasVS.GerenciarListaDiasSemanas(dias, inter);
-                            TarifaHorista tarifaEx = opTarifa.buscarHorista(tarifas, dataExc, dias);
-                            if(tarifaEx == null){                                        
-                                throw ex.new TarifaException("Tarifa não encontrada!");
-                            }
+                            if(listasVS.GerenciarListaDiasSemanas(dias, inter) == 0){
+                                TarifaHorista tarifaEx = opTarifa.buscarHorista(tarifas, dataExc, dias);
+                                if(tarifaEx == null){                                        
+                                    throw ex.new TarifaException("Tarifa não encontrada!");
+                                }
 
-                            if(opTarifa.procurar(tarifaEx, tickets) == true) {        
-                                throw ex.new TarifaException("A tarifa não pode ser excluída pois ela possui um ticket cadastrado!");
+                                if(opTarifa.procurar(tarifaEx, tickets) == true) {        
+                                    throw ex.new TarifaException("A tarifa não pode ser excluída pois ela possui um ticket cadastrado!");
+                                }
+                                tarifas.remove(tarifaEx); 
                             }
-                            tarifas.remove(tarifaEx);  
                         }                               
                         else if(tipo.equalsIgnoreCase("MENSALISTA")) {                            
                             TarifaMensalista tarifaEx = opTarifa.buscarMensalista(tarifas, dataExc);
@@ -116,27 +117,28 @@ public class InterfaceOpcaoTarifa {
                         inter.imprimirMensagem("Tarifa removida com Sucesso!");    
 
                     break;
-                    case 3: /*editar tarifa*/
-                        tipo = inter.receberString("Digite o Tipo de Tarifa que deseja editar (Horista ou Mensalista):");                   
+                    case 3: /*editar tarifa*/                  
                         LocalDateTime dataEdit = inter.receberData("Digite a data da tarifa que deseja editar tarifa (em dia/mês/ano horas:minutos):", ":00");                                    
 
+                        tipo = inter.receberString("Digite o Tipo de Tarifa que deseja editar (Horista ou Mensalista):"); 
                         if(tipo.equalsIgnoreCase("HORISTA")){   
                             List<DiaSemana> dias = new ArrayList<>();                           
-                            listasVS.GerenciarListaDiasSemanas(dias, inter);
-                            TarifaHorista tarifaEx = opTarifa.buscarHorista(tarifas, dataEdit, dias);
-                            if(tarifaEx == null){
-                                throw ex.new TarifaException("Tarifa não encontrada!");
-                            }
-                            String novaData = inter.receberString("Digite a nova data (em dia/mês/ano horas:minutos):");
-                            tarifaEx.setInicio(LocalDateTime.parse(novaData, dataFormata));
+                            if(listasVS.GerenciarListaDiasSemanas(dias, inter) == 0){
+                                TarifaHorista tarifaEx = opTarifa.buscarHorista(tarifas, dataEdit, dias);
+                                if(tarifaEx == null){
+                                    throw ex.new TarifaException("Tarifa não encontrada!");
+                                }
+                                String novaData = inter.receberString("Digite a nova data (em dia/mês/ano horas:minutos):");
+                                tarifaEx.setInicio(LocalDateTime.parse(novaData, dataFormata));
 
-                            double novaPH = inter.receberDouble("Digite o novo valor da primeira hora: ");                                       
-                            tarifaEx.setValorPrimeiraHora(novaPH);
+                                double novaPH = inter.receberDouble("Digite o novo valor da primeira hora: ");                                       
+                                tarifaEx.setValorPrimeiraHora(novaPH);
 
-                            double novaHS = inter.receberDouble("Digite o novo valor das horas subsequentes: "); 
-                            tarifaEx.setValorHoraSubsequente(novaHS); 
+                                double novaHS = inter.receberDouble("Digite o novo valor das horas subsequentes: "); 
+                                tarifaEx.setValorHoraSubsequente(novaHS); 
+                            }    
                         }                               
-                        else{                            
+                        else if(tipo.equalsIgnoreCase("MENSALISTA")){                            
                             TarifaMensalista tarifaEx = opTarifa.buscarMensalista(tarifas, dataEdit);
                             if(tarifaEx == null){
                                 throw ex.new TarifaException("Tarifa não encontrada!");
@@ -148,7 +150,9 @@ public class InterfaceOpcaoTarifa {
                             double novaH = inter.receberDouble("Digite o novo valor da tarifa: ");
                             tarifaEx.setValorUnico(novaH);                                  
 
-                        }                                                                                                                           
+                        }  else {
+                            throw ex.new ErroDigitacaoException("São valídas somente as palavras horista ou mensalista!");
+                        }                                                                                                                         
                         inter.imprimirMensagem("Tarifa editada com Sucesso!");  
                     break;
                     case 4: /*imprimir tarifas*/                                
